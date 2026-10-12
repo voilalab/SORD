@@ -1,0 +1,14 @@
+# tau_stop for SORD's relative stopping test (end of iteration m: if sigma*_m - sigma*_{m+1} <= tau_stop *
+# sigma*_m, x_m is discarded and x_{m-1} returned; x_0 = inpainting is admissible).  Derived by sord/stop_sweep.py on the saved iterates of the reported runs; three values in total.
+default: 0.01
+per_cell:
+  CelebA+MNIST (T1): 0.01
+  CelebA+natural (T1): 0.01
+  CelebA+CIFAR (T1): 0.01
+  CLWD blind (T2): 0.01           # iterate class (paper): reported as Algorithm 1, 22.56
+  FFHQ wm (T2): 0.2
+  Imagenette wm (T2): 0.2
+  Imagenette shadow (T2): 0.2
+  ISTD shadow (T2): 0.2
+  FFHQ shadow (T2): 0.2
+  Audio, all targets / SIR / g=1 / speech (T1): 0.8   # configs/sord/audio_*.yaml

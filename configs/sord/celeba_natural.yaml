@@ -1,0 +1,14 @@
+# SORD on CelebA faces + natural-image patches (64^2).
+#   python -m sord.run configs/sord/celeba_natural.yaml --out runs/celeba_natural
+bench: experiments/ros/results/r5/bench_natural.npz          # relative to DATA_ROOT (replay release: reproduction/fetch_assets.py)
+prior: {kind: celeba, checkpoint: celeba_score}          # checkpoint_manifest.json
+seed: 12345
+sord:
+  K: 32                 # diffusion samples
+  M: 8                  # maximum refinement iterations (as in the reported run)
+  sigma_start: 0.4      # re-noising schedule sigma_m, linear in m ...
+  sigma_end: 0.1        # ... from 0.4 to 0.1
+  tau_stop: 0.01        # relative-decrease stopping threshold (configs/sord/tau_stop.yaml)
+  model: additive       # y = x + n (additive) or y = x * h (multiplicative, shadows)
+  corruption: pos       # additive class: pos (n >= 0) or free (signed)
+  zero_anchor: false    # residual normalization for a non-negative contaminant on black

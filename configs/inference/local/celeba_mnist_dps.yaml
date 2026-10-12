@@ -1,0 +1,59 @@
+## Local inference config (Linux paths + offline model weights)
+# Use with: python inference.py -e local/celeba_mnist_dps -t denoise -m sgm
+
+data_root: ./data
+run_name: celeba
+run_id:
+  sgm: ./models/joint-diffusion-celeba
+  glow: ./models/glow-celeba
+  gan: ./models/gan-celeba
+device: null
+seed: 12345
+num_img: 5
+keep_track: true
+noise_stddev: 0.5
+corruptor: mnist
+paired_data: true
+zoom: null
+show_noise_priors: false
+disable_corruptor_model: false
+limit_n_samples: 100
+
+metrics:
+  - psnr
+  - ssim
+  - lpips
+models:
+  - sgm
+
+sgm:
+  lambda_coeff: 12.7
+  kappa_coeff: 16.7
+  num_scales: 600
+  sde: simple
+  sigma: 25
+  sampling_method: pc
+  predictor: euler_maruyama
+  corrector: none
+  guidance: dps
+  corruptor_run_id: ./models/joint-diffusion-mnist-rgb
+  batch_size: 10
+
+glow:
+  lambda_coeff: 0.03
+  step_size: 0.005
+  num_steps: 600
+  prior: log_p_x
+  optim: adam
+  init_std: 0.1
+  init_strat: observation
+  corruptor_run_id: ./models/glow-mnist-rgb
+  show_optimization_progress: true
+  batch_size: 6
+
+gan:
+  lambda_coeff: 0.9
+  step_size: 0.05
+  num_steps: 1000
+  prior: z_squared
+  batch_size: 128

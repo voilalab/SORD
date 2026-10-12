@@ -1,0 +1,15 @@
+# SORD on CLWD watermarks (64^2), EDM2 prior fine-tuned on CLWD clean images.
+#   python -m sord.run configs/sord/clwd.yaml --out runs/clwd
+bench: experiments/extbench/results/b2r/bench_b2r.npz          # relative to DATA_ROOT (replay release: reproduction/fetch_assets.py)
+support: {file: experiments/extbench/results/b2r/mask_raw_dataset.npz, key: M}   # CLWD's own mask (scripts/build_clwd_dataset_mask.py); scored on M_true
+prior: {kind: edm2, checkpoint: edm2_clwd64}          # checkpoint_manifest.json
+seed: 12345
+sord:
+  K: 32                 # diffusion samples
+  M: 6                  # maximum refinement iterations (as in the reported run)
+  sigma_start: 0.4      # re-noising schedule sigma_m, linear in m ...
+  sigma_end: 0.1        # ... from 0.4 to 0.1
+  tau_stop: 0.01       # relative-decrease stopping threshold (configs/sord/tau_stop.yaml)
+  model: additive       # y = x + n (additive) or y = x * h (multiplicative, shadows)
+  corruption: free      # additive class: pos (n >= 0) or free (signed)
+  zero_anchor: false    # residual normalization for a non-negative contaminant on black

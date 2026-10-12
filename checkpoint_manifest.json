@@ -1,0 +1,688 @@
+{
+ "schema": 1,
+ "description": "Checkpoints used by SORD (sord/priors.py via configs/sord/*.yaml) and, as optional entries, by the paper's baselines. 'path' is relative to CHECKPOINT_ROOT; a directory entry lists its files relative to that directory. The authors' own weights are distributed as zip archives in ONE shared Google Drive folder: set 'gdrive.folder_url' below to that folder's share link (see CHECKPOINT_UPLOAD_GUIDE.md); each such checkpoint names its archive in 'gdrive_archive'.",
+ "gdrive": {
+  "folder_url": "https://drive.google.com/drive/folders/1DRm0mEuemf5vBI2e4I5vaxmH6zgdqH-8?usp=sharing",
+  "note": "One shared folder (Anyone with the link: Viewer) holding the sord_*.zip archives built by scripts/package_checkpoints.py (sord_thirdparty_*.zip: copies of third-party weights, subject to their providers' terms). Optional: 'archives' {zip name: file share link} overrides the folder for single archives."
+ },
+ "checkpoints": {
+  "celeba_score": {
+   "model": "Joint-diffusion CelebA score model (Stevens et al.)",
+   "architecture": "NCSN++-style score network, TensorFlow, 64x64, VE SDE (sigma=25)",
+   "purpose": "clean-image prior for the CelebA benchmarks (MNIST / natural / CIFAR-10 corruptions)",
+   "used_by": [
+    "configs/sord/celeba_mnist.yaml",
+    "configs/sord/celeba_natural.yaml",
+    "configs/sord/celeba_cifar.yaml"
+   ],
+   "required": "quick-start",
+   "category": "diffusion",
+   "path": "diffusion/joint-diffusion-celeba",
+   "files": [
+    {
+     "path": "config.yaml",
+     "size": 1078,
+     "sha256": "cfdb73719162cb53b73d1145646d277e8ebc77c86b709776fcebcab2333fa537"
+    },
+    {
+     "path": "training_checkpoints/checkpoint",
+     "size": 69,
+     "sha256": "c23182b617f30bb8ada881b5c10d77d32239a980f41a739395a9d956aad8caf3"
+    },
+    {
+     "path": "training_checkpoints/ckpt-8.index",
+     "size": 31304,
+     "sha256": "5eaa850c7edd11c609080fa2621ad26586b516f240850f421f0e764dc5480328"
+    },
+    {
+     "path": "training_checkpoints/ckpt-8.data-00000-of-00001",
+     "size": 106891468,
+     "sha256": "737c23ae9dce7b5a5fe8d7e351e49d06ceacc6846deb867c998fcea64ae1028b"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "huggingface",
+    "repo_id": "tristan-deep/joint-diffusion-celeba",
+    "url": "https://huggingface.co/tristan-deep/joint-diffusion-celeba",
+    "verified_from": "configs/inference/paper/*.yaml (run_id hf://tristan-deep/joint-diffusion-celeba); file hashes match the Hugging Face LFS etags"
+   },
+   "license": "not stated in the downloaded files",
+   "redistribution": "unclear: download from Hugging Face, do not repackage",
+   "loader": "sord/priors.py:build_prior (kind celeba) -> utils/checkpoints.py ModelCheckpoint.restore",
+   "gdrive_archive": "sord_thirdparty_celeba_score.zip"
+  },
+  "edm2_clwd64": {
+   "model": "EDM2-S 64x64 fine-tuned on CLWD clean training images",
+   "architecture": "EDM2 (Karras et al. 2024) img64-s, PyTorch pickle",
+   "purpose": "clean-image prior for CLWD watermark removal",
+   "used_by": [
+    "configs/sord/clwd.yaml"
+   ],
+   "required": "benchmark",
+   "category": "method",
+   "path": "method/edm2_clwd64/network-snapshot-0000512-0.100.pkl",
+   "files": [
+    {
+     "path": "",
+     "size": 560537343,
+     "sha256": "9d1c0df8ca5b5306101dcdba391ed4aad94b032cf763bd7483f977addf871e68"
+    }
+   ],
+   "origin": "fine-tuned by the authors from NVIDIA edm2-img64-s-1073741-0.075.pkl (512 kimg, EMA 0.100) on the 60k clean CLWD training images",
+   "source": {
+    "type": "none",
+    "note": "no public source yet; upload the authors' file and record its Google Drive id under 'gdrive'"
+   },
+   "license": "CC BY-NC-SA 4.0 (derivative of NVIDIA EDM2 weights, third_party/edm2/LICENSE.txt)",
+   "redistribution": "allowed under CC BY-NC-SA 4.0 (non-commercial, share-alike, attribution)",
+   "loader": "sord/priors.py:build_prior (kind edm2) -> experiments/extbench/edm2_adapter.py EDM2Adapter",
+   "gdrive_archive": "sord_method_edm2_priors.zip"
+  },
+  "edm2_scene64": {
+   "model": "EDM2-S 64x64 fine-tuned on shadow-free scene images",
+   "architecture": "EDM2 img64-s, PyTorch pickle",
+   "purpose": "clean-image prior for ISTD shadow removal",
+   "used_by": [
+    "configs/sord/istd.yaml"
+   ],
+   "required": "benchmark",
+   "category": "method",
+   "path": "method/edm2_scene64/network-snapshot-0000512-0.050.pkl",
+   "files": [
+    {
+     "path": "",
+     "size": 560537349,
+     "sha256": "d42a5c4a4c0927cb6a0cec479742f4997aff9eb1632f5215f4ea602d605681c1"
+    }
+   ],
+   "origin": "fine-tuned by the authors from NVIDIA edm2-img64-s-1073741-0.075.pkl (512 kimg, EMA 0.050) on shadow-free training scenes (SRD/ISTD backgrounds, DTD)",
+   "source": {
+    "type": "none",
+    "note": "no public source yet; upload the authors' file and record its Google Drive id under 'gdrive'"
+   },
+   "license": "CC BY-NC-SA 4.0 (derivative of NVIDIA EDM2 weights)",
+   "redistribution": "allowed under CC BY-NC-SA 4.0 (non-commercial, share-alike, attribution)",
+   "loader": "sord/priors.py:build_prior (kind edm2) -> experiments/extbench/edm2_adapter.py EDM2Adapter",
+   "gdrive_archive": "sord_method_edm2_priors.zip"
+  },
+  "adm_ffhq256": {
+   "model": "ADM FFHQ 256x256 (ffhq_10m.pt, DPS release)",
+   "architecture": "guided-diffusion UNet, 256x256, linear beta schedule",
+   "purpose": "clean-image prior for FFHQ watermark and FFHQ shadow",
+   "used_by": [
+    "configs/sord/ffhq_watermark.yaml",
+    "configs/sord/ffhq_shadow.yaml"
+   ],
+   "required": "benchmark",
+   "category": "diffusion",
+   "path": "diffusion/guided_diffusion/ffhq_10m.pt",
+   "files": [
+    {
+     "path": "",
+     "size": 374417833,
+     "sha256": "81d535743156ec6be34d8668e6920da94f0614074d7793a16c8fa9e306237faa"
+    }
+   ],
+   "origin": "official third-party (Chung et al., DPS)",
+   "source": {
+    "type": "gdrive-folder",
+    "url": "https://drive.google.com/drive/folders/1jElnRoFv7b31fG0v6pTSQkelbSX3xGZh?usp=sharing",
+    "file": "ffhq_10m.pt",
+    "verified_from": "diffusion-posterior-sampling README.md, section 'Download pretrained checkpoint'"
+   },
+   "license": "not stated in the DPS repository",
+   "redistribution": "unclear: download from the DPS link, do not repackage",
+   "loader": "sord/priors.py:build_prior (kind adm_ffhq256) -> experiments/extbench/gd256_adapter.py GD256NativeAdapter",
+   "gdrive_archive": "sord_thirdparty_adm_ffhq256.zip"
+  },
+  "adm_imagenet256": {
+   "model": "ADM ImageNet 256x256 unconditional (OpenAI guided-diffusion)",
+   "architecture": "guided-diffusion UNet, 256x256, linear beta schedule",
+   "purpose": "clean-image prior for Imagenette watermark and Imagenette shadow",
+   "used_by": [
+    "configs/sord/imagenette_watermark.yaml",
+    "configs/sord/imagenette_shadow.yaml"
+   ],
+   "required": "benchmark",
+   "category": "diffusion",
+   "path": "diffusion/guided_diffusion/256x256_diffusion_uncond.pt",
+   "files": [
+    {
+     "path": "",
+     "size": 2211383297,
+     "sha256": "a37c32fffd316cd494cf3f35b339936debdc1576dad13fe57c42399a5dbc78b1"
+    }
+   ],
+   "origin": "official third-party (Dhariwal & Nichol); the authors' copy was stored as imagenet256_uncond.pt",
+   "source": {
+    "type": "http",
+    "url": "https://openaipublic.blob.core.windows.net/diffusion/jul-2021/256x256_diffusion_uncond.pt",
+    "verified_from": "openai/guided-diffusion README.md",
+    "note": "identity with the official file inferred from name and size; the SHA256 above is of the authors' copy"
+   },
+   "license": "MIT (openai/guided-diffusion)",
+   "redistribution": "permitted by MIT, but download from the official URL",
+   "loader": "sord/priors.py:build_prior (kind adm_imagenet256) -> experiments/extbench/gd256_adapter.py GD256NativeAdapterIN",
+   "gdrive_archive": "sord_thirdparty_adm_imagenet256.zip"
+  },
+  "msdm_piano": {
+   "model": "Weakly-MSDM single-source model, piano (Mariani et al.)",
+   "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
+   "purpose": "clean-source prior for the audio benchmark with target piano",
+   "used_by": [
+    "configs/sord/audio_piano.yaml"
+   ],
+   "required": "benchmark",
+   "category": "diffusion",
+   "path": "diffusion/msdm/ruby-dew-290/epoch=236-valid_loss=0.010.ckpt",
+   "files": [
+    {
+     "path": "",
+     "size": 1622304925,
+     "sha256": "65cf4c3ba71361b5326a124ce844383b7626702240e6a217b44ea333b5c1c2e7"
+    }
+   ],
+   "origin": "official third-party (MSDM, Mariani et al. 2024)",
+   "source": {
+    "type": "gdrive-file",
+    "url": "https://drive.google.com/file/d/1A33CjKPfmaqsgSXyDqr1Pbd39y_KHgU1/view?usp=share_link",
+    "archive": "weakly-msdm.tar",
+    "archive_member": "ruby-dew-290/epoch=236-valid_loss=0.010.ckpt",
+    "verified_from": "MSDM authors' repository, ckpts/README.md ('Weakly MSDM' link; extract weakly-msdm.tar)",
+    "note": "the archive member path is inferred from the extracted layout; verify by SHA256"
+   },
+   "license": "not stated in the MSDM repository",
+   "redistribution": "unclear: download from the MSDM authors, do not repackage",
+   "loader": "sord/priors.py:build_prior (kind msdm) -> experiments/tango_msdm_2026_08_04/src/msdm_prior.py MSDMPrior",
+   "gdrive_archive": "sord_thirdparty_msdm_instrument_priors.zip"
+  },
+  "msdm_guitar": {
+   "model": "Weakly-MSDM single-source model, guitar (Mariani et al.)",
+   "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
+   "purpose": "clean-source prior for the audio benchmark with target guitar",
+   "used_by": [
+    "configs/sord/audio_guitar.yaml"
+   ],
+   "required": "benchmark",
+   "category": "diffusion",
+   "path": "diffusion/msdm/honest-fog-332/epoch=407-valid_loss=0.007.ckpt",
+   "files": [
+    {
+     "path": "",
+     "size": 1622304989,
+     "sha256": "c6131c77fd5bb5b0357a61bed159d60d3d23fdd944b6defd59dfa8a84c446803"
+    }
+   ],
+   "origin": "official third-party (MSDM, Mariani et al. 2024)",
+   "source": {
+    "type": "gdrive-file",
+    "url": "https://drive.google.com/file/d/1A33CjKPfmaqsgSXyDqr1Pbd39y_KHgU1/view?usp=share_link",
+    "archive": "weakly-msdm.tar",
+    "archive_member": "honest-fog-332/epoch=407-valid_loss=0.007.ckpt",
+    "verified_from": "MSDM authors' repository, ckpts/README.md ('Weakly MSDM' link; extract weakly-msdm.tar)",
+    "note": "the archive member path is inferred from the extracted layout; verify by SHA256"
+   },
+   "license": "not stated in the MSDM repository",
+   "redistribution": "unclear: download from the MSDM authors, do not repackage",
+   "loader": "sord/priors.py:build_prior (kind msdm) -> experiments/tango_msdm_2026_08_04/src/msdm_prior.py MSDMPrior",
+   "gdrive_archive": "sord_thirdparty_msdm_instrument_priors.zip"
+  },
+  "msdm_bass": {
+   "model": "Weakly-MSDM single-source model, bass (Mariani et al.)",
+   "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
+   "purpose": "clean-source prior for the audio benchmark with target bass",
+   "used_by": [
+    "configs/sord/audio_bass.yaml"
+   ],
+   "required": "benchmark",
+   "category": "diffusion",
+   "path": "diffusion/msdm/laced-dream-329/epoch=443-valid_loss=0.002.ckpt",
+   "files": [
+    {
+     "path": "",
+     "size": 1622304989,
+     "sha256": "997a2dc5968168c1979c85ac01a490a4f7315b1346289d305babb09b7e9f327a"
+    }
+   ],
+   "origin": "official third-party (MSDM, Mariani et al. 2024)",
+   "source": {
+    "type": "gdrive-file",
+    "url": "https://drive.google.com/file/d/1A33CjKPfmaqsgSXyDqr1Pbd39y_KHgU1/view?usp=share_link",
+    "archive": "weakly-msdm.tar",
+    "archive_member": "laced-dream-329/epoch=443-valid_loss=0.002.ckpt",
+    "verified_from": "MSDM authors' repository, ckpts/README.md ('Weakly MSDM' link; extract weakly-msdm.tar)",
+    "note": "the archive member path is inferred from the extracted layout; verify by SHA256"
+   },
+   "license": "not stated in the MSDM repository",
+   "redistribution": "unclear: download from the MSDM authors, do not repackage",
+   "loader": "sord/priors.py:build_prior (kind msdm) -> experiments/tango_msdm_2026_08_04/src/msdm_prior.py MSDMPrior",
+   "gdrive_archive": "sord_thirdparty_msdm_instrument_priors.zip"
+  },
+  "msdm_drums": {
+   "model": "Weakly-MSDM single-source model, drums (Mariani et al.)",
+   "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
+   "purpose": "clean-source prior for the audio benchmark with target drums",
+   "used_by": [
+    "configs/sord/audio_drums.yaml"
+   ],
+   "required": "benchmark",
+   "category": "diffusion",
+   "path": "diffusion/msdm/ancient-voice-289/epoch=258-valid_loss=0.019.ckpt",
+   "files": [
+    {
+     "path": "",
+     "size": 1622304989,
+     "sha256": "db9be514f9f72884d55d76dcc2bae77f469bc05921d94b1254cac4941800207a"
+    }
+   ],
+   "origin": "official third-party (MSDM, Mariani et al. 2024)",
+   "source": {
+    "type": "gdrive-file",
+    "url": "https://drive.google.com/file/d/1A33CjKPfmaqsgSXyDqr1Pbd39y_KHgU1/view?usp=share_link",
+    "archive": "weakly-msdm.tar",
+    "archive_member": "ancient-voice-289/epoch=258-valid_loss=0.019.ckpt",
+    "verified_from": "MSDM authors' repository, ckpts/README.md ('Weakly MSDM' link; extract weakly-msdm.tar)",
+    "note": "the archive member path is inferred from the extracted layout; verify by SHA256"
+   },
+   "license": "not stated in the MSDM repository",
+   "redistribution": "unclear: download from the MSDM authors, do not repackage",
+   "loader": "sord/priors.py:build_prior (kind msdm) -> experiments/tango_msdm_2026_08_04/src/msdm_prior.py MSDMPrior",
+   "gdrive_archive": "sord_thirdparty_msdm_instrument_priors.zip"
+  },
+  "sgm_mnist": {
+   "model": "Joint-diffusion MNIST-RGB score model (Stevens et al.)",
+   "purpose": "SGM two-prior baseline, MNIST benchmark",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/sgm/joint-diffusion-mnist-rgb/training_checkpoints/ckpt-7.data-00000-of-00001",
+   "files": [
+    {
+     "path": "",
+     "size": 106891468,
+     "sha256": "ad62569d9f9a8e3c2cbc26faa6a89cf10139cb62c7d3cbe9e4cdf75bde8ee5f8"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "huggingface",
+    "repo_id": "tristan-deep/joint-diffusion-mnist-rgb"
+   },
+   "license": "not stated",
+   "redistribution": "unclear: download from Hugging Face",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "msdm_4stem": {
+   "model": "MSDM 4-stem model (Mariani et al.)",
+   "purpose": "MSDM baseline (audio)",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/msdm/glorious-star-335/epoch=729-valid_loss=0.014.ckpt",
+   "files": [
+    {
+     "path": "",
+     "size": 1622331357,
+     "sha256": "1959f0a92f5dbf7c27a92ad494da5eefa483c79c3de16bf18ac9e69f1107e190"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "gdrive-file",
+    "url": "https://drive.google.com/file/d/1mfozibogvNrUaeS283OBz26MWNeZv-OO/view?usp=share_link",
+    "archive": "msdm.tar"
+   },
+   "license": "not stated",
+   "redistribution": "unclear: download from the MSDM authors",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "speech_dm": {
+   "model": "Speech diffusion model (UNet1d, MSDM hyperparameters)",
+   "purpose": "MSDM + speech prior baseline, speech-target rows",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/msdm_speech/speech_dm/best.pt",
+   "files": [
+    {
+     "path": "",
+     "size": 1622273245,
+     "sha256": "f3b024b9416cda0368f10bef740c40121f4ff97e752f7959857db8c5f63bdb08"
+    }
+   ],
+   "origin": "trained by the authors (LibriSpeech)",
+   "source": {
+    "type": "none"
+   },
+   "license": "own",
+   "redistribution": "allowed (authors' weights)",
+   "loader": "baseline code under experiments/ (not part of sord/)",
+   "gdrive_archive": "sord_baseline_msdm_speech_dm.zip"
+  },
+  "slbr_official": {
+   "model": "SLBR official checkpoint",
+   "purpose": "SLBR baseline (official)",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/slbr/slbr_ckpt.pth.tar",
+   "files": [
+    {
+     "path": "",
+     "size": 85707015,
+     "sha256": "be5c0a89513803c8ce56b1768e0c6296900f6ef76df8cbda12900324f9b1caf9"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "gdrive-file",
+    "id": "1uTCzubnWZtu3HIXaK8xsXX-7x302ss13",
+    "verified_from": "SLBR README.md"
+   },
+   "license": "not stated",
+   "redistribution": "unclear",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "slbr_clwd_scratch": {
+   "model": "SLBR trained from scratch on CLWD",
+   "purpose": "SLBR column, CLWD",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/slbr/clwd_scratch/model_best.pth.tar",
+   "files": [
+    {
+     "path": "",
+     "size": 269623316,
+     "sha256": "5d2af2a640df88ba05150081acf8cd1469ab0ce152b757cf6d744e6185239257"
+    }
+   ],
+   "origin": "trained by the authors",
+   "source": {
+    "type": "none"
+   },
+   "license": "own",
+   "redistribution": "allowed (authors' weights)",
+   "loader": "baseline code under experiments/ (not part of sord/)",
+   "gdrive_archive": "sord_baseline_slbr_scratch.zip"
+  },
+  "slbr_ffhq_scratch": {
+   "model": "SLBR trained from scratch on FFHQ watermarks",
+   "purpose": "SLBR column, FFHQ",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/slbr/ffhq_scratch/model_best.pth.tar",
+   "files": [
+    {
+     "path": "",
+     "size": 85780667,
+     "sha256": "7fac166039d6171ea1c1a0cb1a06ee33837ea523062ee5109e63785939f65fb1"
+    }
+   ],
+   "origin": "trained by the authors",
+   "source": {
+    "type": "none"
+   },
+   "license": "own",
+   "redistribution": "allowed (authors' weights)",
+   "loader": "baseline code under experiments/ (not part of sord/)",
+   "gdrive_archive": "sord_baseline_slbr_scratch.zip"
+  },
+  "slbr_imagenette_scratch": {
+   "model": "SLBR trained from scratch on Imagenette watermarks",
+   "purpose": "SLBR column, Imagenette",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/slbr/imagenette_scratch/model_best.pth.tar",
+   "files": [
+    {
+     "path": "",
+     "size": 85780667,
+     "sha256": "8c0c5954981d01d1b331f8a6fd8dcfe934b9150c2710e6b38b0e96b7efc0f2ee"
+    }
+   ],
+   "origin": "trained by the authors",
+   "source": {
+    "type": "none"
+   },
+   "license": "own",
+   "redistribution": "allowed (authors' weights)",
+   "loader": "baseline code under experiments/ (not part of sord/)",
+   "gdrive_archive": "sord_baseline_slbr_scratch.zip"
+  },
+  "patchwiper": {
+   "model": "PatchWiper (PRWD) restoration network",
+   "purpose": "PatchWiper column",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/patchwiper/PatchWiper_PRWD.pth",
+   "files": [
+    {
+     "path": "",
+     "size": 133275116,
+     "sha256": "a1e8b830104daee457e6f1f8d870973faca707e80c234366a2a116a087f1cd6d"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "gdrive-file",
+    "id": "1fhbSgktTkp7DhfVkZ8yg3sR3AFAs-YiH",
+    "verified_from": "PatchWiper README.md"
+   },
+   "license": "not stated",
+   "redistribution": "unclear",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "patchwiper_wln": {
+   "model": "PatchWiper watermark localization network",
+   "purpose": "PatchWiper column",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/patchwiper/WLN.pth",
+   "files": [
+    {
+     "path": "",
+     "size": 68306574,
+     "sha256": "a56e28c78c5fe799f2035367e551a3bd043323c2484caba299259085016c16ed"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "gdrive-file",
+    "id": "18S5qVF9G8wBZ_kXiszYFVvReP7knZ-Wi",
+    "verified_from": "PatchWiper README.md"
+   },
+   "license": "not stated",
+   "redistribution": "unclear",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "shadowformer_istd": {
+   "model": "ShadowFormer ISTD model",
+   "purpose": "ShadowFormer column",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/shadowformer/ISTD_model_latest.pth",
+   "files": [
+    {
+     "path": "",
+     "size": 137241869,
+     "sha256": "4700ae374b965253734dbcac0b63c9cac9af5895ff19655710042a988751fc98"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "gdrive-file",
+    "id": "1bHbkHxY5D5905BMw2jzvkzgXsFPKzSq4",
+    "verified_from": "ShadowFormer README.md"
+   },
+   "license": "MIT",
+   "redistribution": "permitted by MIT",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "shadowdiffusion_gen": {
+   "model": "ShadowDiffusion ISTD (istd_gen.pth)",
+   "purpose": "ShadowDiffusion column",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/shadowdiffusion/ISTD/istd_gen.pth",
+   "files": [
+    {
+     "path": "",
+     "size": 222251744,
+     "sha256": "bca03ee32163478652f45a22180f037b84cdc7fca3c1834d222b97f92799db5c"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "manual",
+    "url": "https://drive.google.com/file/d/12VV5HzxlIg_kCjMHsw8R9n543wYfGfAB/view?usp=sharing",
+    "verified_from": "ShadowDiffusion README.md (ISTD pretrained models link)",
+    "note": "one Google Drive file from the ShadowDiffusion authors holding the ISTD models; download it and place the file at the 'path' above"
+   },
+   "license": "not stated",
+   "redistribution": "unclear",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "shadowdiffusion_opt": {
+   "model": "ShadowDiffusion ISTD (istd_opt.pth)",
+   "purpose": "ShadowDiffusion column",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/shadowdiffusion/ISTD/istd_opt.pth",
+   "files": [
+    {
+     "path": "",
+     "size": 666506559,
+     "sha256": "05e6f145faa01887a82b68a86283c52174614fb14b4238c9a06e48ec9ea05afe"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "manual",
+    "url": "https://drive.google.com/file/d/12VV5HzxlIg_kCjMHsw8R9n543wYfGfAB/view?usp=sharing",
+    "verified_from": "ShadowDiffusion README.md (ISTD pretrained models link)",
+    "note": "one Google Drive file from the ShadowDiffusion authors holding the ISTD models; download it and place the file at the 'path' above"
+   },
+   "license": "not stated",
+   "redistribution": "unclear",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "shadowdiffusion_degradation": {
+   "model": "ShadowDiffusion ISTD (model_best.pth)",
+   "purpose": "ShadowDiffusion column",
+   "used_by": [],
+   "required": "optional",
+   "category": "baselines",
+   "path": "baselines/shadowdiffusion/ISTD/model_best.pth",
+   "files": [
+    {
+     "path": "",
+     "size": 229003977,
+     "sha256": "612da0043f618b725eb09112e70769eb9845aeaa2c93a216ffddfcfbc3c8912a"
+    }
+   ],
+   "origin": "official third-party",
+   "source": {
+    "type": "manual",
+    "url": "https://drive.google.com/file/d/12VV5HzxlIg_kCjMHsw8R9n543wYfGfAB/view?usp=sharing",
+    "verified_from": "ShadowDiffusion README.md (ISTD pretrained models link)",
+    "note": "one Google Drive file from the ShadowDiffusion authors holding the ISTD models; download it and place the file at the 'path' above"
+   },
+   "license": "not stated",
+   "redistribution": "unclear",
+   "loader": "baseline code under experiments/ (not part of sord/)"
+  },
+  "sgm_natural_patch_prior": {
+   "architecture": "score network with UNetT backbone (time-conditional), TensorFlow, 64x64, VE SDE (sigma=25); needs generators/SGM/SGM.py with UNetT",
+   "required": "optional",
+   "category": "baselines",
+   "origin": "trained by the authors (paper_comparison/train_natural_noise_t.py, 2026-10-11, EMA 0.9995)",
+   "source": {
+    "type": "none",
+    "note": "authors' weights; distributed via the release package (see CHECKPOINT_UPLOAD_GUIDE.md)"
+   },
+   "license": "own",
+   "redistribution": "allowed (authors' weights)",
+   "loader": "baselines/sgm (Stevens et al. SGM sampler, noise-model run directory)",
+   "model": "SGM noise prior: natural-image patches (26-38 px crops of the benchmark's skimage photos) on a black 64x64 canvas, step 150k",
+   "purpose": "SGM two-prior baseline on the natural-patch benchmark (masked SGM 19.38 dB, blind 18.92 dB, n=100)",
+   "used_by": [
+    "baselines/sgm"
+   ],
+   "path": "baselines/sgm/natural_patch_prior_150k",
+   "files": [
+    {
+     "path": "config.yaml",
+     "size": 1030,
+     "sha256": "a20f520e860d21e59f153aa8c6150f30907da1c8ddf151e7a0506ed5db5b9219"
+    },
+    {
+     "path": "training_checkpoints/checkpoint",
+     "size": 71,
+     "sha256": "64119629206c0719d3c46a4bb69b25b2dbffe09ef38cf165c571684ca6448346"
+    },
+    {
+     "path": "training_checkpoints/ckpt-15.data-00000-of-00001",
+     "size": 39655424,
+     "sha256": "88b1ea12ecf1240f9c9a72b2484ceff300b312a0c9917c5b9ee85eacf3f45eb0"
+    },
+    {
+     "path": "training_checkpoints/ckpt-15.index",
+     "size": 20912,
+     "sha256": "3e53e569c62f6cf83e65c24816d585bc53e720a2beee0b82186270f6c0367baa"
+    }
+   ],
+   "gdrive_archive": "sord_baseline_sgm_noise_priors.zip"
+  },
+  "sgm_cifar_patch_prior": {
+   "architecture": "score network with UNetT backbone (time-conditional), TensorFlow, 64x64, VE SDE (sigma=25); needs generators/SGM/SGM.py with UNetT",
+   "required": "optional",
+   "category": "baselines",
+   "origin": "trained by the authors (paper_comparison/train_natural_noise_t.py, 2026-10-11, EMA 0.9995)",
+   "source": {
+    "type": "none",
+    "note": "authors' weights; distributed via the release package (see CHECKPOINT_UPLOAD_GUIDE.md)"
+   },
+   "license": "own",
+   "redistribution": "allowed (authors' weights)",
+   "loader": "baselines/sgm (Stevens et al. SGM sampler, noise-model run directory)",
+   "model": "SGM noise prior: CIFAR-10 training images resized to 16-40 px on a black 64x64 canvas, step 110k",
+   "purpose": "SGM two-prior baseline on the CIFAR-patch benchmark (masked SGM 15.34 dB, blind 14.36 dB, n=100)",
+   "used_by": [
+    "baselines/sgm"
+   ],
+   "path": "baselines/sgm/cifar_patch_prior_110k",
+   "files": [
+    {
+     "path": "config.yaml",
+     "size": 1174,
+     "sha256": "4ec3e39b9714beae148b49a6b627b0751e0833962efb6127644bfa972dbdbe94"
+    },
+    {
+     "path": "training_checkpoints/checkpoint",
+     "size": 71,
+     "sha256": "f429d4836695b551d50e23e8616981a7773fba91bf7de3c0d446884e1e2a0499"
+    },
+    {
+     "path": "training_checkpoints/ckpt-11.data-00000-of-00001",
+     "size": 39655424,
+     "sha256": "a851f929fd61180f32d700b822ebbceb572960a935f0661ca6ea50048c6af640"
+    },
+    {
+     "path": "training_checkpoints/ckpt-11.index",
+     "size": 20912,
+     "sha256": "d44c85eaf1819f5abc520ae09b5b206b4f5ac3107b2387cf8c85d56a030b9a7b"
+    }
+   ],
+   "gdrive_archive": "sord_baseline_sgm_noise_priors.zip"
+  }
+ }
+}
