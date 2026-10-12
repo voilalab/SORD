@@ -17,7 +17,7 @@ conda activate sord
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 
 # 2. Fetch benchmark inputs and the required pretrained prior
-python reproduction/fetch_assets.py
+python scripts/download_benchmarks.py --only celeba_cifar
 python scripts/download_checkpoints.py --only celeba_score --output-dir ./checkpoints
 python scripts/verify_checkpoints.py --only celeba_score --checkpoint-dir ./checkpoints
 
@@ -31,7 +31,7 @@ python -m sord.summarize runs/celeba_cifar
 
 Reconstructions and iteration histories are saved in `runs/celeba_cifar/img_<i>.npz`, with run metadata in `runs/celeba_cifar/results.jsonl`.
 
-> **Data download:** `reproduction/fetch_assets.py` fetches benchmark and archived reproduction assets, not only the 25 examples used above. See [`reproduction/`](reproduction/) for data preparation. Checkpoint availability depends on the download sources in [`checkpoint_manifest.json`](checkpoint_manifest.json).
+> **Data download:** `scripts/download_benchmarks.py` fetches the benchmark inputs of the image tasks (`sord_benchmarks.zip`, ~74 MB, from the [Google Drive release folder](CHECKPOINTS.md)) and verifies them against [`reproduction/benchmarks.json`](reproduction/benchmarks.json); omit `--only` to get all of them. Files are placed at the paths the configs expect, under `DATA_ROOT` (default: the repository root). Audio inputs are prepared from Slakh2100 (see [Audio](#audio)).
 
 ## Pretrained priors and datasets
 
@@ -94,8 +94,8 @@ Once the relevant dataset and prior are available, run a task using its configur
 # FFHQ watermark removal
 python -m sord.run configs/sord/ffhq_watermark.yaml --batch 1 --out runs/ffhq_watermark
 
-# CLWD watermark removal: first prepare dataset support masks
-python scripts/build_clwd_dataset_mask.py --clwd-root /path/to/CLWD
+# CLWD watermark removal (the dataset support mask is included in sord_benchmarks.zip;
+# scripts/build_clwd_dataset_mask.py --clwd-root /path/to/CLWD rebuilds it from CLWD)
 python -m sord.run configs/sord/clwd.yaml --batch 8 --out runs/clwd
 
 # ISTD shadow removal
