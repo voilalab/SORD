@@ -1,6 +1,6 @@
 # SORD on ISTD shadows (64^2), EDM2 scene prior.
 #   python -m sord.run configs/sord/istd.yaml --out runs/istd
-bench: experiments/extbench/results/b5s/bench_b5s.npz          # relative to DATA_ROOT (replay release: reproduction/fetch_assets.py)
+bench: experiments/extbench/results/b5s/bench_b5s.npz          # relative to DATA_ROOT (scripts/download_benchmarks.py)
 prior: {kind: edm2, checkpoint: edm2_scene64}          # checkpoint_manifest.json
 seed: 12345
 sord:

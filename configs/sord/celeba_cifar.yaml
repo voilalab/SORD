@@ -1,6 +1,6 @@
 # SORD on CelebA faces + CIFAR-10 patches (64^2).
 #   python -m sord.run configs/sord/celeba_cifar.yaml --out runs/celeba_cifar
-bench: experiments/ros/results/r5/bench_cifar.npz          # relative to DATA_ROOT (replay release: reproduction/fetch_assets.py)
+bench: experiments/ros/results/r5/bench_cifar.npz          # relative to DATA_ROOT (scripts/download_benchmarks.py)
 prior: {kind: celeba, checkpoint: celeba_score}          # checkpoint_manifest.json
 seed: 12345
 sord:

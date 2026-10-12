@@ -1,6 +1,6 @@
 # SORD on CelebA faces + MNIST digits (64^2).
 #   python -m sord.run configs/sord/celeba_mnist.yaml --out runs/celeba_mnist
-bench: experiments/ros/results/r5/bench_mnist.npz          # relative to DATA_ROOT (replay release: reproduction/fetch_assets.py)
+bench: experiments/ros/results/r5/bench_mnist.npz          # relative to DATA_ROOT (scripts/download_benchmarks.py)
 prior: {kind: celeba, checkpoint: celeba_score}          # checkpoint_manifest.json
 seed: 12345
 sord:

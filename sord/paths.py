@@ -4,7 +4,7 @@ Nothing machine-specific is hard-coded: every location is a directory under one 
 overridable by an environment variable (defaults in parentheses, relative to the repository):
 
     PROJECT_ROOT     the repository                      (this checkout)
-    DATA_ROOT        benchmark files                     (PROJECT_ROOT: reproduction/fetch_assets.py
+    DATA_ROOT        benchmark files                     (PROJECT_ROOT: scripts/download_benchmarks.py
                                                           extracts them under experiments/... there)
     CHECKPOINT_ROOT  model weights                       (PROJECT_ROOT/checkpoints)
     OUTPUT_ROOT      run outputs                         (PROJECT_ROOT/runs)

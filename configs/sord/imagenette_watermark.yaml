@@ -1,6 +1,6 @@
 # SORD on Imagenette + CLWD logos (256^2), ADM ImageNet-256.
 #   python -m sord.run configs/sord/imagenette_watermark.yaml --out runs/imagenette_watermark
-bench: experiments/extbench/results/imagenetwm_native/bench_imagenetwm_native.npz          # relative to DATA_ROOT (replay release: reproduction/fetch_assets.py)
+bench: experiments/extbench/results/imagenetwm_native/bench_imagenetwm_native.npz          # relative to DATA_ROOT (scripts/download_benchmarks.py)
 prior: {kind: adm_imagenet256, checkpoint: adm_imagenet256}          # checkpoint_manifest.json
 seed: 12345
 sord:
