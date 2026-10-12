@@ -1,0 +1,32 @@
+# n-step ablation: DM residual filter at sigma* (shipped) vs raw clipped residual (--nfilter identity), 2026-09-18
+
+Image rows: on-Omega PSNR mean / worst of the arm's readout; delta = identity - shipped, paired per image; wins = images where identity is better.
+Declared-alpha watermark arms (b2r kA+pp 28.06, prwd kA 30.75, ffhqwm0 kApp 30.05, imagenetwm kApp 28.01) have NO DM n-step by construction
+(closed-form alpha/colour fit), so their rows below are the blind-n arms of those benches.
+
+| Bench | n | shipped (DM n-step) | no DM n-step (identity) | delta (paired) | wins | note |
+|---|---|---|---|---|---|---|
+| Natural patch on CelebA | 100 | 21.96 / 15.21 | 20.16 / 12.81 | -1.79 | 3/100 |  |
+| MNIST digit on CelebA | 100 | 27.16 / 21.49 | 24.28 / 17.94 | -2.88 | 1/100 |  |
+| CIFAR-10 patch on CelebA | 100 | 22.05 / 13.25 | 20.40 / 12.12 | -1.66 | 6/100 |  |
+| CLWD logos on CelebA (blind $n$) | 100 | 26.30 / 18.64 | 26.20 / 16.95 | -0.09 | 38/100 |  |
+| CLWD + watermark (blind $n$) | 99 | 22.56 / 13.25 | 19.59 / 12.52 | -2.97 | 7/99 |  |
+| PRWD + watermark (blind $n$) | 100 | 23.81 / 15.79 | 22.81 / 12.35 | -1.01 | 25/100 |  |
+| FFHQ + watermark (blind $n$, $m_2$) | 25 | 26.68 / 19.57 | 29.22 / 18.53 | +2.54 | 20/25 | paired at iterate 2 (shipped blind run continues to $m_6$ and declines) |
+| ImageNet + watermark (blind $n$, $m_2$) | 25 | 24.92 / 17.75 | 27.35 / 17.06 | +2.43 | 17/25 | paired at iterate 2 (shipped blind run continues to $m_3$ and declines) |
+| ISTD shadow, additive loop ($m_8$, first 25 images) | 25 | 30.13 / 18.92 | 29.96 / 18.77 | -0.17 | 9/25 | first 25 images only (shipped full-100: 29.14 / 13.00) |
+| ISTD shadow, multiplicative (shipped, gated $m_1$) | 100 | 29.10 / 13.86 | 28.83 / 13.40 | -0.27 | 24/100 |  |
+| ISTD shadow + FFHQ (mult., gated) | 25 | 20.34 / 12.41 | 19.81 / 12.25 | -0.53 | 0/25 | gate stopped the shipped run at $m_{1}$, the identity run at $m_{1}$ |
+| ISTD shadow + ImageNet (mult., gated) | 25 | 19.05 / 8.98 | 17.23 / 8.61 | -1.81 | 1/25 | gate stopped the shipped run at $m_{3}$, the identity run at $m_{1}$ |
+
+Audio rows: in-window SI-SDR (dB) mean / worst of the last iterate, oracle window, tether-free K=4 M=4 loop (paper sampler config); SI-SDRi = mean improvement over the input.
+
+| Bench | cells | shipped (DM n-step) | no DM n-step | delta (paired) | wins | SI-SDRi shipped -> identity | NFE/cell |
+|---|---|---|---|---|---|---|---|
+| Slakh piano (IV+OOV, SIR 0/5) | 100 | 3.31 / -27.71 | 2.85 / -33.39 | -0.46 | 9/100 | +0.80 -> +0.34 | 416 -> 384 |
+| Slakh guitar (balanced, SIR 0/5) | 50 | 3.46 / -18.16 | 2.78 / -24.44 | -0.68 | 2/50 | +0.93 -> +0.25 | 416 -> 384 |
+
+Sources: experiments/reviewer_audit/results/residual.json (natural, mnist, b2r, b5s additive); r5/cifar/min_exact vs r5/audit_cifar/filt_identity;
+r5/audit/{base,filt_identity} (wm); extbench prwd/minE{,_identity}, b5s/multminEc{,_identity}, ffhqwm0_native/min256{,_identity} (x_m2),
+imagenetwm_native/min256in{,_identity} (x_m2), ffhqsh0_native/mult256g{,_identity}, imagenetsh_native/mult256in{,_identity};
+tango_msdm_2026_08_04/results/arms/abl2/{piano,guitar}/{base,identN}. Queue: extbench/results/nstep_ablation_20260917/jobs.txt.
