@@ -1,0 +1,28 @@
+# SORD, audio benchmarks (MSDM single-source priors). Separate environment: the MSDM code needs these versions.
+#   conda env create -f environment-audio.yml && conda activate sord-audio
+#   git clone https://github.com/gladia-research-group/multi-source-diffusion-models third_party/msdm
+name: sord-audio
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu113
+      - torch==1.12.1+cu113
+      - torchaudio==0.12.1+cu113
+      - numpy==1.26.4
+      - scipy==1.13.1
+      - PyYAML==6.0.2
+      - soundfile==0.13.1
+      - librosa==0.11.0
+      - audio-diffusion-pytorch==0.0.43
+      - pytorch-lightning==1.7.7
+      - torchmetrics==0.10.3
+      - einops==0.5.0
+      - einops-exts==0.0.4
+      - hydra-core==1.2.0
+      - omegaconf==2.3.1
+      - tqdm==4.70.0
+      - wandb==0.13.4        # imported by the MSDM code; no account needed
