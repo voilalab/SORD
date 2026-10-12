@@ -72,7 +72,7 @@
    "origin": "fine-tuned by the authors from NVIDIA edm2-img64-s-1073741-0.075.pkl (512 kimg, EMA 0.100) on the 60k clean CLWD training images",
    "source": {
     "type": "none",
-    "note": "no public source yet; upload the authors' file and record its Google Drive id under 'gdrive'"
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_method_edm2_priors.zip in the Google Drive release folder)"
    },
    "license": "CC BY-NC-SA 4.0 (derivative of NVIDIA EDM2 weights, third_party/edm2/LICENSE.txt)",
    "redistribution": "allowed under CC BY-NC-SA 4.0 (non-commercial, share-alike, attribution)",
@@ -99,7 +99,7 @@
    "origin": "fine-tuned by the authors from NVIDIA edm2-img64-s-1073741-0.075.pkl (512 kimg, EMA 0.050) on shadow-free training scenes (SRD/ISTD backgrounds, DTD)",
    "source": {
     "type": "none",
-    "note": "no public source yet; upload the authors' file and record its Google Drive id under 'gdrive'"
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_method_edm2_priors.zip in the Google Drive release folder)"
    },
    "license": "CC BY-NC-SA 4.0 (derivative of NVIDIA EDM2 weights)",
    "redistribution": "allowed under CC BY-NC-SA 4.0 (non-commercial, share-alike, attribution)",
@@ -353,7 +353,8 @@
    ],
    "origin": "trained by the authors (LibriSpeech)",
    "source": {
-    "type": "none"
+    "type": "none",
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_baseline_msdm_speech_dm.zip in the Google Drive release folder)"
    },
    "license": "own",
    "redistribution": "allowed (authors' weights)",
@@ -400,7 +401,8 @@
    ],
    "origin": "trained by the authors",
    "source": {
-    "type": "none"
+    "type": "none",
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_baseline_slbr_scratch.zip in the Google Drive release folder)"
    },
    "license": "own",
    "redistribution": "allowed (authors' weights)",
@@ -423,7 +425,8 @@
    ],
    "origin": "trained by the authors",
    "source": {
-    "type": "none"
+    "type": "none",
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_baseline_slbr_scratch.zip in the Google Drive release folder)"
    },
    "license": "own",
    "redistribution": "allowed (authors' weights)",
@@ -446,7 +449,8 @@
    ],
    "origin": "trained by the authors",
    "source": {
-    "type": "none"
+    "type": "none",
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_baseline_slbr_scratch.zip in the Google Drive release folder)"
    },
    "license": "own",
    "redistribution": "allowed (authors' weights)",
@@ -607,7 +611,7 @@
    "origin": "trained by the authors (paper_comparison/train_natural_noise_t.py, 2026-10-11, EMA 0.9995)",
    "source": {
     "type": "none",
-    "note": "authors' weights; distributed via the release package (see CHECKPOINT_UPLOAD_GUIDE.md)"
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_baseline_sgm_noise_priors.zip in the Google Drive release folder)"
    },
    "license": "own",
    "redistribution": "allowed (authors' weights)",
@@ -649,7 +653,7 @@
    "origin": "trained by the authors (paper_comparison/train_natural_noise_t.py, 2026-10-11, EMA 0.9995)",
    "source": {
     "type": "none",
-    "note": "authors' weights; distributed via the release package (see CHECKPOINT_UPLOAD_GUIDE.md)"
+    "note": "authors' weights; download with scripts/download_checkpoints.py --source gdrive (archive sord_baseline_sgm_noise_priors.zip in the Google Drive release folder)"
    },
    "license": "own",
    "redistribution": "allowed (authors' weights)",

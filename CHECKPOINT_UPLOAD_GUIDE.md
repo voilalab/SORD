@@ -14,6 +14,7 @@ python scripts/package_checkpoints.py --checkpoint-dir ./checkpoints --output-di
 | `sord_baseline_sgm_noise_priors.zip` | `sgm_natural_patch_prior`, `sgm_cifar_patch_prior` | authors' |
 | `sord_baseline_slbr_scratch.zip` | `slbr_clwd_scratch`, `slbr_ffhq_scratch`, `slbr_imagenette_scratch` | authors' |
 | `sord_baseline_msdm_speech_dm.zip` | `speech_dm` | authors' |
+| `sord_benchmarks.zip` | benchmark inputs of the image tasks (not checkpoints; file list and SHA256 in `reproduction/benchmarks.json`, read by `scripts/download_benchmarks.py`) | per source dataset |
 
 The script verifies every file's SHA256 before packaging and writes `SHA256SUMS.txt` (every archive
 and every file inside) and `package_manifest.json`. Archives store files under `checkpoints/<path>`
@@ -40,11 +41,12 @@ SORD-checkpoints/
   sord_baseline_sgm_noise_priors.zip
   sord_baseline_slbr_scratch.zip
   sord_baseline_msdm_speech_dm.zip
+  sord_benchmarks.zip
 ```
 
 ## 4. Shareable links
 
-1. Upload the four zips into one folder, then share the folder: Share -> General access ->
+1. Upload the five zips (four weight archives + `sord_benchmarks.zip`) into one folder, then share the folder: Share -> General access ->
    "Anyone with the link" (Viewer). Nothing in this guide changes sharing permissions automatically.
 2. Copy the folder's share link (`https://drive.google.com/drive/folders/<id>?usp=sharing`).
 3. Paste it in ONE place: `checkpoint_manifest.json` -> `"gdrive"` -> `"folder_url"`. Every checkpoint of
@@ -64,7 +66,7 @@ file whose SHA256 does not match to `*.bad`.
 ## 6. Reproduce the example after download
 
 ```bash
-python reproduction/fetch_assets.py                              # benchmark files (replay release)
+python scripts/download_benchmarks.py --only celeba_cifar        # benchmark inputs (sord_benchmarks.zip)
 python scripts/download_checkpoints.py --only celeba_score
 python -m sord.run configs/sord/celeba_cifar.yaml --images 0:25 --batch 8 --out runs/celeba_cifar
 python -m sord.summarize runs/celeba_cifar

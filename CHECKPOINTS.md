@@ -15,7 +15,8 @@ Add `--include-optional` for the baselines' checkpoints and `--only <id> ...` fo
 **Google Drive release folder:** [https://drive.google.com/drive/folders/1DRm0mEuemf5vBI2e4I5vaxmH6zgdqH-8?usp=sharing](https://drive.google.com/drive/folders/1DRm0mEuemf5vBI2e4I5vaxmH6zgdqH-8?usp=sharing) (set once in `checkpoint_manifest.json` -> `"gdrive"` ->
 `"folder_url"`). It holds the authors' weights (`sord_method_edm2_priors.zip`, `sord_baseline_*.zip`) and
 copies of the third-party priors (`sord_thirdparty_*.zip`, subject to their providers' terms);
-`--source gdrive` downloads only the archive each requested checkpoint needs.
+`--source gdrive` downloads only the archive each requested checkpoint needs. The same folder holds the image benchmark
+inputs (`sord_benchmarks.zip`), fetched by `python scripts/download_benchmarks.py`.
 Total size: 10.3 GB for SORD's benchmarks (required + quick start), 15.7 GB with the optional baseline checkpoints.
 
 ## Categories

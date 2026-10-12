@@ -18,7 +18,6 @@ from easydict import EasyDict as edict
 
 from datasets import get_dataset
 from generators.models import get_model
-from sweeper import Sweeper
 from utils.callbacks import EvalDataset, Monitor
 from utils.checkpoints import ModelCheckpoint
 from utils.gpu_config import set_gpu_usage
@@ -226,6 +225,8 @@ def run_sweep(config, run_ids, dataset):
     assert_run_exists(run_id, denoiser)
     config = init_config(run_id, config)
     config.denoiser = denoiser
+
+    from sweeper import Sweeper  # needs ax-platform; only for hyperparameter sweeps
 
     sw = Sweeper(
         config=config,
