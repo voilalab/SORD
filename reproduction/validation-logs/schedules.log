@@ -1,0 +1,248 @@
+# x-step schedule 0.9 -> 0.6 -> 0.3 -> 0.1 (M=4) vs shipped schedule (0.4 -> 0.1), PAIRED on finished items
+
+on-Omega PSNR: mean ± std / worst (n). Delta = s9631 arm minus shipped headline on the same images (wins/n).
+
+## tab:faces (natural / mnist / cifar, n=100)
+
+### faces natural  (s9631 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min K32 (x_alt) | 21.96 ± 2.33 / 15.21 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 19.02 ± 2.35 / 11.58 (n=100) | -2.94 (0/100) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 21.27 ± 2.38 / 14.13 (n=100) | -0.68 (9/100) |
+| 0.9/0.6/0.3/0.1: m1 | 19.77 ± 2.29 / 12.48 (n=100) | -2.19 (0/100) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 21.27 ± 2.38 / 14.13 (n=100) | -0.68 (9/100) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 19.02 ± 2.35 / 11.58 (n=100) | -2.94 (0/100) |
+
+### faces mnist  (s9631 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min K32 (x_alt) | 27.16 ± 2.05 / 21.49 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 21.93 ± 2.66 / 15.39 (n=100) | -5.23 (0/100) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 26.78 ± 2.15 / 20.88 (n=100) | -0.39 (21/100) |
+| 0.9/0.6/0.3/0.1: m1 | 23.76 ± 2.18 / 18.03 (n=100) | -3.40 (0/100) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 26.78 ± 2.15 / 20.88 (n=100) | -0.39 (21/100) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 21.93 ± 2.66 / 15.39 (n=100) | -5.23 (0/100) |
+
+### faces cifar  (s9631 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min K32 (x_alt) | 22.05 ± 3.45 / 13.25 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 19.59 ± 3.57 / 11.96 (n=100) | -2.46 (2/100) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 21.43 ± 3.48 / 13.03 (n=100) | -0.62 (11/100) |
+| 0.9/0.6/0.3/0.1: m1 | 20.19 ± 3.46 / 12.24 (n=100) | -1.87 (3/100) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 21.43 ± 3.48 / 13.03 (n=100) | -0.62 (11/100) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 19.59 ± 3.57 / 11.96 (n=100) | -2.46 (2/100) |
+
+## tab:wm 64^2 (b2r n=99, prwd n=100)
+
+### b2r blind (minDr)  (s9631 finished 99/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind n (x_alt) | 22.56 ± 4.33 / 13.25 (n=99) | +0.00 (0/99) |
+| shipped: inpaint m0 | 18.93 ± 4.17 / 12.40 (n=99) | -3.63 (4/99) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 21.83 ± 4.20 / 13.07 (n=99) | -0.73 (15/99) |
+| 0.9/0.6/0.3/0.1: m1 | 19.76 ± 4.04 / 12.59 (n=99) | -2.81 (6/99) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 21.83 ± 4.20 / 13.07 (n=99) | -0.73 (15/99) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 18.93 ± 4.17 / 12.40 (n=99) | -3.63 (4/99) |
+
+### prwd blind (minE)  (s9631 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind n (x_blind) | 23.73 ± 5.07 / 15.79 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 21.64 ± 5.34 / 13.15 (n=100) | -2.09 (16/100) |
+| 0.9/0.6/0.3/0.1: blind readout (x_blind) | 23.55 ± 5.07 / 15.42 (n=100) | -0.18 (38/100) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 23.70 ± 5.16 / 15.42 (n=100) | -0.03 (42/100) |
+| 0.9/0.6/0.3/0.1: m1 | 22.56 ± 5.46 / 14.16 (n=100) | -1.17 (25/100) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 21.64 ± 5.34 / 13.15 (n=100) | -2.09 (16/100) |
+
+## tab:wm native 256 (ffhqwm0 / ffhqwmU0 / imagenetwm, n=25)
+
+### ffhqwm0 blind (min256)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind m1 | 27.80 ± 3.50 / 19.32 (n=25) | +0.00 (0/25) |
+| shipped: inpaint m0 | 28.52 ± 3.87 / 18.72 (n=25) | +0.72 (12/25) |
+| 0.9/0.6/0.3/0.1: m1 | 28.33 ± 3.68 / 19.55 (n=25) | +0.52 (16/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 26.70 ± 4.19 / 18.87 (n=25) | -1.10 (11/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 28.62 ± 3.95 / 18.89 (n=25) | +0.82 (14/25) |
+
+### ffhqwmU0 blind (min256)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind m1 | 25.20 ± 4.27 / 14.24 (n=25) | +0.00 (0/25) |
+| shipped: inpaint m0 | 25.26 ± 4.64 / 13.35 (n=25) | +0.06 (9/25) |
+| 0.9/0.6/0.3/0.1: m1 | 25.50 ± 4.36 / 14.13 (n=25) | +0.30 (14/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 23.71 ± 4.19 / 15.01 (n=25) | -1.49 (10/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 25.29 ± 4.59 / 13.35 (n=25) | +0.09 (9/25) |
+
+### imagenetwm blind (min256in)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind m1 | 26.43 ± 6.56 / 17.38 (n=25) | +0.00 (0/25) |
+| shipped: inpaint m0 | 26.58 ± 7.31 / 16.60 (n=25) | +0.15 (8/25) |
+| 0.9/0.6/0.3/0.1: m1 | 26.84 ± 6.83 / 17.43 (n=25) | +0.41 (13/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 23.01 ± 5.98 / 17.42 (n=25) | -3.42 (4/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 26.68 ± 7.44 / 16.65 (n=25) | +0.25 (7/25) |
+
+## tab:b5s (ISTD 64^2, n=100)
+
+### b5s multiplicative (multminEc)  (s9631 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min multiplicative (x_alt) | 29.10 ± 5.55 / 13.86 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 28.12 ± 5.97 / 11.98 (n=100) | -0.98 (21/100) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 28.66 ± 5.43 / 16.62 (n=100) | -0.44 (31/100) |
+| 0.9/0.6/0.3/0.1: m1 | 28.70 ± 5.60 / 13.46 (n=100) | -0.40 (21/100) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 28.12 ± 5.97 / 11.98 (n=100) | -0.98 (21/100) |
+
+### b5s additive (minEc)  (s9631 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min additive (x_alt) | 28.77 ± 5.90 / 12.19 (n=100) | +0.00 (0/100) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 28.60 ± 5.79 / 12.50 (n=100) | -0.17 (34/100) |
+| 0.9/0.6/0.3/0.1: m1 | 28.44 ± 5.89 / 12.05 (n=100) | -0.33 (21/100) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 28.12 ± 5.97 / 11.98 (n=100) | -0.65 (17/100) |
+
+## tab:shadow-transfer-v1 (native 256, n=25)
+
+### ffhqsh0 multiplicative gate (mult256g)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 20.34 ± 4.19 / 12.41 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 20.89 ± 5.02 / 11.05 (n=25) | +0.55 (17/25) |
+| 0.9/0.6/0.3/0.1: m1 | 19.96 ± 4.44 / 11.05 (n=25) | -0.37 (9/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 17.88 ± 4.25 / 10.20 (n=25) | -2.46 (2/25) |
+
+### ffhqsh0 additive m1 (min256g)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 18.90 ± 4.31 / 12.28 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: m1 | 18.45 ± 4.62 / 10.27 (n=25) | -0.45 (8/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 18.64 ± 4.89 / 10.27 (n=25) | -0.26 (9/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 17.88 ± 4.25 / 10.20 (n=25) | -1.02 (7/25) |
+
+### ffhqsh multiplicative gate (mult256g)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.12 ± 5.59 / 9.70 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 19.82 ± 6.38 / 8.99 (n=25) | +0.70 (18/25) |
+| 0.9/0.6/0.3/0.1: m1 | 18.88 ± 5.52 / 9.39 (n=25) | -0.24 (9/25) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 19.82 ± 6.38 / 8.99 (n=25) | +0.70 (18/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 16.83 ± 5.60 / 9.27 (n=25) | -2.29 (2/25) |
+
+### ffhqsh additive m1 (min256g)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 17.14 ± 5.72 / 7.37 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: m1 | 17.11 ± 5.76 / 9.29 (n=25) | -0.03 (11/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 17.10 ± 5.59 / 9.24 (n=25) | -0.04 (12/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 16.83 ± 5.60 / 9.27 (n=25) | -0.31 (10/25) |
+
+### imagenetsh multiplicative gate (mult256in)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.05 ± 6.50 / 8.98 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 19.04 ± 6.62 / 8.85 (n=25) | -0.01 (17/25) |
+| 0.9/0.6/0.3/0.1: m1 | 17.59 ± 5.74 / 8.68 (n=25) | -1.46 (3/25) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 19.04 ± 6.62 / 8.85 (n=25) | -0.01 (17/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 15.07 ± 6.04 / 7.44 (n=25) | -3.98 (2/25) |
+
+### imagenetsh additive m1 (min256in)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 15.80 ± 6.19 / 7.63 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: m1 | 15.65 ± 6.41 / 7.68 (n=25) | -0.15 (8/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 16.32 ± 6.74 / 7.76 (n=25) | +0.52 (19/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 15.07 ± 6.04 / 7.44 (n=25) | -0.73 (5/25) |
+
+### lsunsh multiplicative gate (mult256lb)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 18.12 ± 6.83 / 8.55 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 18.41 ± 6.77 / 7.93 (n=25) | +0.29 (15/25) |
+| 0.9/0.6/0.3/0.1: m1 | 18.19 ± 7.67 / 7.96 (n=25) | +0.08 (6/25) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 18.41 ± 6.77 / 7.93 (n=25) | +0.29 (15/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 16.05 ± 8.50 / 7.06 (n=25) | -2.06 (5/25) |
+
+### lsunsh additive m1 (min256lb)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 16.08 ± 7.37 / 7.53 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: m1 | 16.96 ± 9.57 / 7.30 (n=25) | +0.88 (9/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 17.53 ± 9.78 / 7.53 (n=25) | +1.45 (15/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 16.05 ± 8.50 / 7.06 (n=25) | -0.03 (6/25) |
+
+## tab:shadow-transfer-v2 (native 256, n=25)
+
+### ffhqsh0v2 multiplicative gate (mult256g)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.44 ± 3.83 / 11.84 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 18.89 ± 3.20 / 12.36 (n=25) | -0.55 (15/25) |
+| 0.9/0.6/0.3/0.1: m1 | 19.15 ± 3.77 / 11.94 (n=25) | -0.30 (8/25) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 18.89 ± 3.20 / 12.36 (n=25) | -0.55 (15/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 17.51 ± 4.03 / 9.17 (n=25) | -1.94 (4/25) |
+
+### ffhqshv2 multiplicative gate (mult256g)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.43 ± 4.67 / 10.71 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 19.73 ± 5.01 / 11.10 (n=25) | +0.30 (15/25) |
+| 0.9/0.6/0.3/0.1: m1 | 19.49 ± 4.76 / 10.66 (n=25) | +0.05 (7/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 17.95 ± 4.82 / 8.25 (n=25) | -1.48 (3/25) |
+
+### imagenetshv2 multiplicative gate (mult256in)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 17.67 ± 4.13 / 12.94 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 17.56 ± 3.96 / 13.17 (n=25) | -0.11 (13/25) |
+| 0.9/0.6/0.3/0.1: m1 | 17.47 ± 4.87 / 12.50 (n=25) | -0.20 (7/25) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 17.56 ± 3.96 / 13.17 (n=25) | -0.11 (13/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 15.51 ± 5.41 / 8.00 (n=25) | -2.16 (3/25) |
+
+### lsunshv2 multiplicative gate (mult256lb)  (s9631 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 17.33 ± 4.71 / 10.71 (n=25) | +0.00 (0/25) |
+| 0.9/0.6/0.3/0.1: gate/ship (x_alt) | 17.50 ± 5.15 / 9.38 (n=25) | +0.16 (16/25) |
+| 0.9/0.6/0.3/0.1: m1 | 17.70 ± 5.38 / 8.96 (n=25) | +0.36 (12/25) |
+| 0.9/0.6/0.3/0.1: last (x_m4) | 17.50 ± 5.15 / 9.38 (n=25) | +0.16 (16/25) |
+| 0.9/0.6/0.3/0.1: inpaint m0 | 16.03 ± 6.12 / 6.45 (n=25) | -1.31 (6/25) |
+
+## audio (e3_blind loop arms; s9631 == --loop-sig-list 3.6,2.4,1.2,0.4 --M 4 in SIGMA_DATA units)
+
+win-SI-SDR abs mean ± std | improvement mean ± std | >= input
+
+| bench | n paired | shipped abs | shipped impr | s9631 abs | s9631 impr | paired delta (wins/n) | >= input shipped / s9631 |
+|---|---|---|---|---|---|---|---|
+| piano b50 (K4 M4 blind window) | 200/200 | +5.28 ± 4.80 | +2.78 ± 3.64 | +5.30 ± 4.92 | +2.80 ± 3.83 | +0.02 (128/200) | 173 / 173 |
+| guitar | 100/100 | +6.25 ± 5.02 | +3.71 ± 3.85 | +6.40 ± 5.17 | +3.85 ± 4.09 | +0.15 (56/100) | 80 / 80 |
+| guitar, fresh clips | 100/100 | +5.90 ± 5.45 | +3.42 ± 4.23 | +5.91 ± 5.56 | +3.42 ± 4.37 | +0.01 (54/100) | 88 / 87 |
+| piano + solo strings | 46/46 | +5.12 ± 4.49 | +2.61 ± 3.49 | +5.19 ± 4.46 | +2.69 ± 3.50 | +0.07 (28/46) | 42 / 42 |
+
+Not applicable: tab:balanced SIR rows, tab:bss, tab:audio_iv100, tab:audio_piano_classes and the speech-target rows report the
+K-chain inpaint FLOOR (min_floor_eval / floor_win, zero loop iterations); there is no x-step schedule to set to 0.8.
+

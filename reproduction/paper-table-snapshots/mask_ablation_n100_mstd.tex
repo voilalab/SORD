@@ -1,0 +1,73 @@
+% requires (define once in the preamble):
+% \newcommand{\mstd}[2]{$#1\,{\scriptstyle\pm\,#2}$}
+% \newcommand{\bmstd}[2]{$\mathbf{#1}\,{\scriptstyle\pm\,#2}$}
+
+\begin{table*}[t]
+    \centering
+    \caption{
+    \textbf{Robustness of $\method$ to imperfect corruption masks.}
+    Results report corrupted-region PSNR (dB) over the true support
+    as mean $\pm$ standard deviation over all benchmark images
+    ($n{=}100$; $99$ for CLWD), using the final refinement iterate and
+    $K=32$ chains; the detected-mask cells for CLWD and CIFAR-10 are over
+    the first $25$ images ($^{n=25}$).
+    Values in parentheses denote the IoU between the mask supplied to
+    $\method$ and the true corruption support.
+    Dilated masks retain most of the reconstruction quality, whereas
+    under-estimating the support is substantially more harmful because
+    unmasked corruption is treated as trusted observation.
+    Best mean in each row is shown in \textbf{bold}.
+    }
+    \label{tab:mask_ablation}
+
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.13}
+
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lcccccc@{}}
+        \toprule
+        \textbf{Benchmark}
+        & \textbf{Exact}
+        & \textbf{Dilate 3 px}
+        & \textbf{Dilate 5 px}
+        & \textbf{Erode 1 px}
+        & \textbf{Shift 2 px}
+        & \textbf{Detected mask} \\
+        \midrule
+
+        Natural patch
+        & \bmstd{21.96}{2.33}
+        & \mstd{19.94}{2.53} $(0.73)$
+        & \mstd{18.85}{2.54} $(0.62)$
+        & \mstd{13.84}{2.18} $(0.88)$
+        & \mstd{14.38}{2.08} $(0.78)$
+        & \mstd{20.01}{2.58} $(0.83)$ \\
+
+        MNIST digit
+        & \bmstd{27.16}{2.05}
+        & \mstd{24.40}{2.72} $(0.59)$
+        & \mstd{23.32}{2.90} $(0.47)$
+        & \mstd{17.83}{1.48} $(0.76)$
+        & \mstd{15.20}{2.17} $(0.60)$
+        & \mstd{25.10}{3.04} $(0.80)$ \\
+
+        CLWD watermark
+        & \mstd{22.56}{4.33}
+        & \mstd{19.60}{3.96} $(0.59)$
+        & \mstd{18.39}{3.72} $(0.47)$
+        & \bmstd{24.47}{4.91} $(0.75)$
+        & \mstd{22.14}{4.26} $(0.61)$
+        & \mstd{18.99}{3.77} $(0.51)^{n=25}$ \\
+
+        CIFAR-10 patch
+        & \bmstd{22.05}{3.45}
+        & \mstd{19.53}{3.44} $(0.69)$
+        & \mstd{18.96}{3.47} $(0.57)$
+        & \mstd{12.11}{2.62} $(0.85)$
+        & \mstd{12.36}{2.70} $(0.74)$
+        & \mstd{20.33}{3.51} $(0.82)^{n=25}$ \\
+
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table*}

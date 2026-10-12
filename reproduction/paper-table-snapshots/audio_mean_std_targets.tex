@@ -1,0 +1,25 @@
+% tab:audio-targets -- absolute win-SI-SDR, blind window arm vs MSDM
+\begin{tabular}{lllll}
+\toprule
+bench & n & ours & MSDM & paired $\Delta$\\
+\midrule
+piano (b50) & 200 & 5.28 $\pm$ 4.80 & 3.83 $\pm$ 7.98 & +1.45 $\pm$ 7.69\\
+guitar & 100 & 6.25 $\pm$ 5.02 & 2.79 $\pm$ 8.61 & +3.46 $\pm$ 8.99\\
+guitar, fresh clips & 100 & 5.90 $\pm$ 5.45 & 4.31 $\pm$ 7.76 & +1.59 $\pm$ 9.06\\
+piano + solo strings & 46 & 5.12 $\pm$ 4.49 & 1.62 $\pm$ 7.93 & +3.50 $\pm$ 5.65\\
+\bottomrule
+\end{tabular}
+
+% speech interferer rows (win-SI-SDRi; ours = floor K64, no speech model)
+\begin{tabular}{lllllll}
+\toprule
+bench & cond & n & ours & MSDM & paired $\Delta$ & <input ours / MSDM\\
+\midrule
+piano + speech, MSDM + speech DM (IV) & SIR 0 & 50 & +6.04 $\pm$ 3.66 & +8.24 $\pm$ 8.34 & -2.20 $\pm$ 8.71 & 0 / 8\\
+piano + speech, MSDM + speech DM (IV) & SIR 5 & 50 & +6.36 $\pm$ 3.38 & +2.41 $\pm$ 8.97 & +3.95 $\pm$ 8.89 & 2 / 16\\
+piano + speech, MSDM 4-stem (OOV) & SIR 0 & 50 & +6.04 $\pm$ 3.66 & +3.54 $\pm$ 6.28 & +2.50 $\pm$ 6.36 & 0 / 15\\
+piano + speech, MSDM 4-stem (OOV) & SIR 5 & 50 & +6.36 $\pm$ 3.38 & -0.80 $\pm$ 6.24 & +7.16 $\pm$ 5.51 & 2 / 30\\
+guitar + speech, MSDM + speech DM & SIR 0 & 25 & +5.01 $\pm$ 3.48 & -3.07 $\pm$ 15.36 & +8.08 $\pm$ 14.02 & 2 / 14\\
+guitar + speech, MSDM + speech DM & SIR 5 & 25 & +6.51 $\pm$ 3.69 & -5.15 $\pm$ 14.41 & +11.66 $\pm$ 12.68 & 0 / 14\\
+\bottomrule
+\end{tabular}

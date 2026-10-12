@@ -1,0 +1,95 @@
+% Unified shadow table (2026-09-16). All prior-based rows are TANGO-Min: "add." = additive first iterate,
+% "mult." = multiplicative first iterate (stop gate fires at m=2 on every ISTD chunk), "+DPS" = the same
+% multiplicative loop initialised from the DPS reconstruction.  Sources: paper tab:b5s, tab:shadow-transfer,
+% docs/TANGO_MIN_RESULTS.md 2.8 / 2.12.
+\begin{table*}[t]
+    \centering
+    \caption{
+    \textbf{Shadow removal, in-domain and cross-domain.}
+    PSNR (dB) over the shadow support $\Omega$, mean / worst. ISTD: exact recomposition of real ISTD shadows so that the input equals the ground truth off $\Omega$ ($64\times64$, $n{=}100$, EDM2 prior fine-tuned on ISTD shadow-free plates). The four transfer rows move real ISTD shadow fields onto other domains at $256\times256$ ($n{=}25$ each) with the off-the-shelf ADM prior of the target domain; no shadow-specific training on any target. DPS uses the same prior and support as \method. \methodmin{} add.\ / mult.\ are the additive and multiplicative ($y = h\odot x$) first iterates; $+$DPS initialises the multiplicative loop from the DPS reconstruction. ShadowDiffusion is the official ISTD checkpoint, supervised on this shadow family. Bold: best per row. $^\P$ host images not certifiably outside the prior's training set (ffhqsh: FFHQ rows 60000--60024, inside the ffhq\_10m training set; lsunsh: LSUN-bedroom images from the public test subset, which the ADM checkpoint's LSUN training set may contain), kept as leakage controls, not headline rows; ffhqsh0 (FFHQ rows 0--24) is the held-out slice.
+    $^\ast$Full loops on ISTD: multiplicative best iterate ($m_2$) 29.25 / 15.26, last iterate ($m_8$) 27.37 / 14.53; additive last iterate ($m_8$) 29.14 / 13.00.
+    $^\dagger$Official checkpoint on the untouched ISTD input, scored inside $\Omega$ at $64\times64$ (at $256\times256$: 29.22).
+    }
+    \label{tab:shadow_unified}
+    \small
+    \setlength{\tabcolsep}{3.2pt}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabular}{@{}lcccccc@{}}
+        \toprule
+        \textbf{Dataset}
+        & \textbf{Input}
+        & \textbf{DPS}
+        & \textbf{\methodmin{} add.}
+        & \textbf{\methodmin{} mult.}
+        & \textbf{\methodmin{} mult.\ $+$DPS}
+        & \shortstack{\textbf{Shadow}\\\textbf{Diffusion}} \\
+        \midrule
+        ISTD (in-domain) & 14.48 / 8.44 & 27.44 / 10.49 & 28.77 / 12.19 & 29.10 / 13.86$^\ast$ & 28.81 / 12.21 & \textbf{30.60} / \textbf{17.81}$^\dagger$ \\
+        \midrule
+        FFHQ held-out & 14.89 / 8.56 & 17.39 / 10.79 & 18.90 / 12.28 & 20.34 / 12.41 & \textbf{20.61} / 12.28 & 19.15 / \textbf{14.90} \\
+        FFHQ seen (in prior train set)$^\P$ & 13.98 / 5.29 & 17.01 / 8.03  & 17.14 / 7.37  & 19.12 / 9.70  & \textbf{20.06} / \textbf{11.58} & 18.06 / 7.81 \\
+        Imagenette    & 14.30 / 6.49 & 15.97 / 8.26  & 15.80 / 7.63  & 19.05 / 8.98  & \textbf{20.21} / 9.81 & 18.57 / \textbf{13.20} \\
+        LSUN Bedroom$^\P$ & 12.78 / 5.14 & 18.15 / 9.95  & 16.08 / 7.53  & 18.12 / 8.55  & \textbf{20.87} / \textbf{13.73} & 19.51 / 7.67 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+% ISTD under the two background conventions (2026-09-16).  Left: recomposed bench (background corrected so that
+% input == GT off Omega; our pass-through is exact there).  Right: capture-aligned ISTD+ protocol (per-image linear
+% fit of the GT to the input off-shadow), shadow / non-shadow / all.  SD S/NS/ALL from paper tab:b5s
+% (docs/TANGO_MIN_RESULTS.md 2.8 lists 26.58 / 29.95 / 28.24 for the same row -- reconcile before use).
+\begin{table}[t]
+    \centering
+    \caption{
+    \textbf{ISTD under both background conventions.}
+    Left: recomposed bench, background corrected so the input equals the ground truth off $\Omega$ (on-$\Omega$ mean / worst, full frame). Right: capture-aligned ISTD$+$ protocol, per-image linear fit of the ground truth to the input off-shadow (shadow / non-shadow / all). ``Exact'' = the trusted non-shadow region is passed through. $^\dagger$fair whole-image protocol after retraining SD on recomposed data; the shadow column is SD on the untouched ISTD input.
+    }
+    \label{tab:shadow_istd_conventions}
+    \small
+    \setlength{\tabcolsep}{3.2pt}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabular}{@{}lcc|ccc@{}}
+        \toprule
+        \textbf{Method} & \textbf{Shadow} & \textbf{Full} & \textbf{S} & \textbf{NS} & \textbf{ALL} \\
+        \midrule
+        Recomposed input & 14.48 / 8.44 & 23.28 & 12.96 & 35.80 & 21.36 \\
+        DPS-inpaint, same prior & 27.44 / 10.49 & -- & 23.44 & 30.54 & 27.58 \\
+        Adaptive DPS, oracle $\hat\mu$ & 27.60 / \textbf{18.79} & -- & 24.11 & 31.85 & 28.62 \\
+        \methodmin{} additive & 28.77 / 12.19 & 37.57 & \textbf{24.43} & Exact (\textbf{35.80}) & \textbf{30.65} \\
+        \methodmin{} multiplicative & 29.10 / 13.86 & 37.90 & 24.26 & Exact (\textbf{35.80}) & 30.61 \\
+        \methodmin{} mult.\ $+$DPS init & 28.81 / 12.21 & 37.61 & -- & Exact (\textbf{35.80}) & -- \\
+        Full loop, multiplicative, best iterate ($m_2$) & 29.25 / 15.26 & \textbf{38.05} & 24.32 & Exact (\textbf{35.80}) & 30.60 \\
+        Full loop, multiplicative, last iterate ($m_8$) & 27.37 / 14.53 & -- & -- & Exact (\textbf{35.80}) & -- \\
+        Full loop, additive, last iterate ($m_8$, $K{=}32$) & 29.14 / 13.00 & -- & -- & Exact (\textbf{35.80}) & -- \\
+        \midrule
+        ShadowDiffusion (supervised) & \textbf{30.60} / 17.81 & 33.09$^\dagger$ & \textbf{26.58} & 28.81 & 28.15 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% Transfer benches: full multiplicative loop (K=32, M=8, stop gate OFF) vs the gated arm (2026-09-17).
+% Source: experiments/extbench/results/shadow_transfer_fullloop_20260917.json (per-iterate means/worsts).
+\begin{table}[t]
+    \centering
+    \caption{
+    \textbf{Iterating out of domain.} Shadow-transfer benches ($256\times256$, $n{=}25$; $^\P$ = host images not certifiably outside the prior's training set (ffhqsh: FFHQ rows 60000--60024, inside the ffhq\_10m training set; lsunsh: LSUN-bedroom images from the public test subset, which the ADM checkpoint's LSUN training set may contain), kept as leakage controls, not headline rows; ffhqsh0 (FFHQ rows 0--24) is the held-out slice), on-$\Omega$ PSNR mean / worst of the multiplicative \method{} loop with the stop gate off ($K{=}32$). ``Gated'' is the shipped arm (first iterate on faces, third on Imagenette / LSUN). Iterate 6 is reported as the fixed-budget full loop; ``oracle'' picks the best of eight iterates per image.
+    }
+    \label{tab:shadow_transfer_fullloop}
+    \small
+    \setlength{\tabcolsep}{3.0pt}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabular}{@{}llcccc@{}}
+        \toprule
+        \textbf{Dataset} & \textbf{Init} & \textbf{Gated (paper)} & \textbf{Iterate 6} & \textbf{Last (8)} & \textbf{Oracle} \\
+        \midrule
+        FFHQ held-out & plain & 20.34 / 12.41 & 21.07 / 12.27 & 20.82 / 12.12 & 21.49 \\
+                      & DPS   & 20.61 / 12.28 & \textbf{22.39} / 12.30 & 22.10 / 12.17 & 22.92 \\
+        FFHQ seen (in prior train set)$^\P$ & plain & 19.12 / 9.70  & 19.79 / 9.01  & 19.61 / 8.74  & 20.19 \\
+                      & DPS   & 20.06 / 11.58 & \textbf{21.45} / \textbf{12.93} & 21.25 / 11.99 & 22.16 \\
+        Imagenette    & plain & 19.05 / 8.98  & 19.31 / 8.96  & 19.26 / 8.87  & 19.63 \\
+                      & DPS   & 20.21 / 9.81  & \textbf{20.68} / \textbf{9.86} & 20.53 / 9.67 & 21.45 \\
+        LSUN Bedroom$^\P$ & plain & 18.12 / 8.55  & 18.25 / 8.29 & 18.01 / 8.05 & 19.05 \\
+                      & DPS   & 20.87 / 13.73 & 20.82 / \textbf{13.37} & 20.31 / 12.20 & 22.29 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

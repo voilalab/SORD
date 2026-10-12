@@ -1,0 +1,38 @@
+% Network evaluations per image / cell at the shipped iterate (2026-09-25). Ours: counted from the run JSONs
+% (13*K init ladder + per iterate: x-step levels <= sigma_m x K chains + n-step DDIM steps <= 8); declared-alpha arms
+% have a closed-form n-step (0 evaluations). tab:knfe / tab:cross count a fixed 8 n-step evaluations per iterate and
+% therefore read 1-3% higher (natural 2112, mnist 1648, ISTD 840). Baselines: DPS 250 steps at 64^2 / 1000 at 256^2
+% (one evaluation + one backward pass per step); SGM 600 predictor scales x 2 networks; MSDM published sampler 1200;
+% ShadowDiffusion official config T_sampling = 5; SLBR / PatchWiper / ShadowFormer one forward pass.
+\begin{table*}[t]
+    \centering
+    \caption{\textbf{Network evaluations per image (audio: per cell) at the shipped output.} \method{} counts every evaluation of every chain: the inpainting initialization ($13K$), the x-step ladder ($\le\sigma_m$ levels $\times K$) and the diffusion $n$-step (at most 8 DDIM steps; the declared-$\alpha$ arms fit $\alpha$ and colour in closed form). Where the stop gate fires the first iterate is shipped. DPS counts one evaluation and one backward pass per step; SGM runs 600 predictor scales through two networks; MSDM is the published sampler; supervised models are one forward pass.}
+    \label{tab:nfe}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}llrrrrl@{}}
+        \toprule
+        \textbf{Bench} & \textbf{\method{} arm} & $K$ & \textbf{iterates} & \textbf{\method{}} & \textbf{DPS} & \textbf{other baselines} \\
+        \midrule
+        Natural patch on CelebA ($64^2$) & blind, last iterate & 32 & 8 & 2056 & 250 & SGM 1200 \\
+        MNIST digit on CelebA & blind, last iterate & 32 & 6 & 1606 & 250 & SGM 1200 \\
+        CIFAR-10 patch on CelebA & blind, last iterate & 32 & 8 & 2195 & 250 & SGM 1200 \\
+        \midrule
+        CLWD watermark ($64^2$) & declared $\alpha$ + readout & 32 & 6 & 1600 & 250 & SLBR 1, PatchWiper 1 \\
+        PRWD watermark ($64^2$) & declared $\alpha$ + readout & 32 & 6 & 1600 & 250 & SLBR 1, PatchWiper 1 \\
+        FFHQ watermark ($256^2$) & declared $\alpha$, in-loop readout & 16 & 4 & 624 & 1000 & SLBR 1, PatchWiper 1 \\
+        FFHQ watermark ($256^2$) & blind, gated $m_1$ & 32 & 1 & 833 & 1000 & SLBR 1, PatchWiper 1 \\
+        FFHQ unseen logos ($256^2$) & declared $\alpha$, in-loop readout & 16 & 4 & 624 & 1000 & SLBR 1, PatchWiper 1 \\
+        Imagenette watermark ($256^2$) & declared $\alpha$, in-loop readout & 16 & 3 & 528 & 1000 & SLBR 1, PatchWiper 1 \\
+        Imagenette watermark ($256^2$) & blind, gated $m_1$ & 32 & 1 & 833 & 1000 & SLBR 1, PatchWiper 1 \\
+        \midrule
+        ISTD shadow ($64^2$) & multiplicative, gated $m_1$ & 32 & 1 & 833 & 250 & ShadowDiffusion 5, ShadowFormer 1 \\
+        ISTD shadow on FFHQ ($256^2$) & multiplicative, gated $m_1$ & 32 & 1 & 834 & 1000 & ShadowDiffusion 5, ShadowFormer 1 \\
+        ISTD shadow on Imagenette ($256^2$) & multiplicative, $m_3$ & 32 & 3 & 1061 & 1000 & ShadowDiffusion 5, ShadowFormer 1 \\
+        ISTD shadow on LSUN ($256^2$) & multiplicative, $m_3$ & 32 & 3 & 1062 & 1000 & ShadowDiffusion 5 \\
+        \midrule
+        Slakh piano / guitar, exact window & floor, $K$-chain inpaint & 64 & 0 & 1024 & 250 & MSDM 1200 \\
+        Slakh piano, blind window & blind loop & 4 & 4 & 416 & 250 & MSDM 1200 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}

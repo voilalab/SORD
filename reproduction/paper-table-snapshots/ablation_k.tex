@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering\small
+\caption{Ablation over the number of chains $K$ (all else shipped). PSNR on the corrupted region, mean\,/\,worst over 25 images, last iterate; $K{=}32$ is shipped. $K{=}1$ is undefined: $\sigma^\star$ is the spread across chains. NFE per image scales linearly with $K$.}
+\label{tab:ablation_k}
+\begin{tabular}{lcccccc}
+\toprule
+$K$ & 2 & 4 & 8 & 16 & 32$^\dagger$ & 64 \\
+\midrule
+natural patch & 18.26\,/\,14.23 & 20.42\,/\,16.51 & 21.74\,/\,18.22 & 22.22\,/\,18.76 & 22.52\,/\,19.26 & 22.54\,/\,19.56 \\
+MNIST digit & 24.30\,/\,17.92 & 25.46\,/\,21.39 & 26.54\,/\,22.72 & 27.09\,/\,24.06 & 27.28\,/\,24.54 & 27.40\,/\,24.41 \\
+CIFAR patch & 17.44\,/\,13.05 & 20.07\,/\,14.21 & 21.36\,/\,15.14 & 21.91\,/\,15.41 & 22.23\,/\,16.13 & 22.41\,/\,16.23 \\
+CLWD watermark & 19.39\,/\,12.97 & 20.63\,/\,12.51 & 21.41\,/\,13.23 & 21.68\,/\,12.99 & 22.04\,/\,13.25 & 22.04\,/\,12.74 \\
+ISTD shadow & 27.45\,/\,17.05 & 28.77\,/\,18.33 & 29.60\,/\,17.61 & 30.08\,/\,19.89 & 30.13\,/\,18.92 & 29.98\,/\,17.08 \\
+\bottomrule
+\end{tabular}
+\end{table}

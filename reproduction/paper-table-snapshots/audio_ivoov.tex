@@ -1,0 +1,48 @@
+\begin{table}[t]
+\centering
+\caption{Audio separation on the balanced benches, split by whether the interferer is in MSDM's source vocabulary. In-vocabulary (IV): the three MSDM stems other than the target (30 cells); out-of-vocabulary (OOV): the eight remaining Slakh classes (80 cells). Windowed SI-SDR improvement (dB) of \method{} (one prior: the target's own) vs.\ MSDM (four priors); $\Delta$ = paired difference; cells where \method{} is higher; cells below the input (ours / MSDM). $g{=}1$ is the benchmark's unit-gain condition. Bold: better mean.}
+\label{tab:audio_ivoov}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llrccrcc@{}}
+\toprule
+\textbf{Target} & \textbf{Cond.} & \textbf{Pool} & \textbf{\method} & \textbf{MSDM} & $\Delta$ & ours up & $<$input \\
+\midrule
+Piano & SIR 0 & IV & $+1.63$ & $\mathbf{+4.00}$ & $-2.38$ & 13/30 & 6 / 10 \\
+ &  & OOV & $\mathbf{+2.04}$ & $+0.49$ & $+1.55$ & 53/80 & 17 / 38 \\
+ & SIR 5 & IV & $\mathbf{+3.13}$ & $+1.39$ & $+1.74$ & 22/30 & 6 / 17 \\
+ &  & OOV & $\mathbf{+3.21}$ & $-1.90$ & $+5.11$ & 68/80 & 12 / 58 \\
+ & $g{=}1$ & IV & $+1.29$ & $\mathbf{+5.14}$ & $-3.85$ & 12/30 & 8 / 10 \\
+ &  & OOV & $\mathbf{+1.77}$ & $+0.02$ & $+1.75$ & 51/80 & 16 / 41 \\
+\midrule
+Guitar & SIR 0 & IV & $+2.52$ & $\mathbf{+3.91}$ & $-1.39$ & 12/30 & 4 / 8 \\
+ &  & OOV & $\mathbf{+2.86}$ & $+0.31$ & $+2.55$ & 42/80 & 15 / 36 \\
+ & SIR 5 & IV & $\mathbf{+4.63}$ & $-1.08$ & $+5.71$ & 20/30 & 3 / 17 \\
+ &  & OOV & $\mathbf{+3.97}$ & $+0.08$ & $+3.89$ & 54/80 & 10 / 36 \\
+ & $g{=}1$ & IV & $+1.61$ & $\mathbf{+5.35}$ & $-3.74$ & 11/30 & 7 / 9 \\
+ &  & OOV & $\mathbf{+2.29}$ & $-0.62$ & $+2.92$ & 44/80 & 18 / 34 \\
+\midrule
+Bass & SIR 0 & IV & $+9.14$ & $\mathbf{+19.83}$ & $-10.69$ & 4/30 & 0 / 0 \\
+ &  & OOV & $+14.31$ & $\mathbf{+19.38}$ & $-5.07$ & 20/80 & 0 / 3 \\
+ & SIR 5 & IV & $+11.63$ & $\mathbf{+19.09}$ & $-7.45$ & 4/30 & 0 / 1 \\
+ &  & OOV & $+14.61$ & $\mathbf{+17.29}$ & $-2.68$ & 22/80 & 0 / 2 \\
+ & $g{=}1$ & IV & $+9.49$ & $\mathbf{+20.91}$ & $-11.42$ & 3/30 & 0 / 0 \\
+ &  & OOV & $+13.47$ & $\mathbf{+18.24}$ & $-4.77$ & 23/80 & 0 / 4 \\
+\midrule
+Drums & SIR 0 & IV & $+9.24$ & $\mathbf{+19.65}$ & $-10.41$ & 4/30 & 0 / 0 \\
+ &  & OOV & $+11.99$ & $\mathbf{+16.16}$ & $-4.17$ & 17/80 & 0 / 1 \\
+ & SIR 5 & IV & $+9.71$ & $\mathbf{+16.37}$ & $-6.66$ & 8/30 & 0 / 1 \\
+ &  & OOV & $+11.05$ & $\mathbf{+12.77}$ & $-1.72$ & 32/80 & 0 / 3 \\
+ & $g{=}1$ & IV & $+9.56$ & $\mathbf{+19.43}$ & $-9.87$ & 6/30 & 0 / 0 \\
+ &  & OOV & $+11.56$ & $\mathbf{+14.15}$ & $-2.59$ & 27/80 & 2 / 3 \\
+\midrule
+Piano + speech & SIR 0 & Speech (OOV) & $\mathbf{+6.04}$ & $+3.54$ & $+2.50$ & -- & -- \\
+ & SIR 0 & Speech (IV$^\dagger$) & $+6.04$ & $\mathbf{+8.24}$ & $-2.20$ & -- & -- \\
+ & SIR 5 & Speech (OOV) & $\mathbf{+6.36}$ & $-0.80$ & $+7.16$ & -- & -- \\
+ & SIR 5 & Speech (IV$^\dagger$) & $\mathbf{+6.36}$ & $+2.41$ & $+3.95$ & -- & -- \\
+Guitar + speech & SIR 0 & Speech (IV$^\dagger$) & $\mathbf{+5.01}$ & $-3.07$ & $+8.08$ & -- & -- \\
+ & SIR 5 & Speech (IV$^\dagger$) & $\mathbf{+6.51}$ & $-5.15$ & $+11.66$ & -- & -- \\
+\bottomrule
+\multicolumn{8}{l}{\footnotesize $^\dagger$MSDM given an additional LibriSpeech diffusion prior (two-source configuration); OOV = published four-stem MSDM. Speech: 50 piano / 25 guitar clips, no $g{=}1$ run.}
+\end{tabular}
+\end{table}

@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering\small
+\caption{Mask error: the loop is given a perturbed mask (px = pixels); PSNR on the \emph{true} corrupted region, mean\,/\,worst over 25 images, last iterate, $K{=}32$ (IoU of the given mask in parentheses). Dilation degrades gracefully (about 0.5\,dB per pixel); erosion and shifts leave contaminant outside the mask, where it is treated as clean evidence.}
+\label{tab:ablation_mask}
+\begin{tabular}{lccccccc}
+\toprule
+bench & exact & dil.\,3 & dil.\,5 & dil.\,8 & erode\,1 & shift\,2 & detected \\
+\midrule
+Natural patch & 22.52\,/\,19.26 & 20.13\,/\,16.49 (0.73) & 18.84\,/\,15.71 (0.62) & 17.81\,/\,14.17 (0.50) & 14.04\,/\,11.13 (0.88) & 14.49\,/\,11.77 (0.78) & 20.56\,/\,16.32 (0.84) \\
+MNIST digit & 27.28\,/\,24.54 & 24.35\,/\,18.44 (0.57) & 23.10\,/\,15.57 (0.45) & 22.02\,/\,15.49 (0.34) & 17.94\,/\,14.96 (0.75) & 15.41\,/\,12.16 (0.56) & 25.28\,/\,18.75 (0.79) \\
+CLWD watermark & 22.04\,/\,13.25 & 18.70\,/\,10.51 (0.58) & 17.66\,/\,10.33 (0.45) & 16.74\,/\,11.34 (0.34) & 24.20\,/\,15.02 (0.74) & 22.26\,/\,13.49 (0.60) & 18.99\,/\,9.68 (0.51) \\
+CIFAR patch & 22.23\,/\,16.13 & 19.76\,/\,13.93 (0.69) & 18.92\,/\,12.75 (0.57) & 18.05\,/\,12.85 (0.45) & 11.74\,/\,6.94 (0.85) & 12.29\,/\,7.65 (0.74) & 20.33\,/\,14.46 (0.82) \\
+ISTD shadow & -- & -- & -- & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

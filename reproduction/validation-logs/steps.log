@@ -1,0 +1,26 @@
+# x-step DDIM levels {all (shipped), 8, 4} on every bench; n-step 8 DDIM steps (2026-09-25)
+
+Cells: on-Omega PSNR mean / worst (audio: in-window SI-SDR), (paired delta vs shipped, wins/n), [network evaluations per image / cell at the shipped iterate]. '--' = not run (yet).
+
+| Bench | all levels (shipped) | 8 DDIM levels | 4 DDIM levels |
+|---|---|---|---|
+| Natural patch on CelebA | 21.96 / 15.21 [2056] | 21.96 / 15.21 (+0.00, 54/100) [1768] | 21.96 / 15.22 (+0.01, 57/100) [1256] |
+| MNIST digit on CelebA | 27.16 / 21.49 [1606] | 27.16 / 21.50 (-0.00, 21/100) [1382] | 27.15 / 21.54 (-0.01, 18/100) [1030] |
+| CIFAR-10 patch on CelebA | 22.05 / 13.25 [2056] | 22.05 / 13.25 (+0.00, 58/100) [1768] | 22.05 / 13.26 (+0.00, 55/100) [1256] |
+| CLWD + watermark (b2r, declared alpha + pp readout) | 28.06 / 11.93 [1600] | 28.06 / 11.93 (+0.00, 64/99) [1376] | 28.07 / 11.93 (+0.02, 59/99) [1024] |
+| PRWD + watermark (declared alpha + pp readout) | 30.75 / 10.23 [1600] | 30.75 / 10.23 (+0.00, 66/100) [1376] | 30.76 / 10.22 (+0.01, 58/100) [1024] |
+| FFHQ + watermark (ffhqwm0, kApp) | 30.05 / 19.70 [624] | 30.05 / 19.70 (-0.00, 2/25) [544] | 30.03 / 19.70 (-0.03, 1/25) [416] |
+| FFHQ + watermark, unseen logos (ffhqwmU0, kApp) | 26.76 / 13.85 [624] | 26.75 / 13.85 (-0.00, 7/25) [544] | 26.74 / 13.85 (-0.02, 6/25) [416] |
+| ImageNet + watermark (imagenetwm, kApp) | 28.01 / 17.66 [528] | 28.01 / 17.66 (-0.01, 3/25) [448] | 27.98 / 17.65 (-0.03, 4/25) [352] |
+| ISTD shadow (b5s, mult. gated) | 29.10 / 13.86 [833] | 29.07 / 13.84 (-0.03, 10/100) [673] | 29.00 / 13.81 (-0.11, 7/100) [545] |
+| ISTD shadow + FFHQ (ffhqsh0, mult. gated) | 20.34 / 12.41 [834] | 20.33 / 12.41 (-0.00, 5/25) [674] | 20.32 / 12.41 (-0.01, 5/25) [546] |
+| ISTD shadow + ImageNet (imagenetsh, mult. gated) | 19.05 / 8.98 [1061] | 19.05 / 8.98 (+0.00, 21/25) [901] | 18.48 / 8.99 (-0.57, 13/25) [628] |
+| Slakh piano (SI-SDR, oracle window, K4 M4) | 3.31 / -27.71 [416] | 3.22 / -28.90 (-0.09, 20/100) [288] | 3.08 / -31.12 (-0.22, 22/100) [224] |
+| Slakh guitar (SI-SDR, oracle window, K4 M4) | 3.46 / -18.16 [416] | 3.27 / -19.67 (-0.18, 10/50) [288] | 2.78 / -25.21 (-0.68, 7/50) [224] |
+
+## Mean paired delta vs shipped (benches where the configuration has run)
+
+- 8 DDIM levels: -0.02 dB over 13 benches
+- 4 DDIM levels: -0.13 dB over 13 benches
+
+wrote paper/tables/xs_levels_sweep.tex

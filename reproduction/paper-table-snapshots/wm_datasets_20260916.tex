@@ -1,0 +1,126 @@
+% tab:wm_datasets — 2026-09-18 version: supervised cells reported only where the bench's logos are outside the
+% checkpoint's training set (user rule); seen-logo values kept in the caption for the record. Cell provenance:
+% experiments/extbench/results/tabwm_fill_20260916.md.
+\begin{table*}[t]
+    \centering
+    \caption{
+    \textbf{Watermark removal across datasets and corruption shifts.}
+    Values report mean / worst PSNR (dB) over the watermark support $\Omega$.
+    CLWD denotes CLWD watermarks on CLWD images ($64\times64$, $n=99$);
+    PRWD contains real-world watermarks ($64\times64$, $n=100$);
+    FFHQ held-out uses 12 CLWD watermarks on held-out FFHQ images
+    ($256\times256$, $n=25$);
+    FFHQ unseen uses watermark designs from the unseen CLWD test split,
+    rendered on held-out FFHQ images with $3\times$ larger support;
+    and Imagenette uses an ImageNet diffusion prior
+    ($256\times256$, $n=25$).
+    All host images are outside the training set of every prior and every baseline.
+    $\method$ and DPS use the same clean-image prior and corruption support.
+    The opacity map $\alpha$ is provided by the corresponding watermark
+    construction.
+    Off-the-shelf SLBR and PatchWiper use their published checkpoints,
+    trained on CLWD and PRWD, respectively; SLBR predicts its own mask,
+    PatchWiper is blind as well.
+    Domain-matched variants are trained on paired data from the corresponding
+    target distribution with a logo split disjoint from the bench;
+    $^\dagger$ denotes a CLWD-trained model evaluated zero-shot.
+    $^\S$ Not reported: the 12 watermarks of the FFHQ held-out and Imagenette
+    benches are renders of CLWD train-split logos contained in these
+    checkpoints' training sets (for the record: off-the-shelf 24.84 / 12.57 and
+    24.47 / 9.92; matched domain 18.90 / 9.70 and 21.66 / 13.04; an SLBR
+    fine-tuned on the same 12 logos reaches 34.11 / 28.77 and 30.08 / 18.95).
+    PatchWiper is the only supervised model whose training logos are disjoint
+    from every bench.
+    Bold indicates the best prior-based result in each column.
+    }
+    \label{tab:wm_datasets}
+    \small
+    \setlength{\tabcolsep}{3.2pt}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabular}{@{}lccccc@{}}
+        \toprule
+        \textbf{Method}
+        & \textbf{CLWD}
+        & \textbf{PRWD}
+        & \textbf{FFHQ held-out}
+        & \textbf{FFHQ unseen}
+        & \textbf{Imagenette} \\
+        \midrule
+
+    Input
+    & 22.55 / 11.31
+    & 19.66 / 8.94
+    & 13.49 / 7.90
+    & 14.15 / 5.92
+    & 13.64 / 9.19 \\
+
+    DPS
+    & 17.14 / 9.51
+    & 19.99 / 8.97
+    & 27.13 / 17.10
+    & 23.51 / 11.06
+    & 24.80 / 14.63 \\
+
+    DPS + declared $\alpha$ (readout)
+    & 19.85 / 9.82
+    & 20.98 / 9.02
+    & 28.33 / 18.65
+    & 25.52 / 13.68
+    & 26.48 / 16.34 \\
+
+    DPS + declared $\alpha$ (likelihood)
+    & 17.55 / 9.75
+    & 20.61 / 9.03
+    & 27.55 / 18.03
+    & 24.06 / 11.30
+    & 25.30 / 15.31 \\
+
+    SLBR (off-the-shelf)
+    & 33.79 / 20.28
+    & 28.40 / 10.38
+    & --$^\S$
+    & 26.67 / 14.72
+    & --$^\S$ \\
+
+    PatchWiper (off-the-shelf)
+    & 31.37 / 12.75
+    & 35.12 / 22.68
+    & 23.44 / 12.43
+    & 27.57 / 16.29
+    & 21.79 / 9.26 \\
+
+    \midrule
+
+    $\method$\ inpaint
+    & 18.93 / 12.40
+    & 21.64 / 13.15
+    & 28.52 / 18.72
+    & 25.26 / 13.35
+    & 26.58 / 16.60 \\
+
+    $\method$\ inpaint + declared $\alpha$
+    & 21.63 / \textbf{12.75}
+    & 26.82 / \textbf{16.38}
+    & 29.89 / \textbf{20.15}
+    & \textbf{27.00} / \textbf{15.80}
+    & \textbf{28.16} / 17.65 \\
+
+    \textbf{$\method$\ loop + declared $\alpha$}
+    & \textbf{28.06} / 11.93
+    & \textbf{30.75} / 10.23
+    & \textbf{30.05} / 19.70
+    & 26.76 / 13.85
+    & 28.01 / \textbf{17.66} \\
+
+    \midrule
+
+    SLBR (matched domain)
+    & 31.55 / 19.30
+    & 27.58 / 10.43$^\dagger$
+    & --$^\S$
+    & 27.82 / 15.75
+    & --$^\S$ \\
+
+    \bottomrule
+\end{tabular}
+\end{table*}

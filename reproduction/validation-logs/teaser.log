@@ -1,0 +1,5 @@
+picks: {'mnist': [40, 28, 21], 'natural': [20, 31, 39], 'cifar': [7, 78, 21], 'b2s100': [7, 20, 19], 'ffhqwmU0': [18, 0, 17], 'b5s': [20, 44, 72]}
+audio cell figS_speech_c39_s5 gain +13.6 dB
+audio cell figS_speech_c17_s0 gain +9.8 dB
+audio cell figS_speech_c2_s5 gain +7.8 dB
+wrote paper/figs/qual/fig_teaser_notitles_per3

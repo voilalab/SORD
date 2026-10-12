@@ -1,0 +1,33 @@
+\begin{tabular}{llcccccc}
+\toprule
+bench & arm & PSNR$_\Omega$ & SSIM & LPIPS$\downarrow$ & SSIM$_{\rm box}$ & LPIPS$_{\rm box}\downarrow$ & $n$\\
+\midrule
+ffhqsh0 & input y & 14.89 / 8.56 & 0.915 & 0.075 & 0.764 & 0.194 & 25\\
+ffhqsh0 & DPS, same prior & 17.39 / 10.79 & 0.878 & 0.073 & 0.687 & 0.186 & 25\\
+ffhqsh0 & TANGO-Min additive m1 & 18.90 / 12.28 & 0.901 & 0.095 & 0.744 & 0.245 & 25\\
+ffhqsh0 & TANGO-Min multiplicative gate & 20.34 / 12.41 & 0.923 & 0.069 & 0.796 & 0.178 & 25\\
+ffhqsh0 & TANGO + DPS init & 20.61 / 12.28 & 0.923 & 0.064 & 0.795 & 0.169 & 25\\
+ffhqsh0 & ShadowDiffusion (supervised) & 19.15 / 14.90 & 0.905 & 0.062 & 0.820 & 0.152 & 25\\
+\midrule
+ffhqsh & input y & 13.98 / 5.29 & 0.911 & 0.085 & 0.756 & 0.209 & 25\\
+ffhqsh & DPS, same prior & 17.01 / 8.03 & 0.877 & 0.077 & 0.685 & 0.201 & 25\\
+ffhqsh & TANGO-Min additive m1 & 17.14 / 7.37 & 0.883 & 0.109 & 0.707 & 0.267 & 25\\
+ffhqsh & TANGO-Min multiplicative gate & 19.12 / 9.70 & 0.918 & 0.078 & 0.785 & 0.191 & 25\\
+ffhqsh & TANGO + DPS init & 20.06 / 11.58 & 0.919 & 0.070 & 0.783 & 0.185 & 25\\
+ffhqsh & ShadowDiffusion (supervised) & 18.06 / 7.81 & 0.866 & 0.080 & 0.768 & 0.179 & 25\\
+\midrule
+imagenetsh & input y & 14.30 / 6.49 & 0.912 & 0.084 & 0.764 & 0.208 & 25\\
+imagenetsh & DPS, same prior & 15.97 / 8.25 & 0.846 & 0.132 & 0.620 & 0.309 & 25\\
+imagenetsh & TANGO-Min additive m1 & 15.80 / 7.63 & 0.867 & 0.144 & 0.666 & 0.356 & 25\\
+imagenetsh & TANGO-Min multiplicative gate & 19.05 / 8.98 & 0.926 & 0.077 & 0.808 & 0.191 & 25\\
+imagenetsh & TANGO + DPS init & 20.21 / 9.81 & 0.920 & 0.081 & 0.793 & 0.203 & 25\\
+imagenetsh & ShadowDiffusion (supervised) & 18.57 / 13.20 & 0.917 & 0.062 & 0.828 & 0.144 & 25\\
+\midrule
+lsunsh & input y & 12.78 / 5.14 & 0.905 & 0.106 & 0.739 & 0.282 & 25\\
+lsunsh & DPS, same prior & 18.15 / 9.95 & 0.867 & 0.113 & 0.672 & 0.272 & 25\\
+lsunsh & TANGO-Min additive m1 & 16.08 / 7.53 & 0.877 & 0.137 & 0.704 & 0.332 & 25\\
+lsunsh & TANGO-Min multiplicative gate & 18.12 / 8.55 & 0.925 & 0.083 & 0.801 & 0.220 & 25\\
+lsunsh & TANGO + DPS init & 20.87 / 13.73 & 0.919 & 0.084 & 0.791 & 0.219 & 25\\
+lsunsh & ShadowDiffusion (supervised) & 19.51 / 7.67 & 0.925 & 0.076 & 0.840 & 0.192 & 25\\
+\bottomrule
+\end{tabular}

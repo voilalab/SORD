@@ -1,0 +1,30 @@
+\begin{table*}[t]
+\centering
+\caption{Piano target, 100 Slakh2100 clips, each with one in-vocabulary and one out-of-vocabulary interferer drawn at the natural class frequencies (200 cells per condition). Per interferer class: number of cells $n$, SI-SDR improvement (dB) of \method{} (piano prior only) and MSDM (four priors), and cells where \method{} is higher, under SIR 0, SIR 5 and the benchmark's unit-gain window ($g{=}1$). IV = classes MSDM models (bass, drums, guitar); OOV = all other classes. Bold: better mean.}
+\label{tab:audio_piano_classes}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llr ccc ccc ccc@{}}
+\toprule
+ & & & \multicolumn{3}{c}{SIR 0} & \multicolumn{3}{c}{SIR 5} & \multicolumn{3}{c}{$g{=}1$} \\
+\cmidrule(lr){4-6}\cmidrule(lr){7-9}\cmidrule(lr){10-12}
+\textbf{Interferer} & \textbf{Pool} & $n$ & \method & MSDM & ours up & \method & MSDM & ours up & \method & MSDM & ours up \\
+\midrule
+Bass & IV & 23 & $-0.48$ & $\mathbf{+8.41}$ & 2/23 & $\mathbf{+1.76}$ & $+1.34$ & 13/23 & $-0.74$ & $\mathbf{+9.28}$ & 1/23 \\
+Drums & IV & 28 & $+3.80$ & $\mathbf{+5.27}$ & 14/28 & $\mathbf{+5.47}$ & $+1.38$ & 23/28 & $+3.15$ & $\mathbf{+6.27}$ & 10/28 \\
+Guitar & IV & 49 & $+1.33$ & $\mathbf{+1.66}$ & 24/49 & $\mathbf{+3.00}$ & $-0.34$ & 36/49 & $+0.62$ & $\mathbf{+3.29}$ & 21/49 \\
+Brass & OOV & 8 & $\mathbf{+2.03}$ & $-0.88$ & 5/8 & $\mathbf{+3.38}$ & $-2.50$ & 7/8 & $\mathbf{+2.78}$ & $+1.16$ & 5/8 \\
+Chromatic Percussion & OOV & 6 & $\mathbf{+6.19}$ & $+3.22$ & 4/6 & $\mathbf{+5.03}$ & $+1.73$ & 4/6 & $\mathbf{+4.74}$ & $-1.03$ & 4/6 \\
+Organ & OOV & 17 & $\mathbf{+1.91}$ & $-0.28$ & 12/17 & $\mathbf{+3.22}$ & $-6.15$ & 17/17 & $\mathbf{+1.12}$ & $-0.40$ & 9/17 \\
+Pipe & OOV & 4 & $+3.86$ & $\mathbf{+4.26}$ & 2/4 & $+5.85$ & $\mathbf{+7.11}$ & 2/4 & $\mathbf{+2.21}$ & $-4.25$ & 3/4 \\
+Reed & OOV & 9 & $\mathbf{+1.46}$ & $-0.55$ & 5/9 & $\mathbf{+2.64}$ & $-0.35$ & 6/9 & $\mathbf{+1.77}$ & $-1.81$ & 7/9 \\
+Strings & OOV & 42 & $\mathbf{+2.23}$ & $+0.85$ & 30/42 & $\mathbf{+3.20}$ & $-0.64$ & 30/42 & $\mathbf{+2.17}$ & $+0.46$ & 27/42 \\
+Synth Lead & OOV & 8 & $\mathbf{+2.99}$ & $-1.74$ & 7/8 & $\mathbf{+3.00}$ & $-1.86$ & 7/8 & $\mathbf{+3.01}$ & $-1.18$ & 8/8 \\
+Synth Pad & OOV & 6 & $\mathbf{+1.66}$ & $-4.19$ & 6/6 & $\mathbf{+3.19}$ & $-5.62$ & 5/6 & $\mathbf{+2.06}$ & $-5.33$ & 6/6 \\
+\midrule
+\textbf{All IV} & IV & 100 & $+1.60$ & $\mathbf{+4.22}$ & 40/100 & $\mathbf{+3.40}$ & $+0.53$ & 72/100 & $+1.02$ & $\mathbf{+5.50}$ & 32/100 \\
+\textbf{All OOV} & OOV & 100 & $\mathbf{+2.42}$ & $+0.16$ & 71/100 & $\mathbf{+3.37}$ & $-1.64$ & 78/100 & $\mathbf{+2.22}$ & $-0.59$ & 69/100 \\
+\textbf{All} & -- & 200 & $+2.01$ & $\mathbf{+2.19}$ & 111/200 & $\mathbf{+3.39}$ & $-0.56$ & 150/200 & $+1.62$ & $\mathbf{+2.46}$ & 101/200 \\
+\bottomrule
+\end{tabular}
+\end{table*}

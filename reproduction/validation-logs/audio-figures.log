@@ -1,0 +1,3 @@
+wrote speech2
+wrote speech5
+rows: [('b50', (4, 'invocab', 5.0)), ('b50', (3, 'invocab', 0.0)), ('b50', (23, 'invocab', 5.0)), ('speech', (33, 'speech', 5.0)), ('speech', (28, 'speech', 5.0)), ('b50', (10, 'oov', 5.0)), ('b50', (8, 'oov', 0.0)), ('b50', (20, 'oov', 5.0)), ('b50', (18, 'oov', 0.0)), ('b50', (22, 'oov', 0.0))]

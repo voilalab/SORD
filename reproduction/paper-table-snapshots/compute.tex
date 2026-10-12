@@ -1,0 +1,39 @@
+\begin{table}[t]
+\centering\small
+\caption{Compute per image (per 10\,s cell for audio): network function evaluations (NFE; DPS-style arms count one backward per forward) and measured wall time per image for our loop on a shared GPU (ratios between arms are meaningful, absolute values are not).}
+\label{tab:compute}
+\begin{tabular}{llrr}
+\toprule
+algorithm & bench & NFE (gated / full $M$) & wall [s] \\
+\midrule
+TANGO-Min, Tweedie (shipped, K=32) & natural & 1958 / 2056 & 31.8 / 33.4 \\
+TANGO-Min, DPS x-step & natural & 3395 / 3688 & 48.5 / 52.7 \\
+TANGO-Min, DPS n-step & natural & 1958 / 2056 & 29.3 / 30.8 \\
+TANGO-Min, DPS x+n-step & natural & 3518 / 3944 & 54.6 / 61.2 \\
+TANGO-Min, Tweedie (shipped, K=32) & MNIST & 1513 / 1606 & 31.2 / 33.1 \\
+TANGO-Min, DPS x-step & MNIST & 2297 / 2790 & 29.7 / 36.0 \\
+TANGO-Min, DPS n-step & MNIST & 1686 / 1798 & 34.8 / 37.1 \\
+TANGO-Min, DPS x+n-step & MNIST & 2438 / 2982 & 42.9 / 52.5 \\
+TANGO-Min, Tweedie (shipped, K=32) & CIFAR & 1909 / 2056 & 26.5 / 28.6 \\
+TANGO-Min, DPS x-step & CIFAR & 3200 / 3688 & 36.0 / 41.5 \\
+TANGO-Min, DPS n-step & CIFAR & 2138 / 2312 & 37.5 / 40.6 \\
+TANGO-Min, DPS x+n-step & CIFAR & 3411 / 3944 & 52.0 / 60.2 \\
+TANGO-Min, Tweedie (shipped, K=32) & CLWD wm & 1545 / 1607 & 63.4 / 65.9 \\
+TANGO-Min, DPS x-step & CLWD wm & 2668 / 2791 & 72.8 / 76.1 \\
+TANGO-Min, DPS n-step & CLWD wm & 1723 / 1798 & 63.2 / 65.9 \\
+TANGO-Min, DPS x+n-step & CLWD wm & 2778 / 2982 & 75.5 / 81.0 \\
+TANGO-Min, Tweedie (shipped, K=32) & ISTD & 931 / 2056 & 31.5 / 69.7 \\
+TANGO-Min, DPS x-step & ISTD & 1444 / 3688 & 33.5 / 85.4 \\
+TANGO-Min, DPS n-step & ISTD & 981 / 2312 & 30.3 / 71.5 \\
+TANGO-Min, DPS x+n-step & ISTD & 1494 / 3944 & 34.4 / 90.8 \\
+DPS-inpaint / DPS-Gauss / adaptive DPS (baselines) & all image benches & 500 & -- \\
+SGM two-prior (PiGDM guidance, 2 score nets) & natural / MNIST / CIFAR & 2400 & -- \\
+ShadowDiffusion (DDIM T=5 + degradation net) & ISTD & 6 & -- \\
+ShadowFormer / SLBR / PatchWiper / DENet & ISTD / CLWD & 1 & -- \\
+TANGO-Min audio (K=64, window given) & piano cells & 1024 & -- \\
+MSDM 4-stem (150 steps x 2 resamples) & piano cells & 1200 & -- \\
+MSDM 5-source incl. speech DM & speech cells & 1500 & -- \\
+DPS (audio, y-init, 250 steps) & piano cells & 500 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

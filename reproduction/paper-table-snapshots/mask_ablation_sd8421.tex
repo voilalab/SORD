@@ -1,0 +1,62 @@
+\begin{table*}[t]
+    \centering
+    \caption{
+    \textbf{Robustness of $\method$ to imperfect corruption masks.}
+    Results report corrupted-region PSNR (dB), mean $\pm$ standard deviation
+    over 25 images, with the $0.8\to0.1$ four-stage schedule, the difference-of-$\sigma^\ast$ stopping rule and $K=32$ chains.
+    Values in parentheses denote the IoU between the mask supplied to
+    $\method$ and the true corruption support.
+    Dilated masks retain most of the reconstruction quality, whereas
+    under-estimating the support is substantially more harmful because
+    unmasked corruption is treated as trusted observation.
+    }
+    \label{tab:mask_ablation_sd8421}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{lcccccc}
+        \toprule
+        Benchmark
+        & Exact
+        & Dilate 3 px
+        & Dilate 5 px
+        & Erode 1 px
+        & Shift 2 px
+        & Detected mask \\
+
+        \midrule
+
+        Natural patch
+        & $\mathbf{21.10 \pm 1.83}$
+        & $19.40 \pm 1.88$ $(0.73)$
+        & $18.58 \pm 1.79$ $(0.62)$
+        & $14.01 \pm 2.25$ $(0.88)$
+        & $14.32 \pm 2.14$ $(0.78)$
+        & $19.93 \pm 2.13$ $(0.84)$ \\
+
+        MNIST digit
+        & $\mathbf{24.48 \pm 1.54}$
+        & $22.87 \pm 2.23$ $(0.57)$
+        & $22.10 \pm 2.63$ $(0.45)$
+        & $19.09 \pm 1.43$ $(0.75)$
+        & $16.03 \pm 2.28$ $(0.56)$
+        & $23.08 \pm 2.15$ $(0.79)$ \\
+
+        CLWD watermark
+        & $21.04 \pm 3.87$
+        & $17.74 \pm 3.35$ $(0.58)$
+        & $16.84 \pm 3.17$ $(0.45)$
+        & $\mathbf{23.10 \pm 4.10}$ $(0.74)$
+        & $21.29 \pm 4.00$ $(0.60)$
+        & $18.23 \pm 3.94$ $(0.51)$ \\
+
+        CIFAR-10 patch
+        & $\mathbf{21.05 \pm 3.21}$
+        & $19.47 \pm 3.23$ $(0.69)$
+        & $18.80 \pm 3.35$ $(0.57)$
+        & $11.64 \pm 2.73$ $(0.85)$
+        & $12.13 \pm 2.70$ $(0.74)$
+        & $19.98 \pm 3.50$ $(0.82)$ \\
+
+        \bottomrule
+    \end{tabular}
+    }
+\end{table*}

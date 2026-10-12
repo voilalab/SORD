@@ -1,0 +1,32 @@
+% n-step identity ablation (2026-09-18): built by experiments/extbench/build_nstep_ablation_table_20260917.py
+% from results/nstep_ablation_table_20260917.md (per-row provenance there).
+\begin{table*}[t]
+    \centering
+    \caption{\textbf{Dropping the diffusion $n$-step on every bench.} The shipped loop re-noises the residual to $\sigma^\star$ and denoises it with the same prior before the read-out; the ablation replaces that step by the clipped raw residual (identity filter), everything else unchanged. Image rows: PSNR (dB) over $\Omega$, mean / worst; $\Delta$ = identity $-$ shipped, paired per image; wins = images on which the identity arm is better. Watermark rows use the blind-$n$ arm of each bench: the declared-$\alpha$ arms fit $\alpha$ and colour in closed form and contain no diffusion $n$-step. The $256^2$ watermark rows are paired at iterate 2 (the shipped blind run continues and declines); the gated shadow arms are compared at the iterate their gate selects. Audio rows: in-window SI-SDR (dB) of the last iterate, oracle window, K$=$4, M$=$4, mean / worst over cells; SI-SDRi = mean improvement over the input, shipped $\to$ identity.}
+    \label{tab:ablation_nstep}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lrccrr@{}}
+        \toprule
+        \textbf{Bench} & $n$ & \textbf{shipped (DM $n$-step)} & \textbf{no DM $n$-step} & $\Delta$ & wins \\
+        \midrule
+        Natural patch on CelebA & 100 & \textbf{21.96} / 15.21 & 20.16 / 12.81 & $-1.79$ & 3/100 \\
+        MNIST digit on CelebA & 100 & \textbf{27.16} / 21.49 & 24.28 / 17.94 & $-2.88$ & 1/100 \\
+        CIFAR-10 patch on CelebA & 100 & \textbf{22.05} / 13.25 & 20.40 / 12.12 & $-1.66$ & 6/100 \\
+        CLWD logos on CelebA (blind $n$) & 100 & \textbf{26.30} / 18.64 & 26.20 / 16.95 & $-0.09$ & 38/100 \\
+        \midrule
+        CLWD + watermark (blind $n$) & 99 & \textbf{22.56} / 13.25 & 19.59 / 12.52 & $-2.97$ & 7/99 \\
+        PRWD + watermark (blind $n$) & 100 & \textbf{23.81} / 15.79 & 22.81 / 12.35 & $-1.01$ & 25/100 \\
+        FFHQ + watermark (blind $n$, $m_2$) & 25 & 26.68 / 19.57 & \textbf{29.22} / 18.53 & $+2.54$ & 20/25 \\
+        ImageNet + watermark (blind $n$, $m_2$) & 25 & 24.92 / 17.75 & \textbf{27.35} / 17.06 & $+2.43$ & 17/25 \\
+        \midrule
+        ISTD shadow, additive loop ($m_8$, first 25 images) & 25 & \textbf{30.13} / 18.92 & 29.96 / 18.77 & $-0.17$ & 9/25 \\
+        ISTD shadow, multiplicative (shipped, gated $m_1$) & 100 & \textbf{29.10} / 13.86 & 28.83 / 13.40 & $-0.27$ & 24/100 \\
+        ISTD shadow + FFHQ (mult., gated) & 25 & \textbf{20.34} / 12.41 & 19.81 / 12.25 & $-0.53$ & 0/25 \\
+        ISTD shadow + ImageNet (mult., gated) & 25 & \textbf{19.05} / 8.98 & 17.23 / 8.61 & $-1.81$ & 1/25 \\
+        \midrule
+        Slakh piano (IV+OOV, SIR 0/5), SI-SDRi $+0.80 \to +0.34$ & 100 & \textbf{3.31} / $-27.71$ & 2.85 / $-33.39$ & $-0.46$ & 9/100 \\
+        Slakh guitar (balanced, SIR 0/5), SI-SDRi $+0.93 \to +0.25$ & 50 & \textbf{3.46} / $-18.16$ & 2.78 / $-24.44$ & $-0.68$ & 2/50 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}

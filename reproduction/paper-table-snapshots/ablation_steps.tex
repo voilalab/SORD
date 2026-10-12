@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering\small
+\caption{Fewer solver steps: x-step ladder capped at $N$ levels (shipped: all levels $\le\sigma_m$, 13 at $\sigma{=}0.4$) and n-step DDIM steps (shipped 8; effectively 1--2 because $\sigma^\star$ lies below the ladder floor). PSNR mean\,/\,worst over 25 images and NFE relative to shipped in parentheses.}
+\label{tab:ablation_steps}
+\begin{tabular}{lccccc}
+\toprule
+x-step levels / n-step steps & all / 8 & 4 / 8 & 2 / 8 & 1 / 8 & all / 1 \\
+\midrule
+natural patch & 22.52\,/\,19.26 (1.00) & 22.52\,/\,19.27 (0.61) & 22.50\,/\,19.30 (0.44) & 22.49\,/\,19.15 (0.33) & 22.52\,/\,19.26 (1.00) \\
+MNIST digit & 27.28\,/\,24.54 (1.00) & 27.28\,/\,24.53 (0.64) & 27.24\,/\,24.48 (0.48) & 27.08\,/\,24.22 (0.38) & 27.28\,/\,24.54 (1.00) \\
+CIFAR patch & 22.23\,/\,16.13 (1.00) & 22.24\,/\,16.16 (0.61) & 22.21\,/\,16.24 (0.44) & 22.16\,/\,16.36 (0.33) & 22.23\,/\,16.13 (1.00) \\
+CLWD watermark & 22.04\,/\,13.25 (1.00) & 22.02\,/\,13.26 (0.64) & 21.94\,/\,13.26 (0.48) & 21.75\,/\,13.26 (0.38) & 22.04\,/\,13.26 (1.00) \\
+ISTD shadow & 30.13\,/\,18.92 (1.00) & 30.12\,/\,18.97 (0.61) & 30.07\,/\,19.05 (0.44) & 29.85\,/\,19.28 (0.33) & 30.13\,/\,18.92 (1.00) \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,141 @@
+% tab:watermark_shadow_results -- filled 2026-09-24. Cell provenance (on-Omega PSNR, mean +- sample std over images):
+%   Watermark rows: ffhqwm0 / b2r / imagenetwm (n=25 @256 / n=99 @64 / n=25 @256).
+%     Input, DPS-inpaint, DPS mu=mu_n (oracle per-image mean of n), DPS mu=0: results/dps_ladder_20260923.md
+%       (experiments/extbench/dps_ladder_table.py; 256^2 arms from ~/diffusion-posterior-sampling/dps_variants256.py,
+%       results in experiments/extbench/results/dps256/<bench>/dpsp_{auto,mu0}_c*_eval.json).
+%     SLBR = domain-matched SLBR trained from scratch with a logo split disjoint from the bench:
+%       CLWD  -> DENet-trainer SLBR on CLWD train (results/b2r/slbr_scratch_clwd_eval.json)
+%       FFHQ  -> SLBR scratch on paired FFHQ faces (results/ffhqwm0/slbr_scratch_eval.json)
+%       Imagenette -> SLBR scratch on Imagenette (results/slbr_inscratch_imagenetwm_eval.json)
+%     PatchWiper = official PRWD ckpt, blind zero-shot (results/<bench>[_native]/patchwiper_prwd_eval.json).
+%     Ours: CLWD = declared-alpha K=1 loop + per-pixel colour readout (paper row, 28.06);
+%           FFHQ / Imagenette = TANGO-Min blind-n first iterate m1 (27.80 / 26.43) -- NOTE the declared-alpha
+%           per-pixel-readout arm gives 30.05 +- 3.99 / 28.01 +- 7.15 on these two benches (paper/metrics/mean_std.md).
+%   Shadow rows: b5s (n=100 @64), ffhqsh0 / imagenetsh / lsunsh (n=25 @256, transfer v1 benches).
+%     Input, DPS-inpaint, ShadowDiffusion, ours: paper/tables/mean_std_b5s.tex, mean_std_shadow-transfer-v1.tex.
+%     DPS mu=mu_n / mu=0: results/dps_ladder_20260923.md (b5s: results/dpsp/b5s; 256: results/dps256/{ffhqsh0,imagenetsh}).
+%     ShadowFormer: official ISTD ckpt on the untouched input, scored in Omega. ISTD 30.49 +- 5.18 (paper/metrics/mean_std.md);
+%       transfer = experiments/extbench/shadowformer/results_{ffhqsh0,imagenetsh}, std computed 2026-09-24 (23.29 +- 2.89 / 21.79 +- 4.32).
+%     LSUN: DPS mu=mu_n, DPS mu=0 and ShadowFormer were never run on lsunsh (no dps256/lsunsh, no shadowformer/results_lsunsh).
+\begin{table*}[t]
+    \centering
+    \caption{
+    \textbf{Localized structured corruption removal on watermark and shadow benchmarks.}
+    For watermark removal, FFHQ and Imagenette use the same set of $12$ logos,
+    while CLWD uses its proper train/test logo split.
+    For shadow removal, we evaluate both in-domain ISTD and cross-domain transfer
+    of ISTD shadow fields to FFHQ, Imagenette, and LSUN.
+    Task-specific baselines use dedicated training data or corruption models,
+    whereas $\method{}$ uses only the clean-image prior and the known corruption support.
+    DPS $\mu=\mu_n$ uses the oracle per-image mean of the true corruption on the support.
+    Best completed result in each row is shown in \textbf{bold}.
+    }
+    \label{tab:watermark_shadow_results}
+
+    \setlength{\tabcolsep}{3.0pt}
+    \renewcommand{\arraystretch}{1.12}
+
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lccccccc@{}}
+        \toprule
+        \addlinespace[2pt]
+
+        \textbf{Benchmark}
+        & \textbf{Input}
+        & \shortstack{\textbf{DPS}\\\textbf{Inpaint}}
+        & \shortstack{\textbf{DPS}\\$\boldsymbol{\mu=\mu_n}$}
+        & \shortstack{\textbf{DPS}\\$\boldsymbol{\mu=0}$}
+        & \textbf{SLBR}
+        & \textbf{PatchWiper}
+        & \textbf{\method{}}
+        \\
+        \midrule
+
+        FFHQ
+        & $13.49 \pm 3.20$
+        & $27.13 \pm 3.81$
+        & $18.80 \pm 5.11$
+        & $14.35 \pm 3.89$
+        & $18.90 \pm 5.10$
+        & $23.44 \pm 5.59$
+        & $\mathbf{27.80 \pm 3.50}$
+        \\
+
+        CLWD
+        & $22.55 \pm 5.33$
+        & $17.14 \pm 4.74$
+        & $24.26 \pm 5.15$
+        & $22.73 \pm 5.30$
+        & $\mathbf{31.55 \pm 4.47}$
+        & $31.37 \pm 6.84$
+        & $28.06 \pm 6.48$
+        \\
+
+        Imagenette
+        & $13.64 \pm 4.30$
+        & $24.81 \pm 7.56$
+        & $19.63 \pm 7.18$
+        & $14.56 \pm 4.61$
+        & $21.66 \pm 5.08$
+        & $21.79 \pm 6.89$
+        & $\mathbf{26.43 \pm 6.56}$
+        \\
+
+        \midrule
+        \addlinespace[2pt]
+
+        \textbf{Benchmark}
+        & \textbf{Input}
+        & \shortstack{\textbf{DPS}\\\textbf{Inpaint}}
+        & \shortstack{\textbf{DPS}\\$\boldsymbol{\mu=\mu_n}$}
+        & \shortstack{\textbf{DPS}\\$\boldsymbol{\mu=0}$}
+        & \shortstack{\textbf{Shadow}\\\textbf{Diffusion}}
+        & \shortstack{\textbf{Shadow}\\\textbf{Former}}
+        & \textbf{\method{}}
+        \\
+        \midrule
+
+        ISTD
+        & $14.48 \pm 3.70$
+        & $27.44 \pm 7.08$
+        & $27.60 \pm 4.21$
+        & $14.57 \pm 3.77$
+        & $\mathbf{30.60 \pm 4.93}$
+        & $30.49 \pm 5.18$
+        & $29.10 \pm 5.55$
+        \\
+
+        FFHQ
+        & $14.89 \pm 4.13$
+        & $17.39 \pm 3.85$
+        & $19.85 \pm 3.80$
+        & $14.83 \pm 4.09$
+        & $19.15 \pm 3.23$
+        & $\mathbf{23.29 \pm 2.89}$
+        & $20.34 \pm 4.19$
+        \\
+
+        Imagenette
+        & $14.30 \pm 4.71$
+        & $15.97 \pm 6.55$
+        & $19.51 \pm 4.96$
+        & $14.12 \pm 4.59$
+        & $18.57 \pm 2.83$
+        & $\mathbf{21.79 \pm 4.32}$
+        & $19.05 \pm 6.50$
+        \\
+
+        LSUN bedroom
+        & $12.78 \pm 4.43$
+        & $18.15 \pm 7.93$
+        & --
+        & --
+        & $\mathbf{19.51 \pm 4.13}$
+        & --
+        & $18.12 \pm 6.83$
+        \\
+
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table*}

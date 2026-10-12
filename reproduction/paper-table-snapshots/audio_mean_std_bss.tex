@@ -1,0 +1,15 @@
+% tab:bss -- BSS-Eval on piano b50, exact window, floor K64 vs MSDM (50 cells per row)
+\begin{tabular}{llllll}
+\toprule
+pool, SIR & arm & SI-SDRi & SDR & SIR & SAR\\
+\midrule
+in-vocab, SIR 0 & ours & +1.52 $\pm$ 3.16 & 3.07 $\pm$ 1.79 & 2.91 $\pm$ 3.35 & 13.47 $\pm$ 1.66\\
+in-vocab, SIR 0 & msdm & +4.72 $\pm$ 8.84 & 6.85 $\pm$ 7.02 & 21.01 $\pm$ 14.19 & 10.51 $\pm$ 6.10\\
+in-vocab, SIR 5 & ours & +3.48 $\pm$ 3.78 & 9.09 $\pm$ 3.18 & 13.29 $\pm$ 6.29 & 14.41 $\pm$ 2.39\\
+in-vocab, SIR 5 & msdm & +0.64 $\pm$ 7.49 & 7.27 $\pm$ 6.49 & 24.19 $\pm$ 11.71 & 10.72 $\pm$ 6.00\\
+OOV, SIR 0 & ours & +2.30 $\pm$ 3.32 & 3.60 $\pm$ 2.62 & 4.57 $\pm$ 6.32 & 13.13 $\pm$ 1.79\\
+OOV, SIR 0 & msdm & +1.10 $\pm$ 7.63 & 4.25 $\pm$ 5.56 & 8.33 $\pm$ 10.59 & 8.44 $\pm$ 4.72\\
+OOV, SIR 5 & ours & +3.11 $\pm$ 2.92 & 8.67 $\pm$ 2.44 & 13.91 $\pm$ 7.98 & 13.92 $\pm$ 2.07\\
+OOV, SIR 5 & msdm & -1.14 $\pm$ 7.23 & 6.14 $\pm$ 5.61 & 14.53 $\pm$ 9.68 & 9.47 $\pm$ 5.06\\
+\bottomrule
+\end{tabular}

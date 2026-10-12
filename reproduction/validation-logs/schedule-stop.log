@@ -1,0 +1,253 @@
+# x-step schedule 0.8 -> 0.4 -> 0.2 -> 0.1 (M=4) + difference-of-sigma* stop rule (rise OR abs 0.02, ships x_(m-1)) vs SHIPPED (0.4 -> 0.1 + level gate), PAIRED on finished items
+
+on-Omega PSNR: mean ± std / worst (n). Delta = sd8421 arm minus shipped headline on the same images (wins/n). All iterates saved (x_m1..x_m4).
+
+## tab:faces (natural / mnist / cifar, n=100)
+
+### faces natural  (sd8421 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min K32 (x_alt) | 21.96 ± 2.33 / 15.21 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 19.02 ± 2.35 / 11.58 (n=100) | -2.94 (0/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 20.56 ± 2.26 / 13.74 (n=100) | -1.40 (1/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 19.81 ± 2.30 / 12.52 (n=100) | -2.15 (0/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 21.34 ± 2.39 / 14.19 (n=100) | -0.62 (11/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 19.02 ± 2.35 / 11.58 (n=100) | -2.94 (0/100) |
+
+### faces mnist  (sd8421 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min K32 (x_alt) | 27.16 ± 2.05 / 21.49 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 21.93 ± 2.66 / 15.39 (n=100) | -5.23 (0/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 24.40 ± 1.94 / 18.28 (n=100) | -2.76 (1/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 23.90 ± 2.18 / 18.14 (n=100) | -3.26 (0/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 26.89 ± 2.15 / 20.93 (n=100) | -0.28 (23/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 21.93 ± 2.66 / 15.39 (n=100) | -5.23 (0/100) |
+
+### faces cifar  (sd8421 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min K32 (x_alt) | 22.05 ± 3.45 / 13.25 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 19.59 ± 3.57 / 11.96 (n=100) | -2.46 (2/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 20.80 ± 3.32 / 12.87 (n=100) | -1.26 (4/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 20.23 ± 3.47 / 12.26 (n=100) | -1.82 (3/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 21.52 ± 3.51 / 13.03 (n=100) | -0.53 (12/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 19.59 ± 3.57 / 11.96 (n=100) | -2.46 (2/100) |
+
+## tab:wm 64^2 (b2r n=99, prwd n=100)
+
+### b2r blind (minDr)  (sd8421 finished 74/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind n (x_alt) | 22.76 ± 4.45 / 13.25 (n=63) | +0.00 (0/63) |
+| shipped: inpaint m0 | 19.17 ± 4.38 / 12.40 (n=63) | -3.59 (4/63) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 21.43 ± 3.94 / 12.91 (n=63) | -1.33 (6/63) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 20.06 ± 4.26 / 12.60 (n=63) | -2.71 (5/63) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 22.18 ± 4.41 / 13.07 (n=63) | -0.58 (12/63) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 19.17 ± 4.38 / 12.40 (n=63) | -3.59 (4/63) |
+
+### prwd blind (minE)  (sd8421 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind n (x_blind) | 23.73 ± 5.07 / 15.79 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 21.64 ± 5.34 / 13.15 (n=100) | -2.09 (16/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: blind readout (x_blind) | 23.61 ± 5.07 / 15.48 (n=100) | -0.12 (40/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 23.48 ± 5.24 / 15.48 (n=100) | -0.24 (32/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 22.65 ± 5.48 / 14.17 (n=100) | -1.08 (25/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 21.64 ± 5.34 / 13.15 (n=100) | -2.09 (16/100) |
+
+## tab:wm native 256 (ffhqwm0 / ffhqwmU0 / imagenetwm, n=25)
+
+### ffhqwm0 blind (min256)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind m1 | 27.80 ± 3.50 / 19.32 (n=25) | +0.00 (0/25) |
+| shipped: inpaint m0 | 28.52 ± 3.87 / 18.72 (n=25) | +0.72 (12/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 28.31 ± 3.66 / 19.58 (n=25) | +0.51 (16/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 28.32 ± 3.62 / 20.02 (n=25) | +0.52 (16/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 28.62 ± 3.95 / 18.89 (n=25) | +0.82 (14/25) |
+
+### ffhqwmU0 blind (min256)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind m1 | 25.20 ± 4.27 / 14.24 (n=25) | +0.00 (0/25) |
+| shipped: inpaint m0 | 25.26 ± 4.64 / 13.35 (n=25) | +0.06 (9/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 25.51 ± 4.36 / 14.15 (n=25) | +0.31 (14/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 25.28 ± 4.40 / 14.64 (n=25) | +0.08 (12/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 25.29 ± 4.59 / 13.35 (n=25) | +0.09 (9/25) |
+
+### imagenetwm blind (min256in)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: blind m1 | 26.43 ± 6.56 / 17.38 (n=25) | +0.00 (0/25) |
+| shipped: inpaint m0 | 26.58 ± 7.31 / 16.60 (n=25) | +0.15 (8/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 26.85 ± 6.78 / 17.44 (n=25) | +0.42 (13/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 26.62 ± 6.89 / 17.31 (n=25) | +0.19 (12/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 26.68 ± 7.44 / 16.65 (n=25) | +0.25 (7/25) |
+
+## tab:b5s (ISTD 64^2, n=100)
+
+### b5s multiplicative (multminEc)  (sd8421 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min multiplicative (x_alt) | 29.10 ± 5.55 / 13.86 (n=100) | +0.00 (0/100) |
+| shipped: inpaint m0 | 28.12 ± 5.97 / 11.98 (n=100) | -0.98 (21/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 28.94 ± 5.30 / 16.91 (n=100) | -0.16 (31/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 28.77 ± 5.60 / 13.51 (n=100) | -0.33 (21/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: m2 | 29.12 ± 5.28 / 14.89 (n=100) | +0.02 (54/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 28.47 ± 4.59 / 16.92 (n=100) | -0.63 (48/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 28.12 ± 5.97 / 11.98 (n=100) | -0.98 (21/100) |
+
+### b5s additive (minEc)  (sd8421 finished 100/100)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: TANGO-Min additive (x_alt) | 28.77 ± 5.90 / 12.19 (n=100) | +0.00 (0/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 28.59 ± 5.82 / 12.50 (n=100) | -0.18 (30/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 28.50 ± 5.88 / 12.06 (n=100) | -0.28 (21/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 29.09 ± 5.77 / 12.50 (n=100) | +0.32 (76/100) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 28.12 ± 5.97 / 11.98 (n=100) | -0.65 (17/100) |
+
+## tab:shadow-transfer-v1 (native 256, n=25)
+
+### ffhqsh0 multiplicative gate (mult256g)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 20.34 ± 4.19 / 12.41 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 20.58 ± 4.75 / 11.16 (n=25) | +0.25 (16/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 19.99 ± 4.46 / 11.06 (n=25) | -0.34 (9/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 20.92 ± 5.07 / 11.20 (n=25) | +0.59 (18/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 17.88 ± 4.25 / 10.20 (n=25) | -2.46 (2/25) |
+
+### ffhqsh0 additive m1 (min256g)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 18.90 ± 4.31 / 12.28 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 18.46 ± 4.63 / 10.27 (n=25) | -0.44 (8/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 18.63 ± 4.77 / 10.29 (n=25) | -0.27 (11/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 17.88 ± 4.25 / 10.20 (n=25) | -1.02 (7/25) |
+
+### ffhqsh multiplicative gate (mult256g)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.12 ± 5.59 / 9.70 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 19.35 ± 5.76 / 9.27 (n=25) | +0.24 (17/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 18.91 ± 5.54 / 9.39 (n=25) | -0.21 (9/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 19.75 ± 6.39 / 8.96 (n=25) | +0.63 (17/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 16.83 ± 5.60 / 9.27 (n=25) | -2.29 (2/25) |
+
+### ffhqsh additive m1 (min256g)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 17.14 ± 5.72 / 7.37 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 17.11 ± 5.76 / 9.29 (n=25) | -0.03 (11/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 17.10 ± 5.70 / 9.25 (n=25) | -0.04 (11/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 16.83 ± 5.60 / 9.27 (n=25) | -0.31 (10/25) |
+
+### imagenetsh multiplicative gate (mult256in)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.05 ± 6.50 / 8.98 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 18.52 ± 6.08 / 8.79 (n=25) | -0.53 (7/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 17.63 ± 5.76 / 8.69 (n=25) | -1.42 (3/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 18.98 ± 6.63 / 8.84 (n=25) | -0.06 (15/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 15.07 ± 6.04 / 7.44 (n=25) | -3.98 (2/25) |
+
+### imagenetsh additive m1 (min256in)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 15.80 ± 6.19 / 7.63 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 15.67 ± 6.42 / 7.69 (n=25) | -0.13 (10/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 15.96 ± 6.56 / 7.73 (n=25) | +0.16 (15/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 15.07 ± 6.04 / 7.44 (n=25) | -0.73 (5/25) |
+
+### lsunsh multiplicative gate (mult256lb)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 18.12 ± 6.83 / 8.55 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 18.44 ± 7.18 / 7.97 (n=25) | +0.32 (10/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 18.20 ± 7.65 / 7.96 (n=25) | +0.08 (6/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 18.27 ± 6.72 / 7.90 (n=25) | +0.15 (14/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 16.05 ± 8.50 / 7.06 (n=25) | -2.06 (5/25) |
+
+### lsunsh additive m1 (min256lb)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: additive m1 | 16.08 ± 7.37 / 7.53 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 16.96 ± 9.54 / 7.31 (n=25) | +0.88 (10/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 17.28 ± 9.79 / 7.41 (n=25) | +1.19 (13/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 16.05 ± 8.50 / 7.06 (n=25) | -0.03 (6/25) |
+
+## tab:shadow-transfer-v2 (native 256, n=25)
+
+### ffhqsh0v2 multiplicative gate (mult256g)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.44 ± 3.83 / 11.84 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 19.37 ± 3.69 / 12.17 (n=25) | -0.08 (18/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 19.16 ± 3.77 / 11.95 (n=25) | -0.28 (8/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 18.73 ± 3.14 / 12.32 (n=25) | -0.71 (15/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 17.51 ± 4.03 / 9.17 (n=25) | -1.94 (4/25) |
+
+### ffhqshv2 multiplicative gate (mult256g)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 19.43 ± 4.67 / 10.71 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 19.73 ± 4.83 / 10.91 (n=25) | +0.30 (15/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 19.50 ± 4.78 / 10.66 (n=25) | +0.06 (7/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 19.19 ± 4.48 / 11.05 (n=25) | -0.24 (13/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 17.95 ± 4.82 / 8.25 (n=25) | -1.48 (3/25) |
+
+### imagenetshv2 multiplicative gate (mult256in)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 17.67 ± 4.13 / 12.94 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 17.81 ± 4.76 / 12.84 (n=25) | +0.14 (9/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 17.49 ± 4.88 / 12.51 (n=25) | -0.18 (6/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 17.44 ± 3.90 / 13.13 (n=25) | -0.23 (11/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 15.51 ± 5.41 / 8.00 (n=25) | -2.16 (3/25) |
+
+### lsunshv2 multiplicative gate (mult256lb)  (sd8421 finished 25/25)
+
+| arm | PSNR_Omega mean ± std / worst (n) | delta vs shipped headline |
+|---|---|---|
+| shipped: multiplicative gate (x_alt) | 17.33 ± 4.71 / 10.71 (n=25) | +0.00 (0/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: diff-gate ship (x_alt) | 17.75 ± 5.22 / 9.18 (n=25) | +0.42 (15/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: m1 | 17.67 ± 5.35 / 8.96 (n=25) | +0.34 (12/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: last (x_m4) | 17.35 ± 5.12 / 9.34 (n=25) | +0.01 (13/25) |
+| 0.8/0.4/0.2/0.1+diff-gate: inpaint m0 | 16.03 ± 6.12 / 6.45 (n=25) | -1.31 (6/25) |
+
+## audio (e3_blind loop arms; sd8421 == --loop-sig-list 3.2,1.6,0.8,0.4 --M 4 in SIGMA_DATA units)
+
+win-SI-SDR abs mean ± std | improvement mean ± std | >= input
+
+| bench | n paired | shipped abs | shipped impr | sd8421 diff-ship abs | impr | delta (wins/n) | sd8421 last (m4) delta | sd8421 m1 delta | >= input shipped / diff-ship | stop hist (m1..m4) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| piano b50 (K4 M4 blind window) | 200/200 | +5.28 ± 4.80 | +2.78 ± 3.64 | +5.26 ± 4.77 | +2.76 ± 3.59 | -0.02 (82/200) | +0.02 (126/200) | -0.02 (82/200) | 173 / 176 | 200 0 0 0 |
+| guitar | 100/100 | +6.25 ± 5.02 | +3.71 ± 3.85 | +6.30 ± 5.15 | +3.75 ± 3.97 | +0.05 (43/100) | +0.10 (56/100) | +0.05 (43/100) | 80 / 80 | 100 0 0 0 |
+| guitar, fresh clips | 100/100 | +5.90 ± 5.45 | +3.42 ± 4.23 | +5.80 ± 5.53 | +3.32 ± 4.32 | -0.10 (30/100) | +0.00 (55/100) | -0.10 (30/100) | 88 / 88 | 100 0 0 0 |
+| piano + solo strings | 46/46 | +5.12 ± 4.49 | +2.61 ± 3.49 | +5.09 ± 4.29 | +2.58 ± 3.24 | -0.03 (15/46) | +0.04 (29/46) | -0.03 (15/46) | 42 / 42 | 46 0 0 0 |
+
+Not applicable: tab:balanced SIR rows, tab:bss, tab:audio_iv100, tab:audio_piano_classes and the speech-target rows report the
+K-chain inpaint FLOOR (min_floor_eval / floor_win, zero loop iterations); there is no x-step schedule to set to 0.8.
+

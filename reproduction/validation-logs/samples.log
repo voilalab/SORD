@@ -1,0 +1,203 @@
+# Ablation-2 results (min config K=32 unless stated; c0 n=25; PSNR on the true Omega, mean / worst of the last iterate, best-iterate mean)
+
+## 1. Tweedie denoising replaced by DPS (x-step: off-Omega replacement -> DPS likelihood gradient; n-step: renoise+DDIM -> DPS-Gauss on the read)
+
+| bench | arm | last | worst | best-iter | NFE/img (Tweedie count; DPS arms add one backward per forward) | wall [s] (25 imgs, shared GPU) | wall x base |
+|---|---|---|---|---|---|---|---|
+| natural | Tweedie (shipped) | 22.52 | 19.26 | 22.55 | 2056 | 835 | 1.00 |
+| natural | DPS x-step | 22.77 | 19.34 | 22.82 | 3688 | 1317 | 1.58 |
+| natural | DPS n-step | 22.54 | 18.69 | 22.54 | 2056 | 770 | 0.92 |
+| natural | DPS both | 22.76 | 18.86 | 22.77 | 3944 | 1531 | 1.83 |
+| mnist | Tweedie (shipped) | 27.28 | 24.54 | 27.30 | 1606 | 828 | 1.00 |
+| mnist | DPS x-step | 27.46 | 24.65 | 27.48 | 2790 | 901 | 1.09 |
+| mnist | DPS n-step | 27.39 | 23.66 | 27.41 | 1798 | 927 | 1.12 |
+| mnist | DPS both | 27.54 | 23.90 | 27.56 | 2982 | 1312 | 1.58 |
+| cifar | Tweedie (shipped) | 22.23 | 16.13 | 22.24 | 2056 | 714 | 1.00 |
+| cifar | DPS x-step | 22.43 | 16.21 | 22.45 | 3688 | 1038 | 1.45 |
+| cifar | DPS n-step | 22.17 | 16.03 | 22.20 | 2312 | 1014 | 1.42 |
+| cifar | DPS both | 22.35 | 16.08 | 22.38 | 3944 | 1504 | 2.11 |
+| CLWD wm | Tweedie (shipped) | 22.04 | 13.25 | 22.18 | 1607 | 1648 | 1.00 |
+| CLWD wm | DPS x-step | 22.32 | 13.33 | 22.48 | 2791 | 1903 | 1.15 |
+| CLWD wm | DPS n-step | 22.14 | 13.30 | 22.27 | 1798 | 1648 | 1.00 |
+| CLWD wm | DPS both | 22.40 | 13.33 | 22.55 | 2982 | 2025 | 1.23 |
+| ISTD shadow | Tweedie (shipped) | 30.13 | 18.92 | 30.54 | 2056 | 1742 | 1.00 |
+| ISTD shadow | DPS x-step | 30.42 | 19.12 | 31.00 | 3688 | 2136 | 1.23 |
+| ISTD shadow | DPS n-step | 30.13 | 19.19 | 30.52 | 2312 | 1787 | 1.03 |
+| ISTD shadow | DPS both | 30.47 | 19.52 | 31.04 | 3944 | 2270 | 1.30 |
+
+## 2. K (number of chains)  [K=1 is undefined: sigma* is the K-chain spread; the loop divides by zero in the init demix]
+
+| bench | K | last | worst | best-iter | NFE/img@last |
+|---|---|---|---|---|---|
+| natural | 2 | 18.26 | 14.23 | 19.10 | 136 |
+| natural | 4 | 20.42 | 16.51 | 20.60 | 264 |
+| natural | 8 | 21.74 | 18.22 | 21.78 | 520 |
+| natural | 16 | 22.22 | 18.76 | 22.25 | 1032 |
+| natural | 32 | 22.52 | 19.26 | 22.55 | 2056 |
+| natural | 64 | 22.54 | 19.56 | 22.57 | 4104 |
+| mnist | 2 | 24.30 | 17.92 | 24.39 | 106 |
+| mnist | 4 | 25.46 | 21.39 | 25.50 | 206 |
+| mnist | 8 | 26.54 | 22.72 | 26.55 | 406 |
+| mnist | 16 | 27.09 | 24.06 | 27.10 | 806 |
+| mnist | 32 | 27.28 | 24.54 | 27.30 | 1606 |
+| mnist | 64 | 27.40 | 24.41 | 27.42 | 3206 |
+| cifar | 2 | 17.44 | 13.05 | 18.53 | 136 |
+| cifar | 4 | 20.07 | 14.21 | 20.33 | 264 |
+| cifar | 8 | 21.36 | 15.14 | 21.49 | 520 |
+| cifar | 16 | 21.91 | 15.41 | 21.92 | 1032 |
+| cifar | 32 | 22.23 | 16.13 | 22.24 | 2056 |
+| cifar | 64 | 22.41 | 16.23 | 22.41 | 4104 |
+| CLWD wm | 2 | 19.39 | 12.97 | 19.70 | 107 |
+| CLWD wm | 4 | 20.63 | 12.51 | 20.84 | 207 |
+| CLWD wm | 8 | 21.41 | 13.23 | 21.63 | 407 |
+| CLWD wm | 16 | 21.68 | 12.99 | 21.84 | 807 |
+| CLWD wm | 32 | 22.04 | 13.25 | 22.18 | 1607 |
+| CLWD wm | 64 | 22.04 | 12.74 | 22.17 | 3207 |
+| ISTD shadow | 2 | 27.45 | 17.05 | 28.79 | 136 |
+| ISTD shadow | 4 | 28.77 | 18.33 | 29.45 | 264 |
+| ISTD shadow | 8 | 29.60 | 17.61 | 30.16 | 520 |
+| ISTD shadow | 16 | 30.08 | 19.89 | 30.58 | 1032 |
+| ISTD shadow | 32 | 30.13 | 18.92 | 30.54 | 2056 |
+| ISTD shadow | 64 | 29.98 | 17.08 | 30.33 | 4104 |
+
+## 3. Fewer solver steps: x-step ladder capped at N levels (shipped: all levels <= sigma_m, 13 at 0.4) and n-step DDIM steps (shipped 8; effective = levels <= sigma*, usually 1-2)
+
+| bench | arm | last | worst | best-iter | NFE/img@last | NFE x base | wall [s] |
+|---|---|---|---|---|---|---|---|
+| natural | shipped (all levels, DDIM 8) | 22.52 | 19.26 | 22.55 | 2056 | 1.00 | nan |
+| natural | x-step 4 levels | 22.52 | 19.27 | 22.56 | 1256 | 0.61 | 33.1 |
+| natural | x-step 2 levels | 22.50 | 19.30 | 22.53 | 904 | 0.44 | 36.9 |
+| natural | x-step 1 level (single Tweedie jump) | 22.49 | 19.15 | 22.50 | 680 | 0.33 | 31.6 |
+| natural | n-step DDIM 2 | 22.52 | 19.26 | 22.55 | 2056 | 1.00 | 33.9 |
+| natural | n-step DDIM 1 (single Tweedie) | 22.52 | 19.26 | 22.55 | 2056 | 1.00 | 39.0 |
+| mnist | shipped (all levels, DDIM 8) | 27.28 | 24.54 | 27.30 | 1606 | 1.00 | nan |
+| mnist | x-step 4 levels | 27.28 | 24.53 | 27.29 | 1030 | 0.64 | 27.9 |
+| mnist | x-step 2 levels | 27.24 | 24.48 | 27.25 | 774 | 0.48 | 27.0 |
+| mnist | x-step 1 level (single Tweedie jump) | 27.08 | 24.22 | 27.08 | 614 | 0.38 | 25.8 |
+| mnist | n-step DDIM 2 | 27.28 | 24.54 | 27.30 | 1606 | 1.00 | 32.2 |
+| mnist | n-step DDIM 1 (single Tweedie) | 27.28 | 24.54 | 27.30 | 1606 | 1.00 | 31.9 |
+| cifar | shipped (all levels, DDIM 8) | 22.23 | 16.13 | 22.24 | 2056 | 1.00 | 28.6 |
+| cifar | x-step 4 levels | 22.24 | 16.16 | 22.24 | 1256 | 0.61 | 24.6 |
+| cifar | x-step 2 levels | 22.21 | 16.24 | 22.22 | 904 | 0.44 | 24.6 |
+| cifar | x-step 1 level (single Tweedie jump) | 22.16 | 16.36 | 22.16 | 680 | 0.33 | 23.9 |
+| cifar | n-step DDIM 2 | 22.23 | 16.13 | 22.24 | 2056 | 1.00 | 28.2 |
+| cifar | n-step DDIM 1 (single Tweedie) | 22.23 | 16.13 | 22.24 | 2056 | 1.00 | 28.2 |
+| CLWD wm | shipped (all levels, DDIM 8) | 22.04 | 13.25 | 22.18 | 1607 | 1.00 | nan |
+| CLWD wm | x-step 4 levels | 22.02 | 13.26 | 22.16 | 1031 | 0.64 | 46.3 |
+| CLWD wm | x-step 2 levels | 21.94 | 13.26 | 22.07 | 775 | 0.48 | 45.0 |
+| CLWD wm | x-step 1 level (single Tweedie jump) | 21.75 | 13.26 | 21.84 | 615 | 0.38 | 44.4 |
+| CLWD wm | n-step DDIM 2 | 22.04 | 13.25 | 22.18 | 1607 | 1.00 | 49.1 |
+| CLWD wm | n-step DDIM 1 (single Tweedie) | 22.04 | 13.26 | 22.18 | 1606 | 1.00 | 48.5 |
+| ISTD shadow | shipped (all levels, DDIM 8) | 30.13 | 18.92 | 30.54 | 2056 | 1.00 | nan |
+| ISTD shadow | x-step 4 levels | 30.12 | 18.97 | 30.52 | 1256 | 0.61 | 47.1 |
+| ISTD shadow | x-step 2 levels | 30.07 | 19.05 | 30.45 | 904 | 0.44 | 45.7 |
+| ISTD shadow | x-step 1 level (single Tweedie jump) | 29.85 | 19.28 | 30.12 | 680 | 0.33 | 44.6 |
+| ISTD shadow | n-step DDIM 2 | 30.13 | 18.92 | 30.54 | 2056 | 1.00 | 50.3 |
+| ISTD shadow | n-step DDIM 1 (single Tweedie) | 30.13 | 18.92 | 30.54 | 2056 | 1.00 | 50.4 |
+
+## 4. x-step renoise schedule sigma_start -> sigma_end (linear over M; shipped 0.4 -> 0.1) and constant-altitude controls
+
+| bench | schedule | last | worst | best-iter | sigma*_2 |
+|---|---|---|---|---|---|
+| natural | 0.2 -> 0.1 | 22.20 | 19.26 | 22.33 | 0.031 |
+| natural | 0.3 -> 0.1 | 22.41 | 19.28 | 22.49 | 0.039 |
+| natural | 0.4 -> 0.1 | 22.52 | 19.26 | 22.55 | 0.047 |
+| natural | 0.5 -> 0.1 | 22.53 | 19.25 | 22.56 | 0.052 |
+| natural | 0.6 -> 0.1 | 22.52 | 19.24 | 22.53 | 0.058 |
+| natural | 0.8 -> 0.1 | 22.44 | 19.20 | 22.45 | 0.066 |
+| natural | 0.4 -> 0.05 | 22.47 | 19.26 | 22.54 | 0.047 |
+| natural | 0.4 -> 0.2 | 22.37 | 19.17 | 22.38 | 0.047 |
+| natural | 0.4 -> 0.3 | 22.15 | 18.84 | 22.16 | 0.047 |
+| natural | const sigma* = 0.137 (n-step altitude override) | 22.35 | 19.21 | 22.47 | (fixed) |
+| natural | const sigma* = 0.2 (n-step altitude override) | 21.83 | 18.99 | 22.25 | (fixed) |
+| natural | const sigma* = 0.3 (n-step altitude override) | 20.63 | 17.33 | 21.83 | (fixed) |
+| mnist | 0.2 -> 0.1 | 27.10 | 23.58 | 27.22 | 0.033 |
+| mnist | 0.3 -> 0.1 | 27.26 | 24.06 | 27.29 | 0.040 |
+| mnist | 0.4 -> 0.1 | 27.28 | 24.54 | 27.30 | 0.047 |
+| mnist | 0.5 -> 0.1 | 27.30 | 24.57 | 27.30 | 0.051 |
+| mnist | 0.6 -> 0.1 | 27.27 | 24.56 | 27.28 | 0.056 |
+| mnist | 0.8 -> 0.1 | 27.21 | 24.52 | 27.21 | 0.063 |
+| mnist | 0.4 -> 0.05 | 27.22 | 24.42 | 27.30 | 0.047 |
+| mnist | 0.4 -> 0.2 | 26.92 | 24.38 | 26.92 | 0.047 |
+| mnist | 0.4 -> 0.3 | 26.41 | 24.05 | 26.42 | 0.047 |
+| mnist | const sigma* = 0.137 (n-step altitude override) | 27.01 | 24.17 | 27.11 | (fixed) |
+| mnist | const sigma* = 0.2 (n-step altitude override) | 26.31 | 23.46 | 26.78 | (fixed) |
+| mnist | const sigma* = 0.3 (n-step altitude override) | 24.69 | 22.29 | 26.34 | (fixed) |
+| cifar | 0.2 -> 0.1 | 22.23 | 16.32 | 22.26 | 0.031 |
+| cifar | 0.3 -> 0.1 | 22.27 | 16.24 | 22.28 | 0.040 |
+| cifar | 0.4 -> 0.1 | 22.23 | 16.13 | 22.24 | 0.048 |
+| cifar | 0.5 -> 0.1 | 22.20 | 16.07 | 22.20 | 0.053 |
+| cifar | 0.6 -> 0.1 | 22.13 | 15.98 | 22.13 | 0.059 |
+| cifar | 0.8 -> 0.1 | 22.01 | 15.82 | 22.01 | 0.068 |
+| cifar | 0.4 -> 0.05 | 22.26 | 16.18 | 22.27 | 0.048 |
+| cifar | 0.4 -> 0.2 | 21.99 | 15.96 | 21.99 | 0.048 |
+| cifar | 0.4 -> 0.3 | 21.78 | 15.82 | 21.79 | 0.048 |
+| CLWD wm | 0.2 -> 0.1 | 21.93 | 13.22 | 22.08 | 0.038 |
+| CLWD wm | 0.3 -> 0.1 | 22.01 | 13.23 | 22.16 | 0.049 |
+| CLWD wm | 0.4 -> 0.1 | 22.04 | 13.25 | 22.18 | 0.058 |
+| CLWD wm | 0.5 -> 0.1 | 22.01 | 13.27 | 22.14 | 0.065 |
+| CLWD wm | 0.6 -> 0.1 | 21.97 | 13.28 | 22.08 | 0.073 |
+| CLWD wm | 0.8 -> 0.1 | 21.86 | 13.29 | 21.97 | 0.086 |
+| CLWD wm | 0.4 -> 0.05 | 22.04 | 13.25 | 22.19 | 0.058 |
+| CLWD wm | 0.4 -> 0.2 | 21.85 | 13.20 | 21.92 | 0.058 |
+| CLWD wm | 0.4 -> 0.3 | 21.56 | 13.16 | 21.62 | 0.058 |
+| CLWD wm | const sigma* = 0.137 (n-step altitude override) | 22.04 | 13.26 | 22.19 | (fixed) |
+| CLWD wm | const sigma* = 0.2 (n-step altitude override) | 22.02 | 13.29 | 22.19 | (fixed) |
+| CLWD wm | const sigma* = 0.3 (n-step altitude override) | 21.98 | 13.32 | 22.18 | (fixed) |
+| ISTD shadow | 0.2 -> 0.1 | 29.93 | 18.61 | 30.44 | 0.015 |
+| ISTD shadow | 0.3 -> 0.1 | 30.03 | 18.69 | 30.51 | 0.019 |
+| ISTD shadow | 0.4 -> 0.1 | 30.13 | 18.92 | 30.54 | 0.022 |
+| ISTD shadow | 0.5 -> 0.1 | 30.16 | 19.21 | 30.55 | 0.025 |
+| ISTD shadow | 0.6 -> 0.1 | 30.20 | 19.63 | 30.55 | 0.027 |
+| ISTD shadow | 0.8 -> 0.1 | 30.23 | 20.12 | 30.53 | 0.031 |
+| ISTD shadow | 0.4 -> 0.05 | 30.08 | 18.86 | 30.54 | 0.022 |
+| ISTD shadow | 0.4 -> 0.2 | 30.21 | 19.04 | 30.46 | 0.022 |
+| ISTD shadow | 0.4 -> 0.3 | 30.21 | 19.29 | 30.34 | 0.022 |
+| ISTD shadow | const sigma* = 0.137 (n-step altitude override) | 30.11 | 18.81 | 30.55 | (fixed) |
+| ISTD shadow | const sigma* = 0.2 (n-step altitude override) | 30.06 | 18.65 | 30.55 | (fixed) |
+| ISTD shadow | const sigma* = 0.3 (n-step altitude override) | 29.85 | 18.40 | 30.54 | (fixed) |
+
+## 5. Mask error (given mask != true support; PSNR on the TRUE Omega)
+
+| bench | mask | inpaint (m0) | last | worst | best-iter |
+|---|---|---|---|---|---|
+| natural | exact | 19.65 | 22.52 | 19.26 | 22.55 |
+| natural | dil3 | 18.26 | 20.37 | 16.11 | 20.70 |
+| natural | dil5 | 17.33 | 19.81 | 16.29 | 20.14 |
+| natural | dil8 | 16.16 | 18.65 | 16.11 | 19.08 |
+| natural | erode1 | 14.82 | 15.51 | 12.01 | 15.64 |
+| natural | erode2 | 12.46 | 13.25 | 10.64 | 13.36 |
+| natural | shift2 | 15.28 | 16.84 | 13.27 | 16.86 |
+| natural | shift4 | 14.31 | 16.15 | 11.53 | 16.19 |
+| natural | drop30 | 10.32 | 10.38 | 7.91 | 10.59 |
+| natural | drop50 | 9.78 | 10.05 | 7.40 | 10.10 |
+| natural | blind | 18.96 | 20.50 | 15.36 | 20.92 |
+| mnist | exact | 22.39 | 27.28 | 24.54 | 27.30 |
+| mnist | dil3 | 19.96 | 24.86 | 20.29 | 24.88 |
+| mnist | dil5 | 18.81 | 23.75 | 18.03 | 23.77 |
+| mnist | dil8 | 17.44 | 22.49 | 17.82 | 22.52 |
+| mnist | erode1 | 20.62 | 19.21 | 15.12 | 21.62 |
+| mnist | erode2 | 14.81 | 12.94 | 8.97 | 14.28 |
+| mnist | shift2 | 17.58 | 17.97 | 14.44 | 18.95 |
+| mnist | shift4 | 14.57 | 18.03 | 14.17 | 18.09 |
+| mnist | drop30 | 14.31 | 13.23 | 9.72 | 13.98 |
+| mnist | drop50 | 12.94 | 12.90 | 9.48 | 13.07 |
+| mnist | blind | 21.13 | 25.12 | 19.45 | 25.12 |
+| cifar | exact | 19.88 | 22.23 | 16.13 | 22.24 |
+| cifar | dil3 | 18.90 | 20.44 | 15.17 | 20.98 |
+| cifar | dil5 | 18.27 | 19.91 | 14.21 | 20.60 |
+| cifar | dil8 | 17.32 | 19.29 | 14.67 | 20.04 |
+| cifar | erode1 | 12.62 | 13.24 | 8.23 | 13.33 |
+| cifar | shift2 | 13.75 | 15.01 | 10.37 | 15.10 |
+| cifar | blind | 19.25 | 20.40 | 14.40 | 20.96 |
+| CLWD wm | exact | 18.48 | 22.04 | 13.25 | 22.18 |
+| CLWD wm | dil3 | 16.61 | 20.05 | 11.44 | 20.13 |
+| CLWD wm | dil5 | 16.27 | 19.36 | 11.67 | 19.40 |
+| CLWD wm | dil8 | 15.90 | 18.64 | 13.34 | 18.64 |
+| CLWD wm | erode1 | 19.31 | 22.89 | 14.51 | 23.09 |
+| CLWD wm | erode2 | 20.38 | 22.54 | 15.06 | 22.93 |
+| CLWD wm | shift2 | 18.19 | 22.25 | 13.38 | 22.37 |
+| CLWD wm | shift4 | 18.55 | 22.93 | 14.56 | 23.01 |
+| CLWD wm | drop30 | 21.10 | 23.24 | 12.80 | 23.57 |
+| CLWD wm | drop50 | 22.07 | 22.97 | 12.48 | 23.37 |
+| CLWD wm | blind | 16.31 | 18.79 | 9.60 | 19.06 |

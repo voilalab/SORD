@@ -1,0 +1,65 @@
+{
+  "reference_unit_tests": 3,
+  "cpu_replay": {
+    "celeba": {
+      "passed": true
+    },
+    "images": {
+      "passed": true
+    },
+    "mask-prior": {
+      "passed": true
+    },
+    "schedule-stop": {
+      "passed": true
+    },
+    "teaser": {
+      "passed": true
+    },
+    "audio-figures": {
+      "passed": true
+    },
+    "samples": {
+      "passed": true
+    },
+    "schedules": {
+      "passed": true
+    },
+    "steps": {
+      "passed": true
+    },
+    "mask": {
+      "passed": true
+    },
+    "image-figures": {
+      "passed": true
+    },
+    "mask-figures": {
+      "passed": true
+    },
+    "nstep": {
+      "passed": true
+    },
+    "audio": {
+      "passed": true
+    }
+  },
+  "independent_checkout": true,
+  "asset_files_verified": 1220,
+  "release_archives": 8,
+  "release_bytes": 3274352640,
+  "max_psnr_stat_difference_vs_preparation": 0.0,
+  "audio_table_identical": true,
+  "combined_table_numeric_cells_checked": 261,
+  "combined_table_discrepancies": 0,
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.2.5",
+    "scipy": "1.16.2",
+    "PIL": "12.3.0",
+    "matplotlib": "3.10.0",
+    "skimage": "0.25.2"
+  },
+  "fresh_gpu_runs": "not performed: GPU driver unavailable",
+  "model_weights_and_raw_training_data_in_release": false
+}

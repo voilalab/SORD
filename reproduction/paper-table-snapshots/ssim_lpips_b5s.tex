@@ -1,0 +1,16 @@
+\begin{tabular}{llcccccc}
+\toprule
+bench & arm & PSNR$_\Omega$ & SSIM & LPIPS$\downarrow$ & SSIM$_{\rm box}$ & LPIPS$_{\rm box}\downarrow$ & $n$\\
+\midrule
+b5s & input y & 14.48 / 8.44 & 0.878 & 0.171 & 0.684 & 0.257 & 100\\
+b5s & DPS-inpaint, same prior & 27.44 / 10.49 & 0.929 & 0.065 & 0.830 & 0.133 & 100\\
+b5s & adaptive DPS, oracle mu & 27.60 / 18.79 & 0.948 & 0.066 & 0.876 & 0.126 & 100\\
+b5s & K-chain inpaint (ours m0) & 28.12 / 11.98 & 0.937 & 0.060 & 0.850 & 0.122 & 100\\
+b5s & TANGO-Min additive & 28.77 / 12.19 & 0.944 & 0.058 & 0.866 & 0.116 & 100\\
+b5s & TANGO-Min multiplicative & 29.10 / 13.86 & 0.949 & 0.053 & 0.878 & 0.105 & 100\\
+b5s & full loop multiplicative (m2) & 29.25 / 15.26 & 0.954 & 0.042 & 0.891 & 0.087 & 100\\
+b5s & TANGO-Min mult + DPS init & 28.81 / 12.21 & 0.947 & 0.054 & 0.874 & 0.106 & 100\\
+b5s & ShadowDiffusion (supervised) & 30.60 / 17.81 & 0.975 & 0.015 & 0.956 & 0.026 & 100\\
+b5s & ShadowFormer (supervised) & 30.49 / 17.33 & 0.976 & 0.014 & 0.956 & 0.026 & 100\\
+\bottomrule
+\end{tabular}

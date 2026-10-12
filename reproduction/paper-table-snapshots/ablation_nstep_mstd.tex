@@ -1,0 +1,141 @@
+% n-step identity ablation (2026-09-18), mean +- std version (2026-09-25). Same per-image sources as ablation_nstep.tex
+% (experiments/extbench/build_nstep_ablation_table_20260917.py); stds are sample std over the paired images/cells.
+% requires (define once in the preamble):
+% \newcommand{\mstd}[2]{$#1\,{\scriptstyle\pm\,#2}$}
+% \newcommand{\bmstd}[2]{$\mathbf{#1}\,{\scriptstyle\pm\,#2}$}
+
+\begin{table*}[t]
+    \centering
+    \caption{
+    \textbf{Dropping the diffusion $n$-step on every bench.}
+    The shipped loop re-noises the residual to $\sigma^\star$ and denoises it
+    with the same prior before the read-out; the ablation replaces that step
+    by the clipped raw residual (identity filter), everything else unchanged.
+    Image rows: corrupted-region PSNR (dB), mean $\pm$ standard deviation;
+    $\Delta$ = identity $-$ shipped, paired per image; wins = images on which
+    the identity arm is better.
+    Watermark rows use the blind-$n$ arm of each bench: the declared-$\alpha$
+    arms fit $\alpha$ and colour in closed form and contain no diffusion $n$-step.
+    The $256^2$ watermark rows are paired at iterate 2 (the shipped blind run
+    continues and declines); the gated shadow arms are compared at the iterate
+    their gate selects.
+    Audio rows: in-window SI-SDR (dB) of the last iterate, oracle window,
+    $K=4$, $M=4$, mean $\pm$ standard deviation over cells; SI-SDRi = mean
+    improvement over the input, shipped $\to$ identity.
+    Best mean in each row is shown in \textbf{bold}.
+    }
+    \label{tab:ablation_nstep}
+
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.13}
+
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lrccrr@{}}
+        \toprule
+        \textbf{Bench} & $n$ & \shortstack{\textbf{Shipped}\\\textbf{(DM $n$-step)}} & \shortstack{\textbf{No DM}\\\textbf{$n$-step}} & $\Delta$ & \textbf{Wins} \\
+        \midrule
+        Natural patch on CelebA
+        & 100
+        & \bmstd{21.96}{2.33}
+        & \mstd{20.16}{2.27}
+        & $-1.79$
+        & 3/100 \\
+
+        MNIST digit on CelebA
+        & 100
+        & \bmstd{27.16}{2.05}
+        & \mstd{24.28}{2.36}
+        & $-2.88$
+        & 1/100 \\
+
+        CIFAR-10 patch on CelebA
+        & 100
+        & \bmstd{22.05}{3.45}
+        & \mstd{20.40}{3.38}
+        & $-1.66$
+        & 6/100 \\
+
+        CLWD logos on CelebA (blind $n$)
+        & 100
+        & \bmstd{26.30}{3.31}
+        & \mstd{26.20}{3.78}
+        & $-0.09$
+        & 38/100 \\
+
+        \midrule
+        CLWD + watermark (blind $n$)
+        & 99
+        & \bmstd{22.56}{4.33}
+        & \mstd{19.59}{4.61}
+        & $-2.97$
+        & 7/99 \\
+
+        PRWD + watermark (blind $n$)
+        & 100
+        & \bmstd{23.81}{5.17}
+        & \mstd{22.81}{6.32}
+        & $-1.01$
+        & 25/100 \\
+
+        FFHQ + watermark (blind $n$, $m_2$)
+        & 25
+        & \mstd{26.68}{3.58}
+        & \bmstd{29.22}{4.08}
+        & $+2.54$
+        & 20/25 \\
+
+        ImageNet + watermark (blind $n$, $m_2$)
+        & 25
+        & \mstd{24.92}{6.49}
+        & \bmstd{27.35}{7.41}
+        & $+2.43$
+        & 17/25 \\
+
+        \midrule
+        ISTD shadow, additive loop ($m_8$, first 25 images)
+        & 25
+        & \bmstd{30.13}{6.02}
+        & \mstd{29.96}{6.36}
+        & $-0.17$
+        & 9/25 \\
+
+        ISTD shadow, multiplicative (shipped, gated $m_1$)
+        & 100
+        & \bmstd{29.10}{5.55}
+        & \mstd{28.83}{5.76}
+        & $-0.27$
+        & 24/100 \\
+
+        ISTD shadow + FFHQ (mult., gated)
+        & 25
+        & \bmstd{20.34}{4.19}
+        & \mstd{19.81}{3.97}
+        & $-0.53$
+        & 0/25 \\
+
+        ISTD shadow + ImageNet (mult., gated)
+        & 25
+        & \bmstd{19.05}{6.50}
+        & \mstd{17.23}{5.49}
+        & $-1.81$
+        & 1/25 \\
+
+        \midrule
+        Slakh piano (IV+OOV, SIR 0/5), SI-SDRi $+0.80 \to +0.34$
+        & 100
+        & \bmstd{3.31}{6.75}
+        & \mstd{2.85}{7.31}
+        & $-0.46$
+        & 9/100 \\
+
+        Slakh guitar (balanced, SIR 0/5), SI-SDRi $+0.93 \to +0.25$
+        & 50
+        & \bmstd{3.46}{5.14}
+        & \mstd{2.78}{5.84}
+        & $-0.68$
+        & 2/50 \\
+
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table*}
