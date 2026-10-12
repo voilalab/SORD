@@ -1,0 +1,71 @@
+{
+  "format": 1,
+  "description": "Benchmark inputs read by configs/sord/*.yaml (image tasks). Downloaded by scripts/download_benchmarks.py from the Google Drive folder in checkpoint_manifest.json (gdrive.folder_url); paths are relative to DATA_ROOT (default: repository root).",
+  "archive": {
+    "name": "sord_benchmarks.zip",
+    "bytes": 73728100,
+    "sha256": "6eed7f2f90118fea232b34a44628bc0841b95c33ab242acaecb3a023cf03aafb"
+  },
+  "files": [
+    {
+      "path": "experiments/ros/results/r5/bench_cifar.npz",
+      "config": "celeba_cifar",
+      "bytes": 5492095,
+      "sha256": "938681f1251f1538c0208019c69d649e4198a50d7b9b889dc100eb37448c08d7"
+    },
+    {
+      "path": "experiments/ros/results/r5/bench_mnist.npz",
+      "config": "celeba_mnist",
+      "bytes": 4668150,
+      "sha256": "59ea5801d28ff0fa0a0512ee5037d8369400922599593ae8560d724ec53db657"
+    },
+    {
+      "path": "experiments/ros/results/r5/bench_natural.npz",
+      "config": "celeba_natural",
+      "bytes": 6008801,
+      "sha256": "a2c6e83d134be15b83cf5ee22e398ac36a2b038022af8df437d6836286fcf47f"
+    },
+    {
+      "path": "experiments/extbench/results/b2r/bench_b2r.npz",
+      "config": "clwd",
+      "bytes": 3294956,
+      "sha256": "2faed9180437979407bde6052e618a9367e3883a700e5a3f3c4b6a0ff67fbfdd"
+    },
+    {
+      "path": "experiments/extbench/results/b2r/mask_raw_dataset.npz",
+      "config": "clwd (support mask)",
+      "bytes": 409856,
+      "sha256": "33587d54459570669708cd968d9f172a7ff70ee98139fb620dfcb11a28fdd992"
+    },
+    {
+      "path": "experiments/extbench/results/b5s/bench_b5s.npz",
+      "config": "istd",
+      "bytes": 3665813,
+      "sha256": "6e465b08e27fcbecca294e598fd9e763eade41e8f02a1b690363be6041cabb66"
+    },
+    {
+      "path": "experiments/extbench/results/ffhqwm0_native/bench_ffhqwm0_native.npz",
+      "config": "ffhq_watermark",
+      "bytes": 10663107,
+      "sha256": "67fa4cb36d30063e2a8ac75631353325d8b8c7feceeeaa48cd4703c6f1993d89"
+    },
+    {
+      "path": "experiments/extbench/results/ffhqsh0_native/bench_ffhqsh0_native.npz",
+      "config": "ffhq_shadow",
+      "bytes": 15203894,
+      "sha256": "7fdd598cea500f996e4f4545cfa1a34b5a02d2cbe748aa255665310febd3ebb2"
+    },
+    {
+      "path": "experiments/extbench/results/imagenetwm_native/bench_imagenetwm_native.npz",
+      "config": "imagenette_watermark",
+      "bytes": 9894870,
+      "sha256": "d9b53be567d7d9ac34a275e31b384813a0b3c0863cb5b2aa11df34ef77705204"
+    },
+    {
+      "path": "experiments/extbench/results/imagenetsh_native/bench_imagenetsh_native.npz",
+      "config": "imagenette_shadow",
+      "bytes": 14424662,
+      "sha256": "d7f0eee5b316d613602dbd1e1fde3dcd2bf4603a52321d09ddf2aa0687808bb4"
+    }
+  ]
+}
