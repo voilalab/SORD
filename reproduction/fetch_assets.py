@@ -19,7 +19,7 @@ class SafeRedirect(urllib.request.HTTPRedirectHandler):
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--repository',default=os.environ.get('SORD_RELEASE_REPOSITORY','KheirAli/SORD'),
+    ap.add_argument('--repository',default=os.environ.get('SORD_RELEASE_REPOSITORY','ANONYMOUS/SORD'),
                     help='GitHub owner/name hosting the reproduction-v1 release (or set SORD_RELEASE_REPOSITORY)')
     ap.add_argument('--token-env',default='GH_TOKEN',help='environment variable holding a token for private release access')
     a=ap.parse_args()
