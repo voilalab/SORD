@@ -66,9 +66,7 @@ See [CHECKPOINT_UPLOAD_GUIDE.md](CHECKPOINT_UPLOAD_GUIDE.md) for Google Drive an
 
 Let `y` be an observed signal, `x` its unknown clean counterpart, and `Ω` the known support of a localized corruption `n`. In the additive setting,
 
-$$
-y = x + n, \qquad \operatorname{supp}(n) \subseteq \Omega.
-$$
+$$y = x + n, \qquad \operatorname{supp}(n) \subseteq \Omega.$$
 
 SORD alternates between estimating the localized corruption and refining clean-signal candidates using a diffusion model trained on clean signals:
 
@@ -93,14 +91,14 @@ Once the relevant dataset and prior are available, run a task using its configur
 
 ```bash
 # FFHQ watermark removal
-python -m sord.run configs/sord/ffhq_watermark.yaml --batch 1 --out runs/ffhq_watermark
+CUDA_VISIBLE_DEVICES=0 python -m sord.run configs/sord/ffhq_watermark.yaml --batch 1 --out runs/ffhq_watermark
 
 # CLWD watermark removal (the dataset support mask is included in sord_benchmarks.zip;
 # scripts/build_clwd_dataset_mask.py --clwd-root /path/to/CLWD rebuilds it from CLWD)
-python -m sord.run configs/sord/clwd.yaml --batch 8 --out runs/clwd
+CUDA_VISIBLE_DEVICES=0 python -m sord.run configs/sord/clwd.yaml --batch 8 --out runs/clwd
 
 # ISTD shadow removal
-python -m sord.run configs/sord/istd.yaml --out runs/istd
+CUDA_VISIBLE_DEVICES=0 python -m sord.run configs/sord/istd.yaml --out runs/istd
 ```
 
 ### Audio
@@ -116,8 +114,8 @@ git -C third_party/msdm checkout 76def820666bf2f31af032e8c5a32e4e9de939fc
 
 python scripts/download_benchmarks.py --only audio_piano audio_piano_speech   # audio inputs (one ~1.3 GB archive)
 python scripts/download_checkpoints.py --only msdm_piano                 # the target's MSDM prior
-python -m sord.run_audio configs/sord/audio_piano.yaml --out runs/audio_piano
-python -m sord.run_audio configs/sord/audio_piano_speech.yaml --out runs/audio_piano_speech        # speech interferers
+CUDA_VISIBLE_DEVICES=0 python -m sord.run_audio configs/sord/audio_piano.yaml --out runs/audio_piano
+CUDA_VISIBLE_DEVICES=0 python -m sord.run_audio configs/sord/audio_piano_speech.yaml --out runs/audio_piano_speech        # speech interferers
 ```
 
 The audio benchmark (`sord_audio_benchmarks.zip`, downloaded from the link in `reproduction/benchmarks.json`) holds each target's 110 balanced
