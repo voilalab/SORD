@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--credential-file', type=Path, required=True)
-    ap.add_argument('--repository', default=os.environ.get('SORD_RELEASE_REPOSITORY', 'KheirAli/SORD'))
+    ap.add_argument('--repository', default=os.environ.get('SORD_RELEASE_REPOSITORY', 'ANONYMOUS/SORD'))
     ap.add_argument('--tag', default='reproduction-v1')
     ap.add_argument('--assets', type=Path, default=ROOT/'release-assets')
     ap.add_argument('--watch', action='store_true', help='upload completed archive parts while the builder is running')
