@@ -1,0 +1,20 @@
+# SORD on localized interferer removal, target = bass, speech interferers (balanced 110-clip bench, SIR 0 and 5 dB).
+#   python -m sord.run_audio configs/sord/audio_bass_speech.yaml --out runs/audio_bass_speech --batch 4
+prior:
+  kind: msdm
+  msdm_repo: third_party/msdm      # clone of the MSDM authors' repository (see README)
+  checkpoint: msdm_bass                 # checkpoint_manifest.json
+bench:
+  root: data/audio/slakh_bench_v1   # relative to DATA_ROOT (wav/ + manifest.json)
+  pool: speech          # speech interferers (LibriSpeech); MSDM baseline: MSDM + speech prior
+  clips: "198:308"        # clip indices of this target's 110 cells
+  sirs: [0, 5]          # signal-to-interference ratios (dB)
+  rho: 0.5              # the interference window covers half the clip
+seed: 12345
+sord:
+  modality: audio
+  K: 64                 # diffusion samples
+  M: 6                  # maximum refinement iterations
+  sigma_start: 0.32     # re-noising schedule sigma_m (waveform units, 1.6 x sigma_data) ...
+  sigma_end: 0.08       # ... to 0.4 x sigma_data
+  tau_stop: 0.8         # relative-decrease stopping threshold (configs/sord/tau_stop.yaml)

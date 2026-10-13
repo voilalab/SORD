@@ -1,7 +1,7 @@
 """MSDM baseline (Mariani et al.) on the SORD audio benchmark: the paper's "MSDM" column.
 
     python -m baselines.msdm.run_msdm configs/sord/audio_piano.yaml --out runs/msdm_piano                 # 4-stem MSDM
-    python -m baselines.msdm.run_msdm configs/sord/audio_piano.yaml --pool speech --speech --out runs/msdm_speech_piano
+    python -m baselines.msdm.run_msdm configs/sord/audio_piano_speech.yaml --out runs/msdm_piano_speech         # MSDM + speech
 
 Reads the same SORD audio config as `python -m sord.run_audio` (benchmark root, pool, clips, SIRs, window) and
 scores with the same benchmark code (window SI-SDR at 22.05 kHz), so its results.jsonl is directly comparable.
@@ -9,7 +9,8 @@ scores with the same benchmark code (window SI-SDR at 22.05 kHz), so its results
 * default: weakly-supervised MSDM with the four published Slakh single-source models (bass, drums, guitar, piano)
   separated jointly, Dirac likelihood on source 0 (the authors' eval_weakly_msdm_dirac configuration); the
   stem of the config's target is scored.
-* --speech: "MSDM + speech prior", the baseline the paper uses when the interferer is speech: two sources,
+* --speech (default when the pool is speech, e.g. configs/sord/audio_<target>_speech.yaml): "MSDM + speech prior",
+  the baseline the paper uses when the interferer is speech: two sources,
   [speech, target], with the speech diffusion model trained by the authors on LibriSpeech in the MSDM
   framework (checkpoint `speech_dm`), Dirac likelihood on the speech source.
 
@@ -50,7 +51,8 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--clips", default=None, help="range a:b of clip indices (default: the config's)")
     ap.add_argument("--pool", default=None, help="interferer pool (default: the config's; 'speech' for speech interferers)")
-    ap.add_argument("--speech", action="store_true", help="MSDM + speech prior (two sources) instead of the 4-stem MSDM")
+    ap.add_argument("--speech", action=argparse.BooleanOptionalAction, default=None,
+                    help="MSDM + speech prior (two sources) instead of the 4-stem MSDM (default: on iff the pool is speech)")
     ap.add_argument("--seed", type=int, default=12345)
     a = ap.parse_args()
 
@@ -67,6 +69,8 @@ def main():
     bench_io.BENCH = paths.data(b.get("root", "data/audio/slakh_bench_v1"))
     manifest = json.load(open(bench_io.BENCH / b.get("manifest", "manifest.json")))
     pool = a.pool or b["pool"]
+    if a.speech is None:
+        a.speech = pool == "speech"
     c0, c1 = map(int, (a.clips or b["clips"]).split(":"))
     for c in range(c0, c1):
         tc = manifest["clips"][c]["target_class"].lower()

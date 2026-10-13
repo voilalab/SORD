@@ -45,6 +45,7 @@ SORD uses **task-specific pretrained diffusion models of clean signals**. For co
 | `ffhq_watermark`, `ffhq_shadow` | `adm_ffhq256` (manual setup; see [CHECKPOINTS.md](CHECKPOINTS.md)) |
 | `imagenette_watermark`, `imagenette_shadow` | `adm_imagenet256` |
 | `audio_piano`, `audio_guitar`, `audio_bass`, `audio_drums` | `msdm_piano`, `msdm_guitar`, `msdm_bass`, `msdm_drums`, respectively |
+| `audio_<target>_speech` (same targets, speech interferers) | `msdm_<target>` |
 
 Download and verify only the model(s) you need:
 
@@ -113,10 +114,10 @@ mkdir -p third_party
 git clone https://github.com/gladia-research-group/multi-source-diffusion-models third_party/msdm
 git -C third_party/msdm checkout 76def820666bf2f31af032e8c5a32e4e9de939fc
 
-python scripts/download_benchmarks.py --only audio_piano                 # audio benchmark, all four targets (~1.3 GB)
+python scripts/download_benchmarks.py --only audio_piano audio_piano_speech   # audio inputs (one ~1.3 GB archive)
 python scripts/download_checkpoints.py --only msdm_piano                 # the target's MSDM prior
 python -m sord.run_audio configs/sord/audio_piano.yaml --out runs/audio_piano
-python -m sord.run_audio configs/sord/audio_piano.yaml --pool speech --out runs/audio_piano_speech   # speech interferers
+python -m sord.run_audio configs/sord/audio_piano_speech.yaml --out runs/audio_piano_speech        # speech interferers
 ```
 
 The audio benchmark (`sord_audio_benchmarks.zip`, downloaded from the link in `reproduction/benchmarks.json`) holds each target's 110 balanced

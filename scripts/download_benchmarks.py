@@ -3,7 +3,7 @@
     python scripts/download_benchmarks.py                       # all image benchmarks (~74 MB)
     python scripts/download_benchmarks.py --only celeba_cifar   # files for one config
     python scripts/download_benchmarks.py --audio               # also the audio benchmark (~1.3 GB)
-    python scripts/download_benchmarks.py --only audio_piano    # audio only (one archive for all four targets)
+    python scripts/download_benchmarks.py --only audio_piano_speech   # audio, speech interferers (one archive for all audio)
 
 The inputs are two archives: sord_benchmarks.zip (image tasks) and sord_audio_benchmarks.zip (audio tasks; clips
 derived from Slakh2100 and LibriSpeech, CC BY 4.0). An archive is fetched from its "url" in
