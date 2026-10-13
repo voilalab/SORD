@@ -16,7 +16,8 @@ Add `--include-optional` for the baselines' checkpoints and `--only <id> ...` fo
 `"folder_url"`). It holds the authors' weights (`sord_method_edm2_priors.zip`, `sord_baseline_*.zip`) and
 copies of the third-party priors (`sord_thirdparty_*.zip`, subject to their providers' terms);
 `--source gdrive` downloads only the archive each requested checkpoint needs. The same folder holds the image benchmark
-inputs (`sord_benchmarks.zip`), fetched by `python scripts/download_benchmarks.py`.
+inputs (`sord_benchmarks.zip`); the audio benchmark inputs (`sord_audio_benchmarks.zip`, 1.3 GB) are hosted separately, at the
+link in `reproduction/benchmarks.json`. Both are fetched by `python scripts/download_benchmarks.py`.
 Total size: 10.3 GB for SORD's benchmarks (required + quick start), 15.7 GB with the optional baseline checkpoints.
 
 ## Categories

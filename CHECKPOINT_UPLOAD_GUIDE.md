@@ -15,6 +15,7 @@ python scripts/package_checkpoints.py --checkpoint-dir ./checkpoints --output-di
 | `sord_baseline_slbr_scratch.zip` | `slbr_clwd_scratch`, `slbr_ffhq_scratch`, `slbr_imagenette_scratch` | authors' |
 | `sord_baseline_msdm_speech_dm.zip` | `speech_dm` | authors' |
 | `sord_benchmarks.zip` | benchmark inputs of the image tasks (not checkpoints; file list and SHA256 in `reproduction/benchmarks.json`, read by `scripts/download_benchmarks.py`) | per source dataset |
+| `sord_audio_benchmarks.zip` | benchmark inputs of the audio tasks (clips derived from Slakh2100 and LibriSpeech; listed in `reproduction/benchmarks.json`; hosted outside the Drive folder, see section 4) | CC BY 4.0 (Slakh2100, LibriSpeech) |
 
 The script verifies every file's SHA256 before packaging and writes `SHA256SUMS.txt` (every archive
 and every file inside) and `package_manifest.json`. Archives store files under `checkpoints/<path>`
@@ -52,6 +53,9 @@ SORD-checkpoints/
 3. Paste it in ONE place: `checkpoint_manifest.json` -> `"gdrive"` -> `"folder_url"`. Every checkpoint of
    the package already names its archive (`"gdrive_archive"`), so nothing else changes. Without editing
    the manifest, the same link can be passed as `--gdrive-folder <link>`.
+4. `sord_audio_benchmarks.zip` (1.3 GB) is hosted separately. Paste its download link (a Google Drive file link
+   or any direct HTTP(S) link) in `reproduction/benchmarks.json` -> that archive's `"url"`; until then it can be
+   passed as `--archive-url sord_audio_benchmarks.zip=<link>`. The script checks the archive's SHA256.
 
 ## 5. Verify a download
 

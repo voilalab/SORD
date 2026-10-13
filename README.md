@@ -31,7 +31,7 @@ python -m sord.summarize runs/celeba_cifar
 
 Reconstructions and iteration histories are saved in `runs/celeba_cifar/img_<i>.npz`, with run metadata in `runs/celeba_cifar/results.jsonl`.
 
-> **Data download:** `scripts/download_benchmarks.py` fetches the benchmark inputs of the image tasks (`sord_benchmarks.zip`, ~74 MB, from the [Google Drive release folder](CHECKPOINTS.md)) and verifies them against [`reproduction/benchmarks.json`](reproduction/benchmarks.json); omit `--only` to get all of them. Files are placed at the paths the configs expect, under `DATA_ROOT` (default: the repository root). Audio inputs are prepared from Slakh2100 (see [Audio](#audio)).
+> **Data download:** `scripts/download_benchmarks.py` fetches the benchmark inputs of the image tasks (`sord_benchmarks.zip`, ~74 MB, from the [Google Drive release folder](CHECKPOINTS.md)) and verifies them against [`reproduction/benchmarks.json`](reproduction/benchmarks.json); omit `--only` to get all of them. Files are placed at the paths the configs expect, under `DATA_ROOT` (default: the repository root). Audio inputs (~1.3 GB) are fetched separately with `--audio` or `--only audio_<target>` (see [Audio](#audio)).
 
 ## Pretrained priors and datasets
 
@@ -113,10 +113,16 @@ mkdir -p third_party
 git clone https://github.com/gladia-research-group/multi-source-diffusion-models third_party/msdm
 git -C third_party/msdm checkout 76def820666bf2f31af032e8c5a32e4e9de939fc
 
+python scripts/download_benchmarks.py --only audio_piano                 # audio benchmark, all four targets (~1.3 GB)
+python scripts/download_checkpoints.py --only msdm_piano                 # the target's MSDM prior
 python -m sord.run_audio configs/sord/audio_piano.yaml --out runs/audio_piano
+python -m sord.run_audio configs/sord/audio_piano.yaml --pool speech --out runs/audio_piano_speech   # speech interferers
 ```
 
-Audio benchmark inputs must be prepared from **Slakh2100**; they are not part of the archived replay download. The task configurations specify their input paths and required checkpoints.
+The audio benchmark (`sord_audio_benchmarks.zip`, downloaded from the link in `reproduction/benchmarks.json`) holds each target's 110 balanced
+10 s clips with instrument (`bal`) and speech (`speech`) interferers at SIR 0 and 5 dB, derived from **Slakh2100** and
+**LibriSpeech** (both CC BY 4.0). The MSDM baseline (4-stem MSDM, and MSDM + speech prior for speech interferers) is in
+[`baselines/msdm/`](baselines/msdm/README.md).
 
 > **Scope:** These commands run the provided benchmarks. They are not a general-purpose single-image or single-audio-file command-line interface.
 
@@ -133,6 +139,7 @@ Rather than duplicating experiment-specific material here, we maintain the detai
 | [Result provenance](reproduction/PROVENANCE.md) | Source and traceability of reported results |
 | [Implementation notes](docs/IMPLEMENTATION_NOTES.md) | Implementation details and manuscript differences |
 | [SGM baseline](baselines/sgm/README.md) | Baseline-specific setup and usage |
+| [MSDM baseline](baselines/msdm/README.md) | Audio baseline: 4-stem MSDM and MSDM + speech prior |
 
 **Repository map:** [`sord/`](sord/) contains the algorithm, model interfaces, and entry points; [`scripts/`](scripts/) contains download and data-preparation utilities; [`tests/`](tests/) contains lightweight tests; and [`experiments/`](experiments/) contains additional experiments and prior adapters. `checkpoints/` and `runs/` are local artifact directories rather than required tracked files.
 

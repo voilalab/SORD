@@ -29,6 +29,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("config")
     ap.add_argument("--clips", default=None, help="range a:b of clip indices (default: the config's)")
+    ap.add_argument("--pool", default=None, help="interferer pool (default: the config's; 'speech' for speech interferers)")
     ap.add_argument("--batch", type=int, default=1, help="cells per network call (GPU memory permitting)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
@@ -39,16 +40,17 @@ def main():
     bench_io.BENCH = data(b.get("root", "data/audio/slakh_bench_v1"))   # wav/ + manifest.json, relative to DATA_ROOT
     c0, c1 = map(int, (a.clips or b["clips"]).split(":"))
     manifest = json.load(open(bench_io.BENCH / b.get("manifest", "manifest.json")))
+    pool = a.pool or b["pool"]
     alg = SORDConfig(**cfg["sord"])
     prior = build_prior(cfg["prior"])
 
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    (out / "config.yaml").write_text(yaml.safe_dump(cfg))
+    (out / "config.yaml").write_text(yaml.safe_dump(dict(cfg, bench=dict(b, pool=pool))))
     cells = [(c, s) for c in range(c0, c1) for s in b["sirs"]]
     for g in range(0, len(cells), a.batch):
         group = cells[g:g + a.batch]
-        loaded = [bench_io.load_cell(manifest, c, b["pool"], rho=b.get("rho", 0.5), sir=float(s), dev="cpu")
+        loaded = [bench_io.load_cell(manifest, c, pool, rho=b.get("rho", 0.5), sir=float(s), dev="cpu")
                   for c, s in group]
         Y = np.stack([cell[2][0, 0].numpy()[:, None] for cell in loaded]).astype(np.float64)
         OMEGA = np.stack([cell[3][0, 0].numpy() for cell in loaded])
@@ -59,7 +61,7 @@ def main():
             x22, y22, m = cell[0], cell[2], cell[3]
             score = lambda est: bench_io.metrics(torch.from_numpy(est[:, 0].astype(np.float32))[None, None], x22, y22, m)
             ret = score(r.x)
-            row = dict(clip=c, sir=s, instrument=cell[6], sisdri=ret["win_sisdr"] - ret["win_sisdr_in"],
+            row = dict(clip=c, sir=s, pool=pool, instrument=cell[6], sisdri=ret["win_sisdr"] - ret["win_sisdr_in"],
                        win_sisdr=ret["win_sisdr"], win_sisdr_in=ret["win_sisdr_in"],
                        sisdri_iterates=[score(x)["win_sisdr"] - ret["win_sisdr_in"] for x in r.iterates],
                        returned=r.returned, stopped_early=r.stopped_early,

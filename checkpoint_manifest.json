@@ -171,7 +171,8 @@
    "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
    "purpose": "clean-source prior for the audio benchmark with target piano",
    "used_by": [
-    "configs/sord/audio_piano.yaml"
+    "configs/sord/audio_piano.yaml",
+    "baselines/msdm/run_msdm.py"
    ],
    "required": "benchmark",
    "category": "diffusion",
@@ -202,7 +203,8 @@
    "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
    "purpose": "clean-source prior for the audio benchmark with target guitar",
    "used_by": [
-    "configs/sord/audio_guitar.yaml"
+    "configs/sord/audio_guitar.yaml",
+    "baselines/msdm/run_msdm.py"
    ],
    "required": "benchmark",
    "category": "diffusion",
@@ -233,7 +235,8 @@
    "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
    "purpose": "clean-source prior for the audio benchmark with target bass",
    "used_by": [
-    "configs/sord/audio_bass.yaml"
+    "configs/sord/audio_bass.yaml",
+    "baselines/msdm/run_msdm.py"
    ],
    "required": "benchmark",
    "category": "diffusion",
@@ -264,7 +267,8 @@
    "architecture": "audio-diffusion UNet1d, EDM parameterization, 22.05 kHz mono, PyTorch Lightning",
    "purpose": "clean-source prior for the audio benchmark with target drums",
    "used_by": [
-    "configs/sord/audio_drums.yaml"
+    "configs/sord/audio_drums.yaml",
+    "baselines/msdm/run_msdm.py"
    ],
    "required": "benchmark",
    "category": "diffusion",
@@ -340,7 +344,9 @@
   "speech_dm": {
    "model": "Speech diffusion model (UNet1d, MSDM hyperparameters)",
    "purpose": "MSDM + speech prior baseline, speech-target rows",
-   "used_by": [],
+   "used_by": [
+    "baselines/msdm/run_msdm.py (--speech)"
+   ],
    "required": "optional",
    "category": "baselines",
    "path": "baselines/msdm_speech/speech_dm/best.pt",

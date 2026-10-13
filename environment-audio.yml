@@ -16,6 +16,7 @@ dependencies:
       - scipy==1.13.1
       - PyYAML==6.0.2
       - soundfile==0.13.1
+      - av==15.1.0             # imported by the MSDM code (main/data.py)
       - librosa==0.11.0
       - audio-diffusion-pytorch==0.0.43
       - pytorch-lightning==1.7.7
@@ -25,4 +26,5 @@ dependencies:
       - hydra-core==1.2.0
       - omegaconf==2.3.1
       - tqdm==4.70.0
+      - gdown==5.2.2          # scripts/download_checkpoints.py, scripts/download_benchmarks.py (Google Drive)
       - wandb==0.13.4        # imported by the MSDM code; no account needed
