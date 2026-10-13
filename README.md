@@ -65,8 +65,7 @@ See [CHECKPOINT_UPLOAD_GUIDE.md](CHECKPOINT_UPLOAD_GUIDE.md) for Google Drive an
 ## Method overview
 
 Let `y` be an observed signal, `x` its unknown clean counterpart, and `Ω` the known support of a localized corruption `n`. In the additive setting,
-
-$$y = x + n, \qquad \operatorname{supp}(n) \subseteq \Omega.$$
+y = x + n, where ${supp}(n) \subseteq \Omega.$
 
 SORD alternates between estimating the localized corruption and refining clean-signal candidates using a diffusion model trained on clean signals:
 
