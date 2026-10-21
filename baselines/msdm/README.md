@@ -1,25 +1,22 @@
 # MSDM baseline (audio)
 
-The "MSDM" column of the audio results. `run_msdm.py` reads the same SORD audio configs as
-`python -m sord.run_audio` (`configs/sord/audio_<target>.yaml`) and scores with the same benchmark code
-(window SI-SDR improvement at 22.05 kHz), so its `results.jsonl` is directly comparable with SORD's.
+`run_msdm.py` runs MSDM on the SORD audio configs (`configs/sord/audio_*.yaml`) and scores it with the same
+benchmark code as `python -m sord.run_audio` (window SI-SDR improvement at 22.05 kHz).
 
-| mode | sources | used for |
-|---|---|---|
-| default (4-stem MSDM) | the four published weakly-supervised MSDM models (bass, drums, guitar, piano), Dirac likelihood on source 0 (the authors' `eval_weakly_msdm_dirac` configuration) | instrument interferers (pool `bal`) |
-| `--speech` (MSDM + speech prior; default for pool `speech`) | [speech, target]: the target's MSDM model plus a speech diffusion model trained by the authors on LibriSpeech in the MSDM framework, Dirac likelihood on speech | speech interferers (pool `speech`) |
+| mode | sources |
+|---|---|
+| 4-stem MSDM (default for instrument interferers, `--no-speech`) | the four weakly-supervised MSDM models (bass, drums, guitar, piano), Dirac likelihood on source 0 |
+| MSDM + speech prior (default for speech interferers, `--speech`) | [speech, target]: a LibriSpeech diffusion model in the MSDM framework and the target's MSDM model, Dirac likelihood on speech |
 
-Sampler: Karras schedule sigma 1e-4 to 1 (rho 7), 150 steps, 2 resamples, s_churn 40 (the authors' settings).
+Sampler: Karras schedule sigma 1e-4 to 1 (rho 7), 150 steps, 2 resamples, s_churn 40.
 
 ## Setup
-
-Audio environment, MSDM code and data as for SORD audio (see the main README), plus the speech model:
 
 ```bash
 conda env create -f environment-audio.yml && conda activate sord-audio
 git clone https://github.com/gladia-research-group/multi-source-diffusion-models third_party/msdm
 git -C third_party/msdm checkout 76def820666bf2f31af032e8c5a32e4e9de939fc
-python scripts/download_benchmarks.py --audio                       # audio benchmark (all targets, both pools)
+python scripts/download_benchmarks.py --audio                # add --audio-extra for the extra configs
 python scripts/download_checkpoints.py --only msdm_piano msdm_guitar msdm_bass msdm_drums
 python scripts/download_checkpoints.py --source gdrive --only speech_dm
 ```
@@ -27,30 +24,23 @@ python scripts/download_checkpoints.py --source gdrive --only speech_dm
 ## Run
 
 ```bash
-# 4-stem MSDM, instrument interferers (SIR 0 and 5 dB)
-python -m baselines.msdm.run_msdm configs/sord/audio_piano.yaml --out runs/msdm_piano
-# MSDM + speech prior, speech interferers
-python -m baselines.msdm.run_msdm configs/sord/audio_piano_speech.yaml --out runs/msdm_piano_speech
-# SORD on the same cells
-python -m sord.run_audio configs/sord/audio_piano.yaml --out runs/audio_piano
-python -m sord.run_audio configs/sord/audio_piano_speech.yaml --out runs/audio_piano_speech
+python -m baselines.msdm.run_msdm configs/sord/audio_piano.yaml --out runs/msdm_piano                       # 4-stem MSDM
+python -m baselines.msdm.run_msdm configs/sord/audio_piano_speech.yaml --out runs/msdm_piano_speech         # MSDM + speech prior
+python -m baselines.msdm.run_msdm configs/sord/audio_piano_speech.yaml --no-speech --out runs/msdm4_piano_speech   # 4-stem MSDM, speech interferers
 ```
 
-Each cell takes about a minute on one GPU (4-stem: 1200 network calls; with `--speech`: 600).
+## Seeds and clip ranges
 
-## Seeds and the paper's runs
+Cell k of a run (clips in order, then SIRs) uses torch seed `--seed + k` (default 12345), so a cell's result depends
+on where its run starts. `scripts/run_audio_all.py` uses these `--clips` ranges ("halves": the config's range split
+into two equal runs):
 
-Cell k of a run (clips in order, SIR 0 then 5) uses torch seed `--seed + k` (default 12345), as in the paper's
-runs, so a cell's result depends on where its run starts. The paper's MSDM numbers come from these runs:
-
-| target | 4-stem MSDM, `audio_<target>.yaml` (`--clips`) | MSDM + speech, `audio_<target>_speech.yaml` (`--clips`) |
+| config | 4-stem MSDM | MSDM + speech prior |
 |---|---|---|
-| piano | `418:528` (one run) | `418:473`, `473:528` |
-| guitar | `528:583`, `583:638` | `528:583`, `583:638` |
-| bass | `198:253`, `253:308` | `198:253`, `253:308` |
-| drums | `308:363`, `363:418` | `308:363`, `363:418` |
-
-The released audio benchmark covers each target's 110 balanced clips with instrument (`bal`) and speech
-interferers at SIR 0 and 5 dB. The paper's audio table additionally pools a second balanced instrument set
-into its in-vocabulary / out-of-vocabulary rows, uses 50 further piano clips in the piano speech rows, and
-has unit-gain (g = 1) rows; those inputs are not part of the release package.
+| `audio_piano` | one run | |
+| `audio_{guitar,bass,drums}` | halves | |
+| `audio_<target>_speech` | halves | halves |
+| `audio_<target>_bal2` | halves | |
+| `audio_<target>_g1`, `audio_<target>_bal2_g1` | one run | |
+| `audio_{piano,guitar}_speech_g1` | halves | halves |
+| `audio_piano_speech50`, `audio_piano_speech50_g1` | one run | one run |

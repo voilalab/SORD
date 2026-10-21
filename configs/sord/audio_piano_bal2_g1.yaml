@@ -1,0 +1,21 @@
+# SORD on localized interferer removal, target = piano, second balanced set (bal2, 110 clips) at unit gain (g = 1).
+#   python -m sord.run_audio configs/sord/audio_piano_bal2_g1.yaml --out runs/audio_piano_bal2_g1 --batch 4
+prior:
+  kind: msdm
+  msdm_repo: third_party/msdm      # clone of the MSDM authors' repository (see README)
+  checkpoint: msdm_piano                 # checkpoint_manifest.json
+bench:
+  root: data/audio/slakh_bench_v1   # relative to DATA_ROOT (wav/ + manifest)
+  manifest: manifest_g1.json
+  pool: bal2          # second balanced interferer pool
+  clips: "858:968"      # this target's 110 bal2 clips
+  sirs: [1.0]           # unit gain: raw mixture, interferer at its own level (sir tag 1.0 = gain 1)
+  rho: 0.5              # the interference window covers half the clip
+seed: 12345
+sord:
+  modality: audio
+  K: 64                 # diffusion samples
+  M: 6                  # maximum refinement iterations
+  sigma_start: 0.32     # re-noising schedule sigma_m (waveform units, 1.6 x sigma_data) ...
+  sigma_end: 0.08       # ... to 0.4 x sigma_data
+  tau_stop: 0.8         # relative-decrease stopping threshold (configs/sord/tau_stop.yaml)

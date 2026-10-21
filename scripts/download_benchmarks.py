@@ -3,10 +3,13 @@
     python scripts/download_benchmarks.py                       # all image benchmarks (~74 MB)
     python scripts/download_benchmarks.py --only celeba_cifar   # files for one config
     python scripts/download_benchmarks.py --audio               # also the audio benchmark (~1.3 GB)
+    python scripts/download_benchmarks.py --audio --audio-extra # also the extra audio inputs (~0.7 GB)
     python scripts/download_benchmarks.py --only audio_piano_speech   # audio, speech interferers (one archive for all audio)
 
-The inputs are two archives: sord_benchmarks.zip (image tasks) and sord_audio_benchmarks.zip (audio tasks; clips
-derived from Slakh2100 and LibriSpeech, CC BY 4.0). An archive is fetched from its "url" in
+The inputs are three archives: sord_benchmarks.zip (image tasks), sord_audio_benchmarks.zip (audio tasks) and
+sord_audio_benchmarks_extra.zip (second balanced set, unit-gain cells, 50 further piano speech clips; its unit-gain
+configs also read wavs of the audio archive). Audio clips are derived from Slakh2100
+and LibriSpeech (CC BY 4.0). An archive is fetched from its "url" in
 reproduction/benchmarks.json (a Google Drive file link or a direct HTTP(S) link; --archive-url NAME=URL overrides),
 otherwise from the Google Drive folder of the authors' weights (checkpoint_manifest.json -> "gdrive" ->
 "folder_url", or --gdrive-folder URL). File list and checksums: reproduction/benchmarks.json. Files are written
@@ -46,6 +49,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--only", nargs="+", help="config names, e.g. celeba_cifar clwd audio_piano")
     ap.add_argument("--audio", action="store_true", help="also download the audio benchmark (~1.3 GB)")
+    ap.add_argument("--audio-extra", action="store_true", help="also download the extra audio inputs (~0.7 GB)")
     ap.add_argument("--data-root", type=Path, default=paths.DATA_ROOT)
     ap.add_argument("--gdrive-folder", help="share link of the release folder (overrides the manifest's gdrive.folder_url)")
     ap.add_argument("--archive-url", nargs="+", default=[], metavar="NAME=URL",
@@ -66,7 +70,7 @@ def main():
         if a.only:
             files = [f for f in ar["files"] if set(f["config"].split()) & set(a.only)]
         else:
-            files = ar["files"] if ar["kind"] == "image" or a.audio else []
+            files = ar["files"] if {"image": True, "audio": a.audio, "audio-extra": a.audio_extra}[ar["kind"]] else []
         if not files:
             continue
         todo = [f for f in files if not ((a.data_root / f["path"]).is_file() and sha256(a.data_root / f["path"]) == f["sha256"])]

@@ -31,7 +31,7 @@ python -m sord.summarize runs/celeba_cifar
 
 Reconstructions and iteration histories are saved in `runs/celeba_cifar/img_<i>.npz`, with run metadata in `runs/celeba_cifar/results.jsonl`.
 
-> **Data download:** `scripts/download_benchmarks.py` fetches the benchmark inputs of the image tasks (`sord_benchmarks.zip`, ~74 MB, from the [Google Drive release folder](CHECKPOINTS.md)) and verifies them against [`reproduction/benchmarks.json`](reproduction/benchmarks.json); omit `--only` to get all of them. Files are placed at the paths the configs expect, under `DATA_ROOT` (default: the repository root). Audio inputs (~1.3 GB) are fetched separately with `--audio` or `--only audio_<target>` (see [Audio](#audio)).
+> **Data download:** `scripts/download_benchmarks.py` fetches the benchmark inputs of the image tasks (`sord_benchmarks.zip`, ~74 MB, from the [Google Drive release folder](CHECKPOINTS.md)) and verifies them against [`reproduction/benchmarks.json`](reproduction/benchmarks.json); omit `--only` to get all of them. Files are placed at the paths the configs expect, under `DATA_ROOT` (default: the repository root). Audio inputs are fetched separately with `--audio` (~1.3 GB) and `--audio-extra` (~0.7 GB), or `--only audio_<target>` (see [Audio](#audio)).
 
 ## Pretrained priors and datasets
 
@@ -46,6 +46,7 @@ SORD uses **task-specific pretrained diffusion models of clean signals**. For co
 | `imagenette_watermark`, `imagenette_shadow` | `adm_imagenet256` |
 | `audio_piano`, `audio_guitar`, `audio_bass`, `audio_drums` | `msdm_piano`, `msdm_guitar`, `msdm_bass`, `msdm_drums`, respectively |
 | `audio_<target>_speech` (same targets, speech interferers) | `msdm_<target>` |
+| `audio_<target>_bal2`, `audio_<target>_g1`, `audio_<target>_bal2_g1`, `audio_{piano,guitar}_speech_g1`, `audio_piano_speech50`, `audio_piano_speech50_g1` | `msdm_<target>` |
 
 Download and verify only the model(s) you need:
 
@@ -65,7 +66,10 @@ See [CHECKPOINT_UPLOAD_GUIDE.md](CHECKPOINT_UPLOAD_GUIDE.md) for Google Drive an
 ## Method overview
 
 Let `y` be an observed signal, `x` its unknown clean counterpart, and `Ω` the known support of a localized corruption `n`. In the additive setting,
-$y = x + n$, where ${supp}(n) \subseteq \Omega.$
+
+$$
+y = x + n, \qquad \operatorname{supp}(n) \subseteq \Omega.
+$$
 
 SORD alternates between estimating the localized corruption and refining clean-signal candidates using a diffusion model trained on clean signals:
 
@@ -90,14 +94,14 @@ Once the relevant dataset and prior are available, run a task using its configur
 
 ```bash
 # FFHQ watermark removal
-CUDA_VISIBLE_DEVICES=0 python -m sord.run configs/sord/ffhq_watermark.yaml --batch 1 --out runs/ffhq_watermark
+python -m sord.run configs/sord/ffhq_watermark.yaml --batch 1 --out runs/ffhq_watermark
 
 # CLWD watermark removal (the dataset support mask is included in sord_benchmarks.zip;
 # scripts/build_clwd_dataset_mask.py --clwd-root /path/to/CLWD rebuilds it from CLWD)
-CUDA_VISIBLE_DEVICES=0 python -m sord.run configs/sord/clwd.yaml --batch 8 --out runs/clwd
+python -m sord.run configs/sord/clwd.yaml --batch 8 --out runs/clwd
 
 # ISTD shadow removal
-CUDA_VISIBLE_DEVICES=0 python -m sord.run configs/sord/istd.yaml --out runs/istd
+python -m sord.run configs/sord/istd.yaml --out runs/istd
 ```
 
 ### Audio
@@ -113,14 +117,31 @@ git -C third_party/msdm checkout 76def820666bf2f31af032e8c5a32e4e9de939fc
 
 python scripts/download_benchmarks.py --only audio_piano audio_piano_speech   # audio inputs (one ~1.3 GB archive)
 python scripts/download_checkpoints.py --only msdm_piano                 # the target's MSDM prior
-CUDA_VISIBLE_DEVICES=0 python -m sord.run_audio configs/sord/audio_piano.yaml --out runs/audio_piano
-CUDA_VISIBLE_DEVICES=0 python -m sord.run_audio configs/sord/audio_piano_speech.yaml --out runs/audio_piano_speech        # speech interferers
+python -m sord.run_audio configs/sord/audio_piano.yaml --out runs/audio_piano
+python -m sord.run_audio configs/sord/audio_piano_speech.yaml --out runs/audio_piano_speech        # speech interferers
 ```
 
-The audio benchmark (`sord_audio_benchmarks.zip`, downloaded from the link in `reproduction/benchmarks.json`) holds each target's 110 balanced
-10 s clips with instrument (`bal`) and speech (`speech`) interferers at SIR 0 and 5 dB, derived from **Slakh2100** and
-**LibriSpeech** (both CC BY 4.0). The MSDM baseline (4-stem MSDM, and MSDM + speech prior for speech interferers) is in
-[`baselines/msdm/`](baselines/msdm/README.md).
+All audio configs, SORD and the MSDM baseline, with one table in `runs/audio_all/summary.md` (re-running skips finished runs):
+
+```bash
+python scripts/download_benchmarks.py --audio --audio-extra
+python scripts/download_checkpoints.py --only msdm_piano msdm_guitar msdm_bass msdm_drums
+python scripts/download_checkpoints.py --source gdrive --only speech_dm
+python scripts/run_audio_all.py --out runs/audio_all --gpus 0 1 --extra     # --limit 2 for a quick smoke test
+```
+
+Without `--audio-extra` / `--extra`, only the base configs (`audio_<target>`, `audio_<target>_speech`) are used.
+
+Audio inputs are derived from **Slakh2100** and **LibriSpeech** (both CC BY 4.0): 10 s clips with an interferer added
+inside one window.
+
+| configs | interferers |
+|---|---|
+| `audio_<target>` / `audio_<target>_bal2` | instruments, two balanced sets of 110 clips per target, SIR 0 and 5 dB |
+| `audio_<target>_speech`, `audio_piano_speech50` | speech, SIR 0 and 5 dB |
+| `*_g1` | the same interferers at unit gain (raw mixture) |
+
+The MSDM baseline is in [`baselines/msdm/`](baselines/msdm/README.md).
 
 > **Scope:** These commands run the provided benchmarks. They are not a general-purpose single-image or single-audio-file command-line interface.
 
